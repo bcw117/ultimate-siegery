@@ -1,0 +1,2361 @@
+[
+  {
+    "name": "POF9",
+    "type": "Assault Rifle",
+    "scopes": [
+      "Magnified A",
+      "Magnified B",
+      "Magnified C",
+      "Red Dot A",
+      "Red Dot B",
+      "Red Dot C",
+      "Holo A",
+      "Holo B",
+      "Holo C",
+      "Holo D",
+      "Reflex A",
+      "Reflex B",
+      "Reflex C",
+      "Iron Sight"
+    ],
+    "barrels": [
+      "Flash Hider",
+      "Compensator",
+      "Muzzle Break",
+      "Suppressor",
+      "Extended Barrel",
+      "None"
+    ],
+    "grips": ["Vertical", "Angled", "Horizontal"],
+    "icon_url": "https://i.imgur.com/D2FkIjZ.png"
+  },
+  {
+    "name": "AK-12",
+    "type": "Assault Rifle",
+    "scopes": [
+      "Magnified A",
+      "Magnified B",
+      "Magnified C",
+      "Red Dot A",
+      "Red Dot B",
+      "Red Dot C",
+      "Holo A",
+      "Holo B",
+      "Holo C",
+      "Holo D",
+      "Reflex A",
+      "Reflex B",
+      "Reflex C",
+      "Iron Sight"
+    ],
+    "barrels": [
+      "Flash Hider",
+      "Compensator",
+      "Muzzle Break",
+      "Suppressor",
+      "None"
+    ],
+    "grips": ["Vertical", "Angled", "Horizontal"],
+    "icon_url": "https://i.imgur.com/XkqUvyS.png"
+  },
+  {
+    "name": "SC3000K",
+    "type": "Assault Rifle",
+    "scopes": [
+      "Magnified A",
+      "Magnified B",
+      "Magnified C",
+      "Red Dot A",
+      "Red Dot B",
+      "Red Dot C",
+      "Holo A",
+      "Holo B",
+      "Holo C",
+      "Holo D",
+      "Reflex A",
+      "Reflex B",
+      "Reflex C",
+      "Iron Sight"
+    ],
+    "barrels": [
+      "Flash Hider",
+      "Compensator",
+      "Muzzle Break",
+      "Suppressor",
+      "Extended Barrel",
+      "None"
+    ],
+    "grips": ["Vertical", "Angled", "Horizontal"],
+    "icon_url": "https://i.imgur.com/93Vx6y4.png"
+  },
+  {
+    "name": "V308",
+    "type": "Assault Rifle",
+    "scopes": [
+      "Magnified A",
+      "Magnified B",
+      "Magnified C",
+      "Red Dot A",
+      "Red Dot B",
+      "Red Dot C",
+      "Holo A",
+      "Holo B",
+      "Holo C",
+      "Holo D",
+      "Reflex A",
+      "Reflex B",
+      "Reflex C",
+      "Iron Sight"
+    ],
+    "barrels": [
+      "Flash Hider",
+      "Compensator",
+      "Muzzle Break",
+      "Suppressor",
+      "None"
+    ],
+    "grips": ["Vertical", "Angled", "Horizontal"],
+    "icon_url": "https://i.imgur.com/xoxtQFf.png"
+  },
+  {
+    "name": "416-C CARBINE",
+    "type": "Assault Rifle",
+    "scopes": [
+      "Red Dot A",
+      "Red Dot B",
+      "Red Dot C",
+      "Holo A",
+      "Holo B",
+      "Holo C",
+      "Holo D",
+      "Reflex A",
+      "Reflex B",
+      "Reflex C",
+      "Iron Sight"
+    ],
+    "barrels": [
+      "Flash Hider",
+      "Compensator",
+      "Muzzle Break",
+      "Suppressor",
+      "Extended Barrel",
+      "None"
+    ],
+    "grips": ["Vertical", "Angled", "Horizontal"],
+    "icon_url": "https://i.imgur.com/18j266k.png"
+  },
+  {
+    "name": "556XI",
+    "type": "Assault Rifle",
+    "scopes": [
+      "Magnified A",
+      "Magnified B",
+      "Magnified C",
+      "Red Dot A",
+      "Red Dot B",
+      "Red Dot C",
+      "Holo A",
+      "Holo B",
+      "Holo C",
+      "Holo D",
+      "Reflex A",
+      "Reflex B",
+      "Reflex C",
+      "Iron Sight"
+    ],
+    "barrels": [
+      "Flash Hider",
+      "Compensator",
+      "Muzzle Break",
+      "Suppressor",
+      "None"
+    ],
+    "grips": ["Vertical", "Angled", "Horizontal"],
+    "icon_url": "https://i.imgur.com/l3Z9O2Q.png"
+  },
+  {
+    "name": "M762",
+    "type": "Assault Rifle",
+    "scopes": [
+      "Magnified A",
+      "Magnified B",
+      "Magnified C",
+      "Red Dot A",
+      "Red Dot B",
+      "Red Dot C",
+      "Holo A",
+      "Holo B",
+      "Holo C",
+      "Holo D",
+      "Reflex A",
+      "Reflex B",
+      "Reflex C",
+      "Iron Sight"
+    ],
+    "barrels": [
+      "Flash Hider",
+      "Compensator",
+      "Muzzle Break",
+      "Suppressor",
+      "None"
+    ],
+    "grips": ["Vertical", "Angled", "Horizontal"],
+    "icon_url": "https://i.imgur.com/bJqHwKt.png"
+  },
+  {
+    "name": "TYPE-89",
+    "type": "Assault Rifle",
+    "scopes": [
+      "Magnified A",
+      "Magnified B",
+      "Magnified C",
+      "Red Dot A",
+      "Red Dot B",
+      "Red Dot C",
+      "Holo A",
+      "Holo B",
+      "Holo C",
+      "Holo D",
+      "Reflex A",
+      "Reflex B",
+      "Reflex C",
+      "Iron Sight"
+    ],
+    "barrels": [
+      "Flash Hider",
+      "Compensator",
+      "Muzzle Break",
+      "Suppressor",
+      "None"
+    ],
+    "grips": ["Vertical", "Angled", "Horizontal"],
+    "icon_url": "https://i.imgur.com/hGDt4zV.png"
+  },
+  {
+    "name": "M4",
+    "type": "Assault Rifle",
+    "scopes": [
+      "Magnified A",
+      "Magnified B",
+      "Magnified C",
+      "Red Dot A",
+      "Red Dot B",
+      "Red Dot C",
+      "Holo A",
+      "Holo B",
+      "Holo C",
+      "Holo D",
+      "Reflex A",
+      "Reflex B",
+      "Reflex C",
+      "Iron Sight"
+    ],
+    "barrels": [
+      "Flash Hider",
+      "Compensator",
+      "Muzzle Break",
+      "Suppressor",
+      "Extended Barrel",
+      "None"
+    ],
+    "grips": ["Vertical", "Angled", "Horizontal"],
+    "icon_url": "https://i.imgur.com/lKDElT7.png"
+  },
+  {
+    "name": "PARA-308",
+    "type": "Assault Rifle",
+    "scopes": [
+      "Magnified A",
+      "Magnified B",
+      "Magnified C",
+      "Red Dot A",
+      "Red Dot B",
+      "Red Dot C",
+      "Holo A",
+      "Holo B",
+      "Holo C",
+      "Holo D",
+      "Reflex A",
+      "Reflex B",
+      "Reflex C",
+      "Iron Sight"
+    ],
+    "barrels": [
+      "Flash Hider",
+      "Compensator",
+      "Muzzle Break",
+      "Suppressor",
+      "Extended Barrel",
+      "None"
+    ],
+    "grips": ["Vertical", "Angled", "Horizontal"],
+    "icon_url": "https://i.imgur.com/246krdt.png"
+  },
+  {
+    "name": "SPEAR .308",
+    "type": "Assault Rifle",
+    "scopes": [
+      "Magnified A",
+      "Magnified B",
+      "Magnified C",
+      "Red Dot A",
+      "Red Dot B",
+      "Red Dot C",
+      "Holo A",
+      "Holo B",
+      "Holo C",
+      "Holo D",
+      "Reflex A",
+      "Reflex B",
+      "Reflex C",
+      "Iron Sight"
+    ],
+    "barrels": [
+      "Flash Hider",
+      "Compensator",
+      "Muzzle Break",
+      "Suppressor",
+      "Extended Barrel",
+      "None"
+    ],
+    "grips": ["Vertical", "Angled", "Horizontal"],
+    "icon_url": "https://i.imgur.com/PNyKa6N.png"
+  },
+  {
+    "name": "AK-74M",
+    "type": "Assault Rifle",
+    "scopes": [
+      "Magnified A",
+      "Magnified B",
+      "Magnified C",
+      "Red Dot A",
+      "Red Dot B",
+      "Red Dot C",
+      "Holo A",
+      "Holo B",
+      "Holo C",
+      "Holo D",
+      "Reflex A",
+      "Reflex B",
+      "Reflex C",
+      "Iron Sight"
+    ],
+    "barrels": [
+      "Flash Hider",
+      "Compensator",
+      "Muzzle Break",
+      "Suppressor",
+      "None"
+    ],
+    "grips": ["Vertical", "Angled", "Horizontal"],
+    "icon_url": "https://i.imgur.com/bOB4yay.png"
+  },
+  {
+    "name": "AR33",
+    "type": "Assault Rifle",
+    "scopes": [
+      "Magnified A",
+      "Magnified B",
+      "Magnified C",
+      "Red Dot A",
+      "Red Dot B",
+      "Red Dot C",
+      "Holo A",
+      "Holo B",
+      "Holo C",
+      "Holo D",
+      "Reflex A",
+      "Reflex B",
+      "Reflex C",
+      "Iron Sight"
+    ],
+    "barrels": [
+      "Flash Hider",
+      "Compensator",
+      "Muzzle Break",
+      "Suppressor",
+      "None"
+    ],
+    "grips": ["Vertical", "Angled", "Horizontal"],
+    "icon_url": "https://i.imgur.com/fSUxgbS.png"
+  },
+  {
+    "name": "L85A2",
+    "type": "Assault Rifle",
+    "scopes": [
+      "Magnified A",
+      "Magnified B",
+      "Magnified C",
+      "Red Dot A",
+      "Red Dot B",
+      "Red Dot C",
+      "Holo A",
+      "Holo B",
+      "Holo C",
+      "Holo D",
+      "Reflex A",
+      "Reflex B",
+      "Reflex C",
+      "Iron Sight"
+    ],
+    "barrels": [
+      "Flash Hider",
+      "Compensator",
+      "Muzzle Break",
+      "Suppressor",
+      "None"
+    ],
+    "grips": ["Vertical", "Angled", "Horizontal"],
+    "icon_url": "https://i.imgur.com/dFG30nS.png"
+  },
+  {
+    "name": "G36C",
+    "type": "Assault Rifle",
+    "scopes": [
+      "Magnified A",
+      "Magnified B",
+      "Magnified C",
+      "Red Dot A",
+      "Red Dot B",
+      "Red Dot C",
+      "Holo A",
+      "Holo B",
+      "Holo C",
+      "Holo D",
+      "Reflex A",
+      "Reflex B",
+      "Reflex C",
+      "Iron Sight"
+    ],
+    "barrels": [
+      "Flash Hider",
+      "Compensator",
+      "Muzzle Break",
+      "Suppressor",
+      "Extended Barrel",
+      "None"
+    ],
+    "grips": ["Vertical", "Angled", "Horizontal"],
+    "icon_url": "https://i.imgur.com/YuXb3x9.png"
+  },
+  {
+    "name": "COMMANDO 9",
+    "type": "Assault Rifle",
+    "scopes": [
+      "Red Dot A",
+      "Red Dot B",
+      "Red Dot C",
+      "Holo A",
+      "Holo B",
+      "Holo C",
+      "Holo D",
+      "Reflex A",
+      "Reflex B",
+      "Reflex C",
+      "Iron Sight"
+    ],
+    "barrels": [
+      "Flash Hider",
+      "Compensator",
+      "Muzzle Break",
+      "Suppressor",
+      "Extended Barrel",
+      "None"
+    ],
+    "grips": ["Vertical", "Angled", "Horizontal"],
+    "icon_url": "https://i.imgur.com/Jo2DJHb.png"
+  },
+  {
+    "name": "AUG A2",
+    "type": "Assault Rifle",
+    "scopes": [
+      "Magnified A",
+      "Magnified B",
+      "Magnified C",
+      "Red Dot A",
+      "Red Dot B",
+      "Red Dot C",
+      "Holo A",
+      "Holo B",
+      "Holo C",
+      "Holo D",
+      "Reflex A",
+      "Reflex B",
+      "Reflex C",
+      "Iron Sight"
+    ],
+    "barrels": [
+      "Flash Hider",
+      "Compensator",
+      "Muzzle Break",
+      "Suppressor",
+      "None"
+    ],
+    "grips": ["NA"],
+    "icon_url": "https://i.imgur.com/SG0dmYt.png"
+  },
+  {
+    "name": "F2",
+    "type": "Assault Rifle",
+    "scopes": [
+      "Magnified A",
+      "Magnified B",
+      "Magnified C",
+      "Red Dot A",
+      "Red Dot B",
+      "Red Dot C",
+      "Holo A",
+      "Holo B",
+      "Holo C",
+      "Holo D",
+      "Reflex A",
+      "Reflex B",
+      "Reflex C",
+      "Iron Sight"
+    ],
+    "barrels": [
+      "Flash Hider",
+      "Compensator",
+      "Muzzle Break",
+      "Suppressor",
+      "Extended Barrel",
+      "None"
+    ],
+    "grips": ["NA"],
+    "icon_url": "https://i.imgur.com/B9oWguM.png"
+  },
+  {
+    "name": "C8-SFW",
+    "type": "Assault Rifle",
+    "scopes": [
+      "Magnified A",
+      "Magnified B",
+      "Magnified C",
+      "Red Dot A",
+      "Red Dot B",
+      "Red Dot C",
+      "Holo A",
+      "Holo B",
+      "Holo C",
+      "Holo D",
+      "Reflex A",
+      "Reflex B",
+      "Reflex C",
+      "Iron Sight"
+    ],
+    "barrels": [
+      "Flash Hider",
+      "Compensator",
+      "Muzzle Break",
+      "Suppressor",
+      "Extended Barrel",
+      "None"
+    ],
+    "grips": ["NA"],
+    "icon_url": "https://i.imgur.com/kxqQRY5.png"
+  },
+  {
+    "name": "R4-C",
+    "type": "Assault Rifle",
+    "scopes": [
+      "Magnified A",
+      "Magnified B",
+      "Magnified C",
+      "Red Dot A",
+      "Red Dot B",
+      "Red Dot C",
+      "Holo A",
+      "Holo B",
+      "Holo C",
+      "Holo D",
+      "Reflex A",
+      "Reflex B",
+      "Reflex C",
+      "Iron Sight"
+    ],
+    "barrels": [
+      "Flash Hider",
+      "Compensator",
+      "Muzzle Break",
+      "Suppressor",
+      "Extended Barrel",
+      "None"
+    ],
+    "grips": ["Vertical", "Angled", "Horizontal"],
+    "icon_url": "https://i.imgur.com/pBxDdF5.png"
+  },
+  {
+    "name": "C7E",
+    "type": "Assault Rifle",
+    "scopes": [
+      "Magnified A",
+      "Magnified B",
+      "Magnified C",
+      "Red Dot A",
+      "Red Dot B",
+      "Red Dot C",
+      "Holo A",
+      "Holo B",
+      "Holo C",
+      "Holo D",
+      "Reflex A",
+      "Reflex B",
+      "Reflex C",
+      "Iron Sight"
+    ],
+    "barrels": [
+      "Flash Hider",
+      "Compensator",
+      "Muzzle Break",
+      "Suppressor",
+      "None"
+    ],
+    "grips": ["Vertical", "Angled", "Horizontal"],
+    "icon_url": "https://i.imgur.com/m0vBz74.png"
+  },
+  {
+    "name": "MK17 CQB",
+    "type": "Assault Rifle",
+    "scopes": [
+      "Magnified A",
+      "Magnified B",
+      "Magnified C",
+      "Red Dot A",
+      "Red Dot B",
+      "Red Dot C",
+      "Holo A",
+      "Holo B",
+      "Holo C",
+      "Holo D",
+      "Reflex A",
+      "Reflex B",
+      "Reflex C",
+      "Iron Sight"
+    ],
+    "barrels": [
+      "Flash Hider",
+      "Compensator",
+      "Muzzle Break",
+      "Suppressor",
+      "Extended Barrel",
+      "None"
+    ],
+    "grips": ["Vertical", "Angled", "Horizontal"],
+    "icon_url": "https://i.imgur.com/qFieFCz.png"
+  },
+  {
+    "name": "552 COMMANDO",
+    "type": "Assault Rifle",
+    "scopes": [
+      "Magnified A",
+      "Magnified B",
+      "Magnified C",
+      "Red Dot A",
+      "Red Dot B",
+      "Red Dot C",
+      "Holo A",
+      "Holo B",
+      "Holo C",
+      "Holo D",
+      "Reflex A",
+      "Reflex B",
+      "Reflex C",
+      "Iron Sight"
+    ],
+    "barrels": [
+      "Flash Hider",
+      "Compensator",
+      "Muzzle Break",
+      "Suppressor",
+      "Extended Barrel",
+      "None"
+    ],
+    "grips": ["Vertical", "Angled", "Horizontal"],
+    "icon_url": "https://i.imgur.com/iyeigKx.png"
+  },
+  {
+    "name": "ARX200",
+    "type": "Assault Rifle",
+    "scopes": [
+      "Magnified A",
+      "Magnified B",
+      "Magnified C",
+      "Red Dot A",
+      "Red Dot B",
+      "Red Dot C",
+      "Holo A",
+      "Holo B",
+      "Holo C",
+      "Holo D",
+      "Reflex A",
+      "Reflex B",
+      "Reflex C",
+      "Iron Sight"
+    ],
+    "barrels": [
+      "Flash Hider",
+      "Compensator",
+      "Muzzle Break",
+      "Suppressor",
+      "None"
+    ],
+    "grips": ["Vertical", "Angled", "Horizontal"],
+    "icon_url": "https://i.imgur.com/pjJNhg0.png"
+  },
+  {
+    "name": "F90",
+    "type": "Assault Rifle",
+    "scopes": [
+      "Magnified A",
+      "Magnified B",
+      "Magnified C",
+      "Red Dot A",
+      "Red Dot B",
+      "Red Dot C",
+      "Holo A",
+      "Holo B",
+      "Holo C",
+      "Holo D",
+      "Reflex A",
+      "Reflex B",
+      "Reflex C",
+      "Iron Sight"
+    ],
+    "barrels": [
+      "Flash Hider",
+      "Compensator",
+      "Muzzle Break",
+      "Suppressor",
+      "Extended Barrel",
+      "None"
+    ],
+    "grips": ["Vertical", "Angled", "Horizontal"],
+    "icon_url": "https://i.imgur.com/ltvoR5e.png"
+  },
+  {
+    "name": "P90",
+    "type": "Submachine Gun",
+    "scopes": [
+      "Magnified A",
+      "Magnified B",
+      "Magnified C",
+      "Red Dot A",
+      "Red Dot B",
+      "Red Dot C",
+      "Holo A",
+      "Holo B",
+      "Holo C",
+      "Holo D",
+      "Reflex A",
+      "Reflex B",
+      "Reflex C",
+      "Iron Sight"
+    ],
+    "barrels": [
+      "Flash Hider",
+      "Compensator",
+      "Muzzle Break",
+      "Suppressor",
+      "Extended Barrel",
+      "None"
+    ],
+    "grips": ["NA"],
+    "icon_url": "https://i.imgur.com/JioXAPs.png"
+  },
+  {
+    "name": "9mm C1",
+    "type": "Submachine Gun",
+    "scopes": [
+      "Magnified A",
+      "Magnified B",
+      "Magnified C",
+      "Red Dot A",
+      "Red Dot B",
+      "Red Dot C",
+      "Holo A",
+      "Holo B",
+      "Holo C",
+      "Holo D",
+      "Reflex A",
+      "Reflex B",
+      "Reflex C",
+      "Iron Sight"
+    ],
+    "barrels": [
+      "Flash Hider",
+      "Compensator",
+      "Muzzle Break",
+      "Suppressor",
+      "Extended Barrel",
+      "None"
+    ],
+    "grips": ["Vertical", "Angled", "Horizontal"],
+    "icon_url": "https://i.imgur.com/CSicnOY.png"
+  },
+  {
+    "name": "AUG A3",
+    "type": "Submachine Gun",
+    "scopes": [
+      "Red Dot A",
+      "Red Dot B",
+      "Red Dot C",
+      "Holo A",
+      "Holo B",
+      "Holo C",
+      "Holo D",
+      "Reflex A",
+      "Reflex B",
+      "Reflex C",
+      "Iron Sight"
+    ],
+    "barrels": [
+      "Flash Hider",
+      "Compensator",
+      "Muzzle Break",
+      "Suppressor",
+      "Extended Barrel",
+      "None"
+    ],
+    "grips": ["Vertical", "Angled", "Horizontal"],
+    "icon_url": "https://i.imgur.com/EwhrsYo.png"
+  },
+  {
+    "name": "VECTOR .45 ACP",
+    "type": "Submachine Gun",
+    "scopes": [
+      "Magnified A",
+      "Magnified B",
+      "Magnified C",
+      "Red Dot A",
+      "Red Dot B",
+      "Red Dot C",
+      "Holo A",
+      "Holo B",
+      "Holo C",
+      "Holo D",
+      "Reflex A",
+      "Reflex B",
+      "Reflex C",
+      "Iron Sight"
+    ],
+    "barrels": [
+      "Flash Hider",
+      "Compensator",
+      "Muzzle Break",
+      "Suppressor",
+      "Extended Barrel",
+      "None"
+    ],
+    "grips": ["Vertical", "Angled", "Horizontal"],
+    "icon_url": "https://i.imgur.com/nYqNJVY.png"
+  },
+  {
+    "name": "M12",
+    "type": "Submachine Gun",
+    "scopes": [
+      "Red Dot A",
+      "Red Dot B",
+      "Red Dot C",
+      "Holo A",
+      "Holo B",
+      "Holo C",
+      "Holo D",
+      "Reflex A",
+      "Reflex B",
+      "Reflex C",
+      "Iron Sight"
+    ],
+    "barrels": [
+      "Flash Hider",
+      "Compensator",
+      "Muzzle Break",
+      "Suppressor",
+      "Extended Barrel",
+      "None"
+    ],
+    "grips": ["NA"],
+    "icon_url": "https://i.imgur.com/xnjqNAP.png"
+  },
+  {
+    "name": "FMG-9",
+    "type": "Submachine Gun",
+    "scopes": [
+      "Magnified A",
+      "Magnified B",
+      "Magnified C",
+      "Red Dot A",
+      "Red Dot B",
+      "Red Dot C",
+      "Holo A",
+      "Holo B",
+      "Holo C",
+      "Holo D",
+      "Reflex A",
+      "Reflex B",
+      "Reflex C",
+      "Iron Sight"
+    ],
+    "barrels": [
+      "Flash Hider",
+      "Compensator",
+      "Muzzle Break",
+      "Suppressor",
+      "Extended Barrel",
+      "None"
+    ],
+    "grips": ["NA"],
+    "icon_url": "https://i.imgur.com/Sv4LCCi.png"
+  },
+  {
+    "name": "PDW9",
+    "type": "Submachine Gun",
+    "scopes": [
+      "Magnified A",
+      "Magnified B",
+      "Magnified C",
+      "Red Dot A",
+      "Red Dot B",
+      "Red Dot C",
+      "Holo A",
+      "Holo B",
+      "Holo C",
+      "Holo D",
+      "Reflex A",
+      "Reflex B",
+      "Reflex C",
+      "Iron Sight"
+    ],
+    "barrels": [
+      "Flash Hider",
+      "Compensator",
+      "Muzzle Break",
+      "Suppressor",
+      "Extended Barrel",
+      "None"
+    ],
+    "grips": ["Vertical", "Angled", "Horizontal"],
+    "icon_url": "https://i.imgur.com/SfD33PY.png"
+  },
+  {
+    "name": "UMP45",
+    "type": "Submachine Gun",
+    "scopes": [
+      "Magnified A",
+      "Magnified B",
+      "Magnified C",
+      "Red Dot A",
+      "Red Dot B",
+      "Red Dot C",
+      "Holo A",
+      "Holo B",
+      "Holo C",
+      "Holo D",
+      "Reflex A",
+      "Reflex B",
+      "Reflex C",
+      "Iron Sight"
+    ],
+    "barrels": [
+      "Flash Hider",
+      "Compensator",
+      "Muzzle Break",
+      "Suppressor",
+      "Extended Barrel",
+      "None"
+    ],
+    "grips": ["Vertical", "Angled", "Horizontal"],
+    "icon_url": "https://i.imgur.com/DXCAI3x.png"
+  },
+  {
+    "name": "SCORPION EVO 3 A1",
+    "type": "Submachine Gun",
+    "scopes": [
+      "Red Dot A",
+      "Red Dot B",
+      "Red Dot C",
+      "Holo A",
+      "Holo B",
+      "Holo C",
+      "Holo D",
+      "Reflex A",
+      "Reflex B",
+      "Reflex C",
+      "Iron Sight"
+    ],
+    "barrels": [
+      "Flash Hider",
+      "Compensator",
+      "Muzzle Break",
+      "Suppressor",
+      "None"
+    ],
+    "grips": ["Vertical", "Angled", "Horizontal"],
+    "icon_url": "https://i.imgur.com/Xf4RkeF.png"
+  },
+  {
+    "name": "P10 RONI",
+    "type": "Submachine Gun",
+    "scopes": [
+      "Red Dot A",
+      "Red Dot B",
+      "Red Dot C",
+      "Holo A",
+      "Holo B",
+      "Holo C",
+      "Holo D",
+      "Reflex A",
+      "Reflex B",
+      "Reflex C",
+      "Iron Sight"
+    ],
+    "barrels": [
+      "Flash Hider",
+      "Compensator",
+      "Muzzle Break",
+      "Suppressor",
+      "Extended Barrel",
+      "None"
+    ],
+    "grips": ["Vertical", "Angled", "Horizontal"],
+    "icon_url": "https://i.imgur.com/am0iQln.png"
+  },
+  {
+    "name": "MP5",
+    "type": "Submachine Gun",
+    "scopes": [
+      "Magnified A",
+      "Magnified B",
+      "Magnified C",
+      "Red Dot A",
+      "Red Dot B",
+      "Red Dot C",
+      "Holo A",
+      "Holo B",
+      "Holo C",
+      "Holo D",
+      "Reflex A",
+      "Reflex B",
+      "Reflex C",
+      "Iron Sight"
+    ],
+    "barrels": [
+      "Flash Hider",
+      "Compensator",
+      "Muzzle Break",
+      "Suppressor",
+      "Extended Barrel",
+      "None"
+    ],
+    "grips": ["Vertical", "Angled", "Horizontal"],
+    "icon_url": "https://i.imgur.com/PUJ9el4.png"
+  },
+  {
+    "name": "MPX",
+    "type": "Submachine Gun",
+    "scopes": [
+      "Red Dot A",
+      "Red Dot B",
+      "Red Dot C",
+      "Holo A",
+      "Holo B",
+      "Holo C",
+      "Holo D",
+      "Reflex A",
+      "Reflex B",
+      "Reflex C",
+      "Iron Sight"
+    ],
+    "barrels": [
+      "Flash Hider",
+      "Compensator",
+      "Muzzle Break",
+      "Suppressor",
+      "Extended Barrel",
+      "None"
+    ],
+    "grips": ["Vertical", "Angled", "Horizontal"],
+    "icon_url": "https://i.imgur.com/0lGbMaK.png"
+  },
+  {
+    "name": "MP7",
+    "type": "Submachine Gun",
+    "scopes": [
+      "Magnified A",
+      "Magnified B",
+      "Magnified C",
+      "Red Dot A",
+      "Red Dot B",
+      "Red Dot C",
+      "Holo A",
+      "Holo B",
+      "Holo C",
+      "Holo D",
+      "Reflex A",
+      "Reflex B",
+      "Reflex C",
+      "Iron Sight"
+    ],
+    "barrels": [
+      "Flash Hider",
+      "Compensator",
+      "Muzzle Break",
+      "Suppressor",
+      "Extended Barrel",
+      "None"
+    ],
+    "grips": ["NA"],
+    "icon_url": "https://i.imgur.com/nTLMXY7.png"
+  },
+  {
+    "name": "MP5SD",
+    "type": "Submachine Gun",
+    "scopes": [
+      "Red Dot A",
+      "Red Dot B",
+      "Red Dot C",
+      "Holo A",
+      "Holo B",
+      "Holo C",
+      "Holo D",
+      "Reflex A",
+      "Reflex B",
+      "Reflex C",
+      "Iron Sight"
+    ],
+    "barrels": ["NA"],
+    "grips": ["Vertical", "Angled", "Horizontal"],
+    "icon_url": "https://i.imgur.com/l5UoMyK.png"
+  },
+  {
+    "name": "T-5 SMG",
+    "type": "Submachine Gun",
+    "scopes": [
+      "Red Dot A",
+      "Red Dot B",
+      "Red Dot C",
+      "Holo A",
+      "Holo B",
+      "Holo C",
+      "Holo D",
+      "Reflex A",
+      "Reflex B",
+      "Reflex C",
+      "Iron Sight"
+    ],
+    "barrels": [
+      "Flash Hider",
+      "Compensator",
+      "Muzzle Break",
+      "Suppressor",
+      "Extended Barrel",
+      "None"
+    ],
+    "grips": ["Vertical", "Angled", "Horizontal"],
+    "icon_url": "https://i.imgur.com/aJD4n8e.png"
+  },
+  {
+    "name": "K1A",
+    "type": "Submachine Gun",
+    "scopes": [
+      "Red Dot A",
+      "Red Dot B",
+      "Red Dot C",
+      "Holo A",
+      "Holo B",
+      "Holo C",
+      "Holo D",
+      "Reflex A",
+      "Reflex B",
+      "Reflex C",
+      "Iron Sight"
+    ],
+    "barrels": [
+      "Flash Hider",
+      "Compensator",
+      "Muzzle Break",
+      "Suppressor",
+      "Extended Barrel",
+      "None"
+    ],
+    "grips": ["Vertical", "Angled", "Horizontal"],
+    "icon_url": "https://i.imgur.com/ASxXNFF.png"
+  },
+  {
+    "name": "Mx4 Storm",
+    "type": "Submachine Gun",
+    "scopes": [
+      "Red Dot A",
+      "Red Dot B",
+      "Red Dot C",
+      "Holo A",
+      "Holo B",
+      "Holo C",
+      "Holo D",
+      "Reflex A",
+      "Reflex B",
+      "Reflex C",
+      "Iron Sight"
+    ],
+    "barrels": [
+      "Flash Hider",
+      "Compensator",
+      "Muzzle Break",
+      "Suppressor",
+      "Extended Barrel",
+      "None"
+    ],
+    "grips": ["Vertical", "Angled", "Horizontal"],
+    "icon_url": "https://i.imgur.com/0KjOTla.png"
+  },
+  {
+    "name": "UZK50GI",
+    "type": "Submachine Gun",
+    "scopes": [
+      "Red Dot A",
+      "Red Dot B",
+      "Red Dot C",
+      "Holo A",
+      "Holo B",
+      "Holo C",
+      "Holo D",
+      "Reflex A",
+      "Reflex B",
+      "Reflex C",
+      "Iron Sight"
+    ],
+    "barrels": [
+      "Flash Hider",
+      "Compensator",
+      "Muzzle Break",
+      "Suppressor",
+      "Extended Barrel",
+      "None"
+    ],
+    "grips": ["Vertical", "Angled", "Horizontal"],
+    "icon_url": "https://i.imgur.com/EjnVX3B.png"
+  },
+  {
+    "name": "9x19VSN",
+    "type": "Submachine Gun",
+    "scopes": [
+      "Magnified A",
+      "Magnified B",
+      "Magnified C",
+      "Red Dot A",
+      "Red Dot B",
+      "Red Dot C",
+      "Holo A",
+      "Holo B",
+      "Holo C",
+      "Holo D",
+      "Reflex A",
+      "Reflex B",
+      "Reflex C",
+      "Iron Sight"
+    ],
+    "barrels": [
+      "Flash Hider",
+      "Compensator",
+      "Muzzle Break",
+      "Suppressor",
+      "Extended Barrel",
+      "None"
+    ],
+    "grips": ["Vertical", "Angled", "Horizontal"],
+    "icon_url": "https://i.imgur.com/YM28ZXk.png"
+  },
+  {
+    "name": "MP5K",
+    "type": "Submachine Gun",
+    "scopes": [
+      "Magnified A",
+      "Magnified B",
+      "Magnified C",
+      "Red Dot A",
+      "Red Dot B",
+      "Red Dot C",
+      "Holo A",
+      "Holo B",
+      "Holo C",
+      "Holo D",
+      "Reflex A",
+      "Reflex B",
+      "Reflex C",
+      "Iron Sight"
+    ],
+    "barrels": [
+      "Flash Hider",
+      "Compensator",
+      "Muzzle Break",
+      "Suppressor",
+      "Extended Barrel",
+      "None"
+    ],
+    "grips": ["NA"],
+    "icon_url": "https://i.imgur.com/cJnZz6l.png"
+  },
+  {
+    "name": "SR-25",
+    "type": "Marksman Rifle",
+    "scopes": [
+      "Telescopic A",
+      "Telescopic B",
+      "Magnified A",
+      "Magnified B",
+      "Magnified C",
+      "Red Dot A",
+      "Red Dot B",
+      "Red Dot C",
+      "Holo A",
+      "Holo B",
+      "Holo C",
+      "Holo D",
+      "Reflex A",
+      "Reflex B",
+      "Reflex C",
+      "Iron Sight"
+    ],
+    "barrels": ["Muzzle Break", "Suppressor", "None"],
+    "grips": ["Vertical", "Angled", "Horizontal"],
+    "icon_url": "https://i.imgur.com/GAwCFpP.png"
+  },
+  {
+    "name": "AR-15.50",
+    "type": "Marksman Rifle",
+    "scopes": [
+      "Telescopic A",
+      "Telescopic B",
+      "Magnified A",
+      "Magnified B",
+      "Magnified C",
+      "Red Dot A",
+      "Red Dot B",
+      "Red Dot C",
+      "Holo A",
+      "Holo B",
+      "Holo C",
+      "Holo D",
+      "Reflex A",
+      "Reflex B",
+      "Reflex C",
+      "Iron Sight"
+    ],
+    "barrels": ["Muzzle Break", "Suppressor", "None"],
+    "grips": ["Vertical", "Angled", "Horizontal"],
+    "icon_url": "https://i.imgur.com/k4RWCgE.png"
+  },
+  {
+    "name": "417",
+    "type": "Marksman Rifle",
+    "scopes": [
+      "Telescopic A",
+      "Telescopic B",
+      "Magnified A",
+      "Magnified B",
+      "Magnified C",
+      "Red Dot A",
+      "Red Dot B",
+      "Red Dot C",
+      "Holo A",
+      "Holo B",
+      "Holo C",
+      "Holo D",
+      "Reflex A",
+      "Reflex B",
+      "Reflex C",
+      "Iron Sight"
+    ],
+    "barrels": ["Muzzle Break", "Suppressor", "None"],
+    "grips": ["Vertical", "Angled", "Horizontal"],
+    "icon_url": "https://i.imgur.com/XM1aYZ0.png"
+  },
+  {
+    "name": "Mk 14 EBR",
+    "type": "Marksman Rifle",
+    "scopes": [
+      "Telescopic A",
+      "Telescopic B",
+      "Magnified A",
+      "Magnified B",
+      "Magnified C",
+      "Red Dot A",
+      "Red Dot B",
+      "Red Dot C",
+      "Holo A",
+      "Holo B",
+      "Holo C",
+      "Holo D",
+      "Reflex A",
+      "Reflex B",
+      "Reflex C",
+      "Iron Sight"
+    ],
+    "barrels": ["Muzzle Break", "Suppressor", "None"],
+    "grips": ["Vertical", "Angled", "Horizontal"],
+    "icon_url": "https://i.imgur.com/a7tnoMB.png"
+  },
+  {
+    "name": "OTs-03",
+    "type": "Marksman Rifle",
+    "scopes": [
+      "Red Dot A",
+      "Red Dot B",
+      "Red Dot C",
+      "Holo A",
+      "Holo B",
+      "Holo C",
+      "Holo D",
+      "Reflex A",
+      "Reflex B",
+      "Reflex C",
+      "Iron Sight"
+    ],
+    "barrels": ["Muzzle Break", "Suppressor", "None"],
+    "grips": ["Vertical", "Angled", "Horizontal"],
+    "icon_url": "https://i.imgur.com/SvaWAHY.png"
+  },
+  {
+    "name": "CSRX 300",
+    "type": "Marksman Rifle",
+    "scopes": ["NA"],
+    "barrels": ["NA"],
+    "grips": ["NA"],
+    "icon_url": "https://i.imgur.com/QIpmJkI.png"
+  },
+  {
+    "name": "CAMRS",
+    "type": "Marksman Rifle",
+    "scopes": [
+      "Telescopic A",
+      "Telescopic B",
+      "Magnified A",
+      "Magnified B",
+      "Magnified C",
+      "Red Dot A",
+      "Red Dot B",
+      "Red Dot C",
+      "Holo A",
+      "Holo B",
+      "Holo C",
+      "Holo D",
+      "Reflex A",
+      "Reflex B",
+      "Reflex C",
+      "Iron Sight"
+    ],
+    "barrels": ["Muzzle Break", "Suppressor", "None"],
+    "grips": ["NA"],
+    "icon_url": "https://i.imgur.com/jRgdhPK.png"
+  },
+  {
+    "name": "ACS12",
+    "type": "Shotgun",
+    "scopes": [
+      "Magnified A",
+      "Magnified B",
+      "Magnified C",
+      "Red Dot A",
+      "Red Dot B",
+      "Red Dot C",
+      "Holo A",
+      "Holo B",
+      "Holo C",
+      "Holo D",
+      "Reflex A",
+      "Reflex B",
+      "Reflex C",
+      "Iron Sight"
+    ],
+    "barrels": ["NA"],
+    "grips": ["Vertical", "Angled", "Horizontal"],
+    "icon_url": "https://i.imgur.com/oWkeNV1.png"
+  },
+  {
+    "name": "M590A1",
+    "type": "Shotgun",
+    "scopes": [
+      "Red Dot A",
+      "Red Dot B",
+      "Red Dot C",
+      "Holo A",
+      "Holo B",
+      "Holo C",
+      "Holo D",
+      "Reflex A",
+      "Reflex B",
+      "Reflex C",
+      "Iron Sight"
+    ],
+    "barrels": ["NA"],
+    "grips": ["NA"],
+    "icon_url": "https://i.imgur.com/1hKRvhC.png"
+  },
+  {
+    "name": "SUPER 90",
+    "type": "Shotgun",
+    "scopes": [
+      "Red Dot A",
+      "Red Dot B",
+      "Red Dot C",
+      "Holo A",
+      "Holo B",
+      "Holo C",
+      "Holo D",
+      "Reflex A",
+      "Reflex B",
+      "Reflex C",
+      "Iron Sight"
+    ],
+    "grips": ["NA"],
+    "barrels": ["NA"],
+    "icon_url": "https://i.imgur.com/j0bQNp4.png"
+  },
+  {
+    "name": "M870",
+    "type": "Shotgun",
+    "scopes": [
+      "Red Dot A",
+      "Red Dot B",
+      "Red Dot C",
+      "Holo A",
+      "Holo B",
+      "Holo C",
+      "Holo D",
+      "Reflex A",
+      "Reflex B",
+      "Reflex C",
+      "Iron Sight"
+    ],
+    "grips": ["NA"],
+    "barrels": ["NA"],
+    "icon_url": "https://i.imgur.com/2DulKY2.png"
+  },
+  {
+    "name": "TCSG12",
+    "type": "Shotgun",
+    "scopes": [
+      "Magnified A",
+      "Magnified B",
+      "Magnified C",
+      "Red Dot A",
+      "Red Dot B",
+      "Red Dot C",
+      "Holo A",
+      "Holo B",
+      "Holo C",
+      "Holo D",
+      "Reflex A",
+      "Reflex B",
+      "Reflex C",
+      "Iron Sight"
+    ],
+    "barrels": ["Suppressor", "None"],
+    "grips": ["Vertical", "Angled", "Horizontal"],
+    "icon_url": "https://i.imgur.com/jxNiaOx.png"
+  },
+  {
+    "name": "FO-12",
+    "type": "Shotgun",
+    "scopes": [
+      "Red Dot A",
+      "Red Dot B",
+      "Red Dot C",
+      "Holo A",
+      "Holo B",
+      "Holo C",
+      "Holo D",
+      "Reflex A",
+      "Reflex B",
+      "Reflex C",
+      "Iron Sight"
+    ],
+    "barrels": ["Extended Barrel", "Suppressor", "None"],
+    "grips": ["Vertical", "Horizontal", "Angled"],
+    "icon_url": "https://i.imgur.com/9mWXMtL.png"
+  },
+  {
+    "name": "SIX12",
+    "type": "Shotgun",
+    "scopes": [
+      "Red Dot A",
+      "Red Dot B",
+      "Red Dot C",
+      "Holo A",
+      "Holo B",
+      "Holo C",
+      "Holo D",
+      "Reflex A",
+      "Reflex B",
+      "Reflex C",
+      "Iron Sight"
+    ],
+    "grips": ["NA"],
+    "barrels": ["NA"],
+    "icon_url": "https://i.imgur.com/XMdA44M.png"
+  },
+  {
+    "name": "SIX12 SD",
+    "type": "Shotgun",
+    "scopes": [
+      "Red Dot A",
+      "Red Dot B",
+      "Red Dot C",
+      "Holo A",
+      "Holo B",
+      "Holo C",
+      "Holo D",
+      "Reflex A",
+      "Reflex B",
+      "Reflex C",
+      "Iron Sight"
+    ],
+    "grips": ["NA"],
+    "barrels": ["NA"],
+    "icon_url": "https://i.imgur.com/yco3bh7.png"
+  },
+  {
+    "name": "M1014",
+    "type": "Shotgun",
+    "scopes": [
+      "Red Dot A",
+      "Red Dot B",
+      "Red Dot C",
+      "Holo A",
+      "Holo B",
+      "Holo C",
+      "Holo D",
+      "Reflex A",
+      "Reflex B",
+      "Reflex C",
+      "Iron Sight"
+    ],
+    "barrels": ["NA"],
+    "grips": ["NA"],
+    "icon_url": "https://i.imgur.com/QoKV2HB.png"
+  },
+  {
+    "name": "SG-CQB",
+    "type": "Shotgun",
+    "scopes": [
+      "Red Dot A",
+      "Red Dot B",
+      "Red Dot C",
+      "Holo A",
+      "Holo B",
+      "Holo C",
+      "Holo D",
+      "Reflex A",
+      "Reflex B",
+      "Reflex C",
+      "Iron Sight"
+    ],
+    "barrels": ["NA"],
+    "grips": ["Vertical", "Horizontal"],
+    "icon_url": "https://i.imgur.com/878GOhH.png"
+  },
+  {
+    "name": "SPAS-15",
+    "type": "Shotgun",
+    "scopes": [
+      "Red Dot A",
+      "Red Dot B",
+      "Red Dot C",
+      "Holo A",
+      "Holo B",
+      "Holo C",
+      "Holo D",
+      "Reflex A",
+      "Reflex B",
+      "Reflex C",
+      "Iron Sight"
+    ],
+    "grips": ["NA"],
+    "barrels": ["NA"],
+    "icon_url": "https://i.imgur.com/ptUqPpu.png"
+  },
+  {
+    "name": "SPAS-12",
+    "type": "Shotgun",
+    "scopes": [
+      "Red Dot A",
+      "Red Dot B",
+      "Red Dot C",
+      "Holo A",
+      "Holo B",
+      "Holo C",
+      "Holo D",
+      "Reflex A",
+      "Reflex B",
+      "Reflex C",
+      "Iron Sight"
+    ],
+    "grips": ["NA"],
+    "barrels": ["NA"],
+    "icon_url": "https://i.imgur.com/wMvRHWE.png"
+  },
+  {
+    "name": "SASG-12",
+    "type": "Shotgun",
+    "scopes": [
+      "Red Dot A",
+      "Red Dot B",
+      "Red Dot C",
+      "Holo A",
+      "Holo B",
+      "Holo C",
+      "Holo D",
+      "Reflex A",
+      "Reflex B",
+      "Reflex C",
+      "Iron Sight"
+    ],
+    "barrels": ["Suppressor", "None"],
+    "grips": ["Vertical", "Angled", "Horizontal"],
+    "icon_url": "https://i.imgur.com/TASWBEp.png"
+  },
+
+  {
+    "name": "SUPERNOVA",
+    "type": "Shotgun",
+    "scopes": [
+      "Red Dot A",
+      "Red Dot B",
+      "Red Dot C",
+      "Holo A",
+      "Holo B",
+      "Holo C",
+      "Holo D",
+      "Reflex A",
+      "Reflex B",
+      "Reflex C",
+      "Iron Sight"
+    ],
+    "barrels": ["Suppressor", "None"],
+    "grips": ["NA"],
+    "icon_url": "https://i.imgur.com/gshdPvF.png"
+  },
+  {
+    "name": "ITA12L",
+    "type": "Shotgun",
+    "scopes": [
+      "Red Dot A",
+      "Red Dot B",
+      "Red Dot C",
+      "Holo A",
+      "Holo B",
+      "Holo C",
+      "Holo D",
+      "Reflex A",
+      "Reflex B",
+      "Reflex C",
+      "Iron Sight"
+    ],
+    "grips": ["NA"],
+    "barrels": ["NA"],
+    "icon_url": "https://i.imgur.com/ldY0IlZ.png"
+  },
+  {
+    "name": "BOSG.12.2",
+    "type": "Shotgun",
+    "scopes": [
+      "Magnified A",
+      "Magnified B",
+      "Magnified C",
+      "Red Dot A",
+      "Red Dot B",
+      "Red Dot C",
+      "Holo A",
+      "Holo B",
+      "Holo C",
+      "Holo D",
+      "Reflex A",
+      "Reflex B",
+      "Reflex C",
+      "Iron Sight"
+    ],
+    "barrels": ["NA"],
+    "grips": ["Vertical", "Angled", "Horizontal"],
+    "icon_url": "https://i.imgur.com/90I2Sb8.png"
+  },
+  {
+    "name": "G8A1",
+    "type": "Light Machine Gun",
+    "scopes": [
+      "Magnified A",
+      "Magnified B",
+      "Magnified C",
+      "Red Dot A",
+      "Red Dot B",
+      "Red Dot C",
+      "Holo A",
+      "Holo B",
+      "Holo C",
+      "Holo D",
+      "Reflex A",
+      "Reflex B",
+      "Reflex C",
+      "Iron Sight"
+    ],
+    "barrels": [
+      "Flash Hider",
+      "Compensator",
+      "Muzzle Break",
+      "Suppressor",
+      "None"
+    ],
+    "grips": ["Vertical", "Angled", "Horizontal"],
+    "icon_url": "https://i.imgur.com/Wy6HdZW.png"
+  },
+  {
+    "name": "LMG-E",
+    "type": "Light Machine Gun",
+    "scopes": [
+      "Magnified A",
+      "Magnified B",
+      "Magnified C",
+      "Red Dot A",
+      "Red Dot B",
+      "Red Dot C",
+      "Holo A",
+      "Holo B",
+      "Holo C",
+      "Holo D",
+      "Reflex A",
+      "Reflex B",
+      "Reflex C",
+      "Iron Sight"
+    ],
+    "barrels": [
+      "Flash Hider",
+      "Compensator",
+      "Muzzle Break",
+      "Suppressor",
+      "None"
+    ],
+    "grips": ["Vertical", "Angled", "Horizontal"],
+    "icon_url": "https://i.imgur.com/UWXTqIL.png"
+  },
+  {
+    "name": "M249 SAW",
+    "type": "Light Machine Gun",
+    "scopes": [
+      "Magnified A",
+      "Magnified B",
+      "Magnified C",
+      "Red Dot A",
+      "Red Dot B",
+      "Red Dot C",
+      "Holo A",
+      "Holo B",
+      "Holo C",
+      "Holo D",
+      "Reflex A",
+      "Reflex B",
+      "Reflex C",
+      "Iron Sight"
+    ],
+    "barrels": ["Flash Hider", "Compensator", "Muzzle Break", "None"],
+    "grips": ["Vertical", "Angled", "Horizontal"],
+    "icon_url": "https://i.imgur.com/dWLYeNw.png"
+  },
+  {
+    "name": "M249",
+    "type": "Light Machine Gun",
+    "scopes": [
+      "Magnified A",
+      "Magnified B",
+      "Magnified C",
+      "Red Dot A",
+      "Red Dot B",
+      "Red Dot C",
+      "Holo A",
+      "Holo B",
+      "Holo C",
+      "Holo D",
+      "Reflex A",
+      "Reflex B",
+      "Reflex C",
+      "Iron Sight"
+    ],
+    "barrels": ["Flash Hider", "Compensator", "Muzzle Break", "None"],
+    "grips": ["Vertical", "Angled", "Horizontal"],
+    "icon_url": "https://i.imgur.com/gQOhuzN.png"
+  },
+  {
+    "name": "ALDA 5.56",
+    "type": "Light Machine Gun",
+    "scopes": [
+      "Red Dot A",
+      "Red Dot B",
+      "Red Dot C",
+      "Holo A",
+      "Holo B",
+      "Holo C",
+      "Holo D",
+      "Reflex A",
+      "Reflex B",
+      "Reflex C",
+      "Iron Sight"
+    ],
+    "barrels": [
+      "Flash Hider",
+      "Compensator",
+      "Muzzle Break",
+      "Suppressor",
+      "None"
+    ],
+    "grips": ["Vertical", "Horizontal"],
+    "icon_url": "https://i.imgur.com/uNiNSiM.png"
+  },
+  {
+    "name": "6P41",
+    "type": "Light Machine Gun",
+    "scopes": [
+      "Magnified A",
+      "Magnified B",
+      "Magnified C",
+      "Red Dot A",
+      "Red Dot B",
+      "Red Dot C",
+      "Holo A",
+      "Holo B",
+      "Holo C",
+      "Holo D",
+      "Reflex A",
+      "Reflex B",
+      "Reflex C",
+      "Iron Sight"
+    ],
+    "barrels": [
+      "Flash Hider",
+      "Compensator",
+      "Muzzle Break",
+      "Suppressor",
+      "None"
+    ],
+    "grips": ["Vertical", "Angled", "Horizontal"],
+    "icon_url": "https://i.imgur.com/nv4v9Q4.png"
+  },
+  {
+    "name": "DP27",
+    "type": "Light Machine Gun",
+    "scopes": [
+      "Red Dot A",
+      "Red Dot B",
+      "Red Dot C",
+      "Holo A",
+      "Holo B",
+      "Holo C",
+      "Holo D",
+      "Reflex A",
+      "Reflex B",
+      "Reflex C",
+      "Iron Sight"
+    ],
+    "grips": ["NA"],
+    "barrels": ["NA"],
+    "icon_url": "https://i.imgur.com/EuXUXJt.png"
+  },
+  {
+    "name": "T-95 LSW",
+    "type": "Light Machine Gun",
+    "scopes": [
+      "Magnified A",
+      "Magnified B",
+      "Magnified C",
+      "Red Dot A",
+      "Red Dot B",
+      "Red Dot C",
+      "Holo A",
+      "Holo B",
+      "Holo C",
+      "Holo D",
+      "Reflex A",
+      "Reflex B",
+      "Reflex C",
+      "Iron Sight"
+    ],
+    "barrels": [
+      "Flash Hider",
+      "Compensator",
+      "Muzzle Break",
+      "Suppressor",
+      "None"
+    ],
+    "grips": ["Vertical", "Angled", "Horizontal"],
+    "icon_url": "https://i.imgur.com/6QCVGPg.png"
+  },
+  {
+    "name": "BALLISTIC SHIELD",
+    "type": "Shield",
+    "scopes": ["NA"],
+    "barrels": ["NA"],
+    "grips": ["NA"],
+    "icon_url": "https://i.imgur.com/5KsHjO9.png"
+  },
+  {
+    "name": "CCE SHIELD",
+    "type": "Shield",
+    "scopes": ["NA"],
+    "grips": ["NA"],
+    "barrels": ["NA"],
+    "icon_url": "https://i.imgur.com/3CmDzwG.png"
+  },
+  {
+    "name": "LE ROC",
+    "type": "Shield",
+    "scopes": ["NA"],
+    "grips": ["NA"],
+    "barrels": ["NA"],
+    "icon_url": "https://i.imgur.com/nGWCxmM.png"
+  },
+  {
+    "name": "G52-TACTICAL SHIELD",
+    "scopes": ["NA"],
+    "grips": ["NA"],
+    "barrels": ["NA"],
+    "type": "Shield",
+    "icon_url": "https://i.imgur.com/OFeah3y.png"
+  },
+  {
+    "name": "SUPER SHORTY",
+    "type": "Shotgun",
+    "scopes": [
+      "Red Dot A",
+      "Red Dot B",
+      "Red Dot C",
+      "Holo A",
+      "Holo B",
+      "Holo C",
+      "Holo D",
+      "Reflex A",
+      "Reflex B",
+      "Reflex C",
+      "Iron Sight"
+    ],
+    "grips": ["NA"],
+    "barrels": ["NA"],
+    "icon_url": "https://i.imgur.com/ceMDeDV.png"
+  },
+  {
+    "name": "ITA12S",
+    "type": "Shotgun",
+    "scopes": [
+      "Red Dot A",
+      "Red Dot B",
+      "Red Dot C",
+      "Holo A",
+      "Holo B",
+      "Holo C",
+      "Holo D",
+      "Reflex A",
+      "Reflex B",
+      "Reflex C",
+      "Iron Sight"
+    ],
+    "grips": ["NA"],
+    "barrels": ["NA"],
+    "icon_url": "https://i.imgur.com/gKRXgpZ.png"
+  },
+  {
+    "name": "SMG-11",
+    "type": "Machine Pistol",
+    "scopes": [
+      "Red Dot A",
+      "Red Dot B",
+      "Red Dot C",
+      "Holo A",
+      "Holo B",
+      "Holo C",
+      "Holo D",
+      "Reflex A",
+      "Reflex B",
+      "Reflex C",
+      "Iron Sight"
+    ],
+    "barrels": [
+      "Flash Hider",
+      "Compensator",
+      "Muzzle Break",
+      "Suppressor",
+      "Extended Barrel",
+      "None"
+    ],
+    "grips": ["Vertical", "Angled", "Horizontal"],
+    "icon_url": "https://i.imgur.com/HVuD3gD.png"
+  },
+  {
+    "name": "SMG-12",
+    "type": "Machine Pistol",
+    "scopes": [
+      "Red Dot A",
+      "Red Dot B",
+      "Red Dot C",
+      "Holo A",
+      "Holo B",
+      "Holo C",
+      "Holo D",
+      "Reflex A",
+      "Reflex B",
+      "Reflex C",
+      "Iron Sight"
+    ],
+    "barrels": ["NA"],
+    "grips": ["Vertical", "Angled", "Horizontal"],
+    "icon_url": "https://i.imgur.com/1fC7KAS.png"
+  },
+  {
+    "name": "BEARING 9",
+    "type": "Machine Pistol",
+    "scopes": [
+      "Red Dot A",
+      "Red Dot B",
+      "Red Dot C",
+      "Holo A",
+      "Holo B",
+      "Holo C",
+      "Holo D",
+      "Reflex A",
+      "Reflex B",
+      "Reflex C",
+      "Iron Sight"
+    ],
+    "barrels": [
+      "Flash Hider",
+      "Compensator",
+      "Muzzle Break",
+      "Suppressor",
+      "Extended Barrel",
+      "None"
+    ],
+    "grips": ["NA"],
+    "icon_url": "https://i.imgur.com/wT1qVsk.png"
+  },
+  {
+    "name": "C75 Auto",
+    "type": "Machine Pistol",
+    "scopes": ["NA"],
+    "barrels": ["Suppressor", "None"],
+    "grips": ["NA"],
+    "icon_url": "https://i.imgur.com/VA1Y1FG.png"
+  },
+  {
+    "name": "SPSMG9",
+    "type": "Machine Pistol",
+    "scopes": [
+      "Red Dot A",
+      "Red Dot B",
+      "Red Dot C",
+      "Holo A",
+      "Holo B",
+      "Holo C",
+      "Holo D",
+      "Reflex A",
+      "Reflex B",
+      "Reflex C",
+      "Iron Sight"
+    ],
+    "barrels": [
+      "Flash Hider",
+      "Compensator",
+      "Muzzle Break",
+      "Suppressor",
+      "Extended Barrel",
+      "None"
+    ],
+    "grips": ["NA"],
+    "icon_url": "https://i.imgur.com/owfOEEn.png"
+  },
+  {
+    "name": "M45 MEUSOC",
+    "type": "Pistol",
+    "scopes": ["NA"],
+    "grips": ["NA"],
+    "barrels": ["Muzzle Break", "Suppressor", "None"],
+    "icon_url": "https://i.imgur.com/eZqecY4.png"
+  },
+  {
+    "name": "USP40",
+    "type": "Pistol",
+    "scopes": ["NA"],
+    "grips": ["NA"],
+    "barrels": ["Muzzle Break", "Suppressor", "None"],
+    "icon_url": "https://i.imgur.com/HF6a0qj.png"
+  },
+  {
+    "name": "MK1 9mm",
+    "type": "Pistol",
+    "scopes": ["NA"],
+    "grips": ["NA"],
+    "barrels": ["Muzzle Break", "Suppressor", "None"],
+    "icon_url": "https://i.imgur.com/ntKax3y.png"
+  },
+  {
+    "name": "GSH-18",
+    "type": "Pistol",
+    "scopes": ["NA"],
+    "grips": ["NA"],
+    "barrels": ["Muzzle Break", "Suppressor", "None"],
+    "icon_url": "https://i.imgur.com/bAcjOI1.png"
+  },
+  {
+    "name": "5.7 USG",
+    "type": "Pistol",
+    "scopes": ["NA"],
+    "grips": ["NA"],
+    "barrels": ["Muzzle Break", "Suppressor", "None"],
+    "icon_url": "https://i.imgur.com/fP7E1N6.png"
+  },
+  {
+    "name": "KERATOS .357",
+    "type": "Pistol",
+    "scopes": ["NA"],
+    "grips": ["NA"],
+    "barrels": ["Muzzle Break", "Suppressor", "None"],
+    "icon_url": "https://i.imgur.com/wpVBOFb.png"
+  },
+  {
+    "name": "P9",
+    "type": "Pistol",
+    "scopes": ["NA"],
+    "grips": ["NA"],
+    "barrels": ["Muzzle Break", "Suppressor", "None"],
+    "icon_url": "https://i.imgur.com/Nkuo7a8.png"
+  },
+  {
+    "name": "P229",
+    "type": "Pistol",
+    "scopes": ["NA"],
+    "grips": ["NA"],
+    "barrels": ["Muzzle Break", "Suppressor", "None"],
+    "icon_url": "https://i.imgur.com/jw6hygP.png"
+  },
+  {
+    "name": "Q-929",
+    "type": "Pistol",
+    "scopes": ["NA"],
+    "grips": ["NA"],
+    "barrels": ["Muzzle Break", "Suppressor", "None"],
+    "icon_url": "https://i.imgur.com/y4nQMpu.png"
+  },
+  {
+    "name": "P12",
+    "type": "Pistol",
+    "scopes": ["NA"],
+    "grips": ["NA"],
+    "barrels": ["Muzzle Break", "Suppressor", "None"],
+    "icon_url": "https://i.imgur.com/bh4W2aL.png"
+  },
+  {
+    "name": "PMM",
+    "type": "Pistol",
+    "scopes": ["NA"],
+    "grips": ["NA"],
+    "barrels": ["Muzzle Break", "Suppressor", "None"],
+    "icon_url": "https://i.imgur.com/tdz4YMY.png"
+  },
+  {
+    "name": "1911 TACOPS",
+    "type": "Pistol",
+    "scopes": ["NA"],
+    "grips": ["NA"],
+    "barrels": ["Muzzle Break", "Suppressor", "None"],
+    "icon_url": "https://i.imgur.com/QOQ6kpd.png"
+  },
+  {
+    "name": "LFP586",
+    "type": "Pistol",
+    "scopes": ["NA"],
+    "grips": ["NA"],
+    "barrels": ["NA"],
+    "icon_url": "https://i.imgur.com/2Qc7IPt.png"
+  },
+  {
+    "name": "PRB92",
+    "type": "Pistol",
+    "scopes": ["NA"],
+    "grips": ["NA"],
+    "barrels": ["Muzzle Break", "Suppressor", "None"],
+    "icon_url": "https://i.imgur.com/Gr4wE7G.png"
+  },
+  {
+    "name": "LUISON",
+    "type": "Pistol",
+    "scopes": ["NA"],
+    "barrels": ["NA"],
+    "grips": ["NA"],
+    "icon_url": "https://i.imgur.com/gHnmUeD.png"
+  },
+  {
+    "name": "Bailiff 410",
+    "type": "Shotgun",
+    "scopes": ["NA"],
+    "barrels": ["NA"],
+    "grips": ["NA"],
+    "icon_url": "https://i.imgur.com/Bl7MOeM.png"
+  },
+  {
+    "name": "D-50",
+    "type": "Pistol",
+    "scopes": ["NA"],
+    "grips": ["NA"],
+    "barrels": ["Muzzle Break", "Suppressor", "None"],
+    "icon_url": "https://i.imgur.com/XTWaD0k.png"
+  },
+  {
+    "name": "P-10C",
+    "type": "Pistol",
+    "scopes": ["NA"],
+    "grips": ["NA"],
+    "barrels": ["Muzzle Break", "Suppressor", "None"],
+    "icon_url": "https://i.imgur.com/WZ2m9XI.png"
+  },
+  {
+    "name": "P226 MK 25",
+    "type": "Pistol",
+    "scopes": ["NA"],
+    "barrels": ["Muzzle Break", "Suppressor", "None"],
+    "grips": ["NA"],
+    "icon_url": "https://i.imgur.com/kp8NHDn.png"
+  },
+  {
+    "name": "SDP 9mm",
+    "type": "Pistol",
+    "scopes": ["NA"],
+    "grips": ["NA"],
+    "barrels": ["Muzzle Break", "Suppressor", "None"],
+    "icon_url": "https://i.imgur.com/J13BH6U.png"
+  },
+  {
+    "name": "RG15",
+    "type": "Pistol",
+    "scopes": ["NA"],
+    "grips": ["NA"],
+    "barrels": ["Muzzle Break", "Suppressor", "None"],
+    "icon_url": "https://i.imgur.com/91Lo842.png"
+  },
+  {
+    "name": ".44 Mag Semi-Auto",
+    "type": "Pistol",
+    "scopes": ["NA"],
+    "barrels": ["NA"],
+    "grips": ["NA"],
+    "icon_url": "https://i.imgur.com/4QUGA4Z.png"
+  },
+  {
+    "name": ".44 Vendetta",
+    "type": "Pistol",
+    "scopes": ["NA"],
+    "barrels": ["NA"],
+    "grips": ["NA"],
+    "icon_url": "https://i.imgur.com/YCCL5cK.png"
+  },
+  {
+    "name": "GONNE-6",
+    "type": "Hand Cannon",
+    "scopes": ["NA"],
+    "barrels": ["NA"],
+    "grips": ["NA"],
+    "icon_url": "https://i.imgur.com/lc3eGIo.png"
+  }
+]

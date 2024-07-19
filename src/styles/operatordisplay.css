@@ -1,0 +1,57 @@
+.operator-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  min-height: 100vh;
+}
+
+.operator-container h1 {
+  font-size: 4.5rem;
+  text-align: center;
+}
+
+.operator-container h3 {
+  margin: 5px 0px;
+}
+
+.operator-image-container {
+  position: relative;
+  max-height: 725px;
+}
+
+.operator-portrait {
+  height: auto;
+  width: auto;
+  max-height: 725px;
+  position: relative;
+  top: 0;
+  left: 0;
+  background-image: url("../../public/operator-background.jpg");
+  border-width: 10px;
+  border-radius: 5px;
+}
+
+.operator-icon {
+  height: auto;
+  width: auto;
+  max-width: 175px;
+  max-height: 175px;
+  position: absolute;
+  bottom: -5%;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.loadout-container {
+  display: grid;
+  margin-left: 2rem;
+}
+
+.loadout-container h2 {
+  font-size: 2.25rem;
+}
+
+.gadget {
+  max-height: 150px;
+  max-width: 100px;
+}

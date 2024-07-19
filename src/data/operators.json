@@ -1,0 +1,675 @@
+[
+  {
+    "name": "Striker",
+    "weapons": {
+      "primary": ["M4", "M249"],
+      "secondary": ["5.7 USG", "ITA12S"]
+    },
+    "gadgets": [
+      "Breach Charge",
+      "Claymore",
+      "Impact EMP Grenade",
+      "Frag Grenade",
+      "Hard Breach Charge",
+      "Smoke Grenade",
+      "Stun Grenade"
+    ],
+    "side": "A"
+  },
+  {
+    "name": "Sledge",
+    "weapons": {
+      "primary": ["M590A1", "L85A2"],
+      "secondary": ["P226 MK 25"]
+    },
+    "gadgets": ["Frag Grenade", "Stun Grenade", "Impact EMP Grenade"],
+    "side": "A"
+  },
+  {
+    "name": "Thatcher",
+    "weapons": {
+      "primary": ["AR33", "L85A2", "M590A1"],
+      "secondary": ["P226 MK 25"]
+    },
+    "gadgets": ["Breach Charge", "Claymore"],
+    "side": "A"
+  },
+  {
+    "name": "Ash",
+    "weapons": {
+      "primary": ["G36C", "R4-C"],
+      "secondary": ["M45 MEUSOC", "5.7 USG"]
+    },
+    "gadgets": ["Breach Charge", "Claymore"],
+    "side": "A"
+  },
+  {
+    "name": "Thermite",
+    "weapons": {
+      "primary": ["556XI", "M1014"],
+      "secondary": ["M45 MEUSOC", "5.7 USG"]
+    },
+    "gadgets": ["Smoke Grenade", "Stun Grenade"],
+    "side": "A"
+  },
+  {
+    "name": "Twitch",
+    "weapons": {
+      "primary": ["F2", "417", "SG-CQB"],
+      "secondary": ["P9", "LFP586"]
+    },
+    "gadgets": ["Claymore", "Smoke Grenade"],
+    "side": "A"
+  },
+  {
+    "name": "Montagne",
+    "weapons": {
+      "primary": ["LE ROC"],
+      "secondary": ["P9", "LFP586"]
+    },
+    "gadgets": ["Hard Breach Charge", "Smoke Grenade", "Impact EMP Grenade"],
+    "side": "A"
+  },
+  {
+    "name": "Glaz",
+    "weapons": {
+      "primary": ["OTs-03"],
+      "secondary": ["PMM", "GONNE-6", "BEARING 9"]
+    },
+    "gadgets": ["Smoke Grenade", "Frag Grenade", "Claymore"],
+    "side": "A"
+  },
+  {
+    "name": "Fuze",
+    "weapons": {
+      "primary": ["BALLISTIC SHIELD", "6P41", "AK-12"],
+      "secondary": ["PMM", "GSH-18"]
+    },
+    "gadgets": ["Breach Charge", "Hard Breach Charge", "Smoke Grenade"],
+    "side": "A"
+  },
+  {
+    "name": "Blitz",
+    "weapons": {
+      "primary": ["G52-TACTICAL SHIELD"],
+      "secondary": ["P12"]
+    },
+    "gadgets": ["Smoke Grenade", "Breach Charge"],
+    "side": "A"
+  },
+  {
+    "name": "IQ",
+    "weapons": {
+      "primary": ["AUG A2", "552 COMMANDO", "G8A1"],
+      "secondary": ["P12"]
+    },
+    "gadgets": ["Breach Charge", "Claymore", "Frag Grenade"],
+    "side": "A"
+  },
+  {
+    "name": "Buck",
+    "weapons": {
+      "primary": ["C8-SFW", "CAMRS"],
+      "secondary": ["MK1 9mm", "GONNE-6"]
+    },
+    "gadgets": ["Stun Grenade", "Hard Breach Charge"],
+    "side": "A"
+  },
+  {
+    "name": "Blackbeard",
+    "weapons": {
+      "primary": ["MK17 CQB", "SR-25"],
+      "secondary": ["D-50"]
+    },
+    "gadgets": ["Claymore", "Stun Grenade", "Frag Grenade"],
+    "side": "A"
+  },
+  {
+    "name": "Capitao",
+    "weapons": {
+      "primary": ["PARA-308", "M249"],
+      "secondary": ["PRB92", "GONNE-6"]
+    },
+    "gadgets": ["Claymore", "Hard Breach Charge", "Impact EMP Grenade"],
+    "side": "A"
+  },
+  {
+    "name": "Hibana",
+    "weapons": {
+      "primary": ["TYPE-89", "SUPERNOVA"],
+      "secondary": ["P229", "BEARING 9"]
+    },
+    "gadgets": ["Stun Grenade", "Breach Charge"],
+    "side": "A"
+  },
+  {
+    "name": "Jackal",
+    "weapons": {
+      "primary": ["C7E", "PDW9", "ITA12L"],
+      "secondary": ["USP40", "ITA12S"]
+    },
+    "gadgets": ["Claymore", "Smoke Grenade"],
+    "side": "A"
+  },
+  {
+    "name": "Ying",
+    "weapons": {
+      "primary": ["T-95 LSW", "SIX12"],
+      "secondary": ["Q-929"]
+    },
+    "gadgets": ["Hard Breach Charge", "Smoke Grenade"],
+    "side": "A"
+  },
+  {
+    "name": "Zofia",
+    "weapons": {
+      "primary": ["LMG-E", "M762"],
+      "secondary": ["RG15"]
+    },
+    "gadgets": ["Breach Charge", "Claymore"],
+    "side": "A"
+  },
+  {
+    "name": "Dokkaebi",
+    "weapons": {
+      "primary": ["Mk 14 EBR", "BOSG.12.2"],
+      "secondary": ["SMG-12", "C75 Auto", "GONNE-6"]
+    },
+    "gadgets": ["Smoke Grenade", "Stun Grenade", "Impact EMP Grenade"],
+    "side": "A"
+  },
+  {
+    "name": "Lion",
+    "weapons": {
+      "primary": ["V308", "417", "SG-CQB"],
+      "secondary": ["LFP586", "P9"]
+    },
+    "gadgets": ["Stun Grenade", "Claymore", "Frag Grenade"],
+    "side": "A"
+  },
+  {
+    "name": "Finka",
+    "weapons": {
+      "primary": ["SPEAR .308", "6P41", "SASG-12"],
+      "secondary": ["PMM", "GSH-18"]
+    },
+    "gadgets": ["Smoke Grenade", "Stun Grenade", "Frag Grenade"],
+    "side": "A"
+  },
+  {
+    "name": "Maverick",
+    "weapons": {
+      "primary": ["AR-15.50", "M4"],
+      "secondary": ["1911 TACOPS"]
+    },
+    "gadgets": ["Stun Grenade", "Claymore", "Smoke Grenade"],
+    "side": "A"
+  },
+  {
+    "name": "Nomad",
+    "weapons": {
+      "primary": ["AK-74M", "ARX200"],
+      "secondary": [".44 Mag Semi-Auto", "PRB92"]
+    },
+    "gadgets": ["Stun Grenade", "Breach Charge"],
+    "side": "A"
+  },
+  {
+    "name": "Gridlock",
+    "weapons": {
+      "primary": ["F90", "M249 SAW"],
+      "secondary": ["SUPER SHORTY", "SDP 9mm"]
+    },
+    "gadgets": ["Smoke Grenade", "Impact EMP Grenade", "Frag Grenade"],
+    "side": "A"
+  },
+  {
+    "name": "Nokk",
+    "weapons": {
+      "primary": ["FMG-9", "SIX12 SD"],
+      "secondary": ["5.7 USG", "D-50"]
+    },
+    "gadgets": ["Frag Grenade", "Hard Breach Charge", "Impact EMP Grenade"],
+    "side": "A"
+  },
+  {
+    "name": "Amaru",
+    "weapons": {
+      "primary": ["G8A1", "SUPERNOVA"],
+      "secondary": ["SMG-11", "ITA12S", "GONNE-6"]
+    },
+    "gadgets": ["Hard Breach Charge", "Stun Grenade", "Frag Grenade"],
+    "side": "A"
+  },
+  {
+    "name": "Kali",
+    "weapons": {
+      "primary": ["CSRX 300"],
+      "secondary": ["SPSMG9", "C75 Auto", "P226 MK 25"]
+    },
+    "gadgets": ["Claymore", "Breach Charge"],
+    "side": "A"
+  },
+  {
+    "name": "Iana",
+    "weapons": {
+      "primary": ["ARX200", "G36C"],
+      "secondary": ["MK1 9mm", "GONNE-6"]
+    },
+    "gadgets": ["Impact EMP Grenade", "Smoke Grenade"],
+    "side": "A"
+  },
+  {
+    "name": "Ace",
+    "weapons": {
+      "primary": ["AK-12", "M1014"],
+      "secondary": ["P9"]
+    },
+    "gadgets": ["Breach Charge", "Claymore"],
+    "side": "A"
+  },
+  {
+    "name": "Zero",
+    "weapons": {
+      "primary": ["SC3000K", "MP7"],
+      "secondary": ["5.7 USG", "GONNE-6"]
+    },
+    "gadgets": ["Hard Breach Charge", "Claymore"],
+    "side": "A"
+  },
+  {
+    "name": "Flores",
+    "weapons": {
+      "primary": ["AR33", "SR-25"],
+      "secondary": ["GSH-18"]
+    },
+    "gadgets": ["Stun Grenade", "Claymore"],
+    "side": "A"
+  },
+  {
+    "name": "Osa",
+    "weapons": {
+      "primary": ["556XI", "PDW9"],
+      "secondary": ["PMM"]
+    },
+    "gadgets": ["Claymore", "Frag Grenade", "Impact EMP Grenade"],
+    "side": "A"
+  },
+  {
+    "name": "Sens",
+    "weapons": {
+      "primary": ["POF9", "417"],
+      "secondary": ["SDP 9mm", "GONNE-6"]
+    },
+    "gadgets": ["Hard Breach Charge", "Claymore", "Frag Grenade"],
+    "side": "A"
+  },
+  {
+    "name": "Grim",
+    "weapons": {
+      "primary": ["552 COMMANDO", "SG-CQB"],
+      "secondary": ["P229", "Bailiff 410"]
+    },
+    "gadgets": ["Impact EMP Grenade", "Claymore", "Hard Breach Charge"],
+    "side": "A"
+  },
+  {
+    "name": "Brava",
+    "weapons": {
+      "primary": ["PARA-308", "CAMRS"],
+      "secondary": ["SUPER SHORTY", "USP40"]
+    },
+    "gadgets": ["Smoke Grenade", "Claymore"],
+    "side": "A"
+  },
+  {
+    "name": "Ram",
+    "weapons": {
+      "primary": ["R4-C", "LMG-E"],
+      "secondary": ["MK1 9mm", "ITA12S"]
+    },
+    "gadgets": ["Stun Grenade", "Smoke Grenade"],
+    "side": "A"
+  },
+  {
+    "name": "Deimos",
+    "weapons": {
+      "primary": ["AK-74M", "M590A1"],
+      "secondary": [".44 Vendetta"]
+    },
+    "gadgets": ["Frag Grenade", "Hard Breach Charge"],
+    "side": "A"
+  },
+  {
+    "name": "Sentry",
+    "weapons": {
+      "primary": ["COMMANDO 9", "M870"],
+      "secondary": ["C75 Auto", "SUPER SHORTY"]
+    },
+    "gadgets": [
+      "Barbed Wire",
+      "Bulletproof Camera",
+      "Deployable Shield",
+      "Observation Blocker",
+      "Impact Grenade",
+      "Nitro Cell",
+      "Proximity Alarm"
+    ],
+    "side": "A"
+  },
+  {
+    "name": "Smoke",
+    "weapons": {
+      "primary": ["FMG-9", "M590A1"],
+      "secondary": ["P226 MK 25", "SMG-11"]
+    },
+    "gadgets": ["Barbed Wire", "Proximity Alarm"],
+    "side": "D"
+  },
+  {
+    "name": "Mute",
+    "weapons": {
+      "primary": ["MP5K", "M590A1"],
+      "secondary": ["P226 MK 25", "SMG-11"]
+    },
+    "gadgets": ["Bulletproof Camera", "Nitro Cell"],
+    "side": "D"
+  },
+  {
+    "name": "Castle",
+    "weapons": {
+      "primary": ["UMP45", "M1014"],
+      "secondary": ["5.7 USG", "SUPER SHORTY"]
+    },
+    "gadgets": ["Proximity Alarm", "Bulletproof Camera"],
+    "side": "D"
+  },
+  {
+    "name": "Pulse",
+    "weapons": {
+      "primary": ["M1014", "UMP45"],
+      "secondary": ["M45 MEUSOC", "5.7 USG"]
+    },
+    "gadgets": ["Nitro Cell", "Deployable Shield", "Observation Blocker"],
+    "side": "D"
+  },
+  {
+    "name": "Doc",
+    "weapons": {
+      "primary": ["SG-CQB", "MP5", "P90"],
+      "secondary": ["P9", "LFP586", "Bailiff 410"]
+    },
+    "gadgets": ["Bulletproof Camera", "Barbed Wire"],
+    "side": "D"
+  },
+  {
+    "name": "Rook",
+    "weapons": {
+      "primary": ["SG-CQB", "MP5", "P90"],
+      "secondary": ["P9", "LFP586"]
+    },
+    "gadgets": ["Proximity Alarm", "Impact EMP Grenade", "Observation Blocker"],
+    "side": "D"
+  },
+  {
+    "name": "Kapkan",
+    "weapons": {
+      "primary": ["9x19VSN", "SASG-12"],
+      "secondary": ["PMM", "GSH-18"]
+    },
+    "gadgets": ["Impact EMP Grenade", "Nitro Cell"],
+    "side": "D"
+  },
+  {
+    "name": "Tachanka",
+    "weapons": {
+      "primary": ["DP27", "9x19VSN"],
+      "secondary": ["GSH-18", "PMM", "BEARING 9"]
+    },
+    "gadgets": ["Barbed Wire", "Proximity Alarm", "Deployable Shield"],
+    "side": "D"
+  },
+  {
+    "name": "Jager",
+    "weapons": {
+      "primary": ["M870", "416-C CARBINE"],
+      "secondary": ["P12"]
+    },
+    "gadgets": ["Bulletproof Camera", "Observation Blocker"],
+    "side": "D"
+  },
+  {
+    "name": "Bandit",
+    "weapons": {
+      "primary": ["MP7", "M870"],
+      "secondary": ["P12"]
+    },
+    "gadgets": ["Barbed Wire", "Nitro Cell"],
+    "side": "D"
+  },
+  {
+    "name": "Frost",
+    "weapons": {
+      "primary": ["SUPER 90", "9mm C1"],
+      "secondary": ["MK1 9mm", "ITA12S"]
+    },
+    "gadgets": ["Bulletproof Camera", "Deployable Shield"],
+    "side": "D"
+  },
+  {
+    "name": "Valkyrie",
+    "weapons": {
+      "primary": ["MPX", "SPAS-12"],
+      "secondary": ["D-50"]
+    },
+    "gadgets": ["Impact Grenade", "Nitro Cell"],
+    "side": "D"
+  },
+  {
+    "name": "Caveira",
+    "weapons": {
+      "primary": ["M12", "SPAS-15"],
+      "secondary": ["LUISON"]
+    },
+    "gadgets": ["Proximity Alarm", "Impact Grenade", "Observation Blocker"],
+    "side": "D"
+  },
+  {
+    "name": "Echo",
+    "weapons": {
+      "primary": ["SUPERNOVA", "MP5SD"],
+      "secondary": ["P229", "BEARING 9"]
+    },
+    "gadgets": ["Impact Grenade", "Deployable Shield"],
+    "side": "D"
+  },
+  {
+    "name": "Mira",
+    "weapons": {
+      "primary": ["VECTOR .45 ACP", "ITA12L"],
+      "secondary": ["USP40", "ITA12S"]
+    },
+    "gadgets": ["Proximity Alarm", "Nitro Cell"],
+    "side": "D"
+  },
+  {
+    "name": "Lesion",
+    "weapons": {
+      "primary": ["SIX12 SD", "T-5 SMG"],
+      "secondary": ["Q-929", "SUPER SHORTY"]
+    },
+    "gadgets": ["Observation Blocker", "Bulletproof Camera"],
+    "side": "D"
+  },
+  {
+    "name": "Ela",
+    "weapons": {
+      "primary": ["SCORPION EVO 3 A1", "FO-12"],
+      "secondary": ["RG15"]
+    },
+    "gadgets": ["Barbed Wire", "Deployable Shield", "Observation Blocker"],
+    "side": "D"
+  },
+  {
+    "name": "Vigil",
+    "weapons": {
+      "primary": ["K1A", "BOSG.12.2"],
+      "secondary": ["C75 Auto", "SMG-12"]
+    },
+    "gadgets": ["Bulletproof Camera", "Impact Grenade"],
+    "side": "D"
+  },
+  {
+    "name": "Maestro",
+    "weapons": {
+      "primary": ["ALDA 5.56", "ACS12"],
+      "secondary": ["Bailiff 410", "KERATOS .357"]
+    },
+    "gadgets": ["Barbed Wire", "Impact EMP Grenade", "Observation Blocker"],
+    "side": "D"
+  },
+  {
+    "name": "Alibi",
+    "weapons": {
+      "primary": ["Mx4 Storm", "ACS12"],
+      "secondary": ["KERATOS .357", "Bailiff 410"]
+    },
+    "gadgets": ["Proximity Alarm", "Observation Blocker"],
+    "side": "D"
+  },
+  {
+    "name": "Clash",
+    "weapons": {
+      "primary": ["CCE SHIELD"],
+      "secondary": ["SUPER SHORTY", "SPSMG9", "P-10C"]
+    },
+    "gadgets": ["Barbed Wire", "Impact Grenade", "Deployable Shield"],
+    "side": "D"
+  },
+  {
+    "name": "Kaid",
+    "weapons": {
+      "primary": ["AUG A3", "TCSG12"],
+      "secondary": [".44 Mag Semi-Auto", "LFP586"]
+    },
+    "gadgets": ["Nitro Cell", "Barbed Wire", "Observation Blocker"],
+    "side": "D"
+  },
+  {
+    "name": "Mozzie",
+    "weapons": {
+      "primary": ["COMMANDO 9", "P10 RONI"],
+      "secondary": ["SDP 9mm"]
+    },
+    "gadgets": ["Barbed Wire", "Nitro Cell"],
+    "side": "D"
+  },
+  {
+    "name": "Warden",
+    "weapons": {
+      "primary": ["M590A1", "MPX"],
+      "secondary": ["P-10C", "SMG-12"]
+    },
+    "gadgets": ["Deployable Shield", "Nitro Cell", "Observation Blocker"],
+    "side": "D"
+  },
+  {
+    "name": "Goyo",
+    "weapons": {
+      "primary": ["VECTOR .45 ACP", "TCSG12"],
+      "secondary": ["P229"]
+    },
+    "gadgets": ["Proximity Alarm", "Bulletproof Camera", "Impact Grenade"],
+    "side": "D"
+  },
+  {
+    "name": "Wamai",
+    "weapons": {
+      "primary": ["AUG A2", "MP5K"],
+      "secondary": ["KERATOS .357", "P12"]
+    },
+    "gadgets": ["Impact Grenade", "Proximity Alarm"],
+    "side": "D"
+  },
+  {
+    "name": "Oryx",
+    "weapons": {
+      "primary": ["T-5 SMG", "SPAS-12"],
+      "secondary": ["Bailiff 410", "USP40"]
+    },
+    "gadgets": ["Barbed Wire", "Proximity Alarm"],
+    "side": "D"
+  },
+  {
+    "name": "Melusi",
+    "weapons": {
+      "primary": ["MP5", "SUPER 90"],
+      "secondary": ["RG15"]
+    },
+    "gadgets": ["Bulletproof Camera", "Impact Grenade"],
+    "side": "D"
+  },
+  {
+    "name": "Aruni",
+    "weapons": {
+      "primary": ["P10 RONI", "Mk 14 EBR"],
+      "secondary": ["PRB92"]
+    },
+    "gadgets": ["Barbed Wire", "Bulletproof Camera"],
+    "side": "D"
+  },
+  {
+    "name": "Thunderbird",
+    "weapons": {
+      "primary": ["SPEAR .308", "SPAS-15"],
+      "secondary": ["Q-929", "BEARING 9"]
+    },
+    "gadgets": ["Barbed Wire", "Bulletproof Camera", "Deployable Shield"],
+    "side": "D"
+  },
+  {
+    "name": "Thorn",
+    "weapons": {
+      "primary": ["UZK50GI", "M870"],
+      "secondary": ["1911 TACOPS", "C75 Auto"]
+    },
+    "gadgets": ["Deployable Shield", "Barbed Wire"],
+    "side": "D"
+  },
+  {
+    "name": "Azami",
+    "weapons": {
+      "primary": ["9x19VSN", "ACS12"],
+      "secondary": ["D-50"]
+    },
+    "gadgets": ["Barbed Wire", "Impact Grenade"],
+    "side": "D"
+  },
+  {
+    "name": "Solis",
+    "weapons": {
+      "primary": ["P90", "ITA12L"],
+      "secondary": ["SMG-11"]
+    },
+    "gadgets": ["Proximity Alarm", "Bulletproof Camera"],
+    "side": "D"
+  },
+  {
+    "name": "Fenrir",
+    "weapons": {
+      "primary": ["MP7", "SASG-12"],
+      "secondary": ["Bailiff 410", "5.7 USG"]
+    },
+    "gadgets": ["Bulletproof Camera", "Observation Blocker"],
+    "side": "D"
+  },
+  {
+    "name": "Tubarao",
+    "weapons": {
+      "primary": ["MPX", "AR-15.50"],
+      "secondary": ["P226 MK 25"]
+    },
+    "gadgets": ["Nitro Cell", "Proximity Alarm"],
+    "side": "D"
+  }
+]

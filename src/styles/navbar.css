@@ -1,0 +1,23 @@
+.navbar {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  min-height: 5vh;
+  background-color: transparent;
+}
+
+.navMenu {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 3rem;
+}
+
+.navbar p {
+  font-size: 2.25rem;
+}
+
+.navMenu li {
+  font-size: 1.75rem;
+}
