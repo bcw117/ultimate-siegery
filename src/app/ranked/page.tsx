@@ -8,7 +8,6 @@ import "@styles/classic.css";
 const ScoutItalic = localFont({ src: "../../fonts/ScoutCond-BoldItalic.otf" });
 
 const page = () => {
-  const [data, setData] = useState();
   const [sidePicked, setSidePicked] = useState("picking");
 
   return (
@@ -37,22 +36,27 @@ const page = () => {
         </>
       ) : (
         <div className="wrapper">
-          <button
-            className={ScoutItalic.className + " attack-button"}
-            onClick={() => {
-              setSidePicked("attacking");
-            }}
-          >
-            ATTACK
-          </button>
-          <button
-            className={ScoutItalic.className + " defense-button"}
-            onClick={() => {
-              setSidePicked("defending");
-            }}
-          >
-            DEFEND
-          </button>
+          <h1 className={ScoutItalic.className + " text-4xl"}>
+            Select the side your are starting on:
+          </h1>
+          <div className="button-wrapper">
+            <button
+              className={ScoutItalic.className + " attack-button"}
+              onClick={() => {
+                setSidePicked("attacking");
+              }}
+            >
+              ATTACKERS
+            </button>
+            <button
+              className={ScoutItalic.className + " defense-button"}
+              onClick={() => {
+                setSidePicked("defending");
+              }}
+            >
+              DEFENDERS
+            </button>
+          </div>
         </div>
       )}
     </>

@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import {
   Operator,
-  Weapon,
+  WeaponSet,
   OperatorResponse,
   WeaponResponse,
 } from "@/types/operator";
@@ -42,6 +42,29 @@ client
   .catch((err: any) => {
     console.error("Error connecting to PostgreSQL database", err);
   });
+
+function selectAttachments(weapon: WeaponSet) {
+  const scope = weapon.scopes[Math.floor(Math.random() * weapon.scopes.length)];
+  const barrel =
+    weapon.barrels[Math.floor(Math.random() * weapon.barrels.length)];
+  const grips = weapon.grips[Math.floor(Math.random() * weapon.grips.length)];
+  const underbarrels = ["Laser", "None"];
+  var underbarrel =
+    underbarrels[Math.floor(Math.random() * underbarrels.length)];
+  if (weapon.type === "Hand Cannon" || weapon.type === "Shield") {
+    underbarrel = "NA";
+  }
+
+  return {
+    name: weapon.name,
+    type: weapon.type,
+    scope,
+    barrel,
+    grips,
+    underbarrel,
+    icon_url: weapon.icon_url,
+  };
+}
 
 async function operatorQuery(side: string) {
   const sql =
@@ -85,8 +108,12 @@ async function weaponQuery(primary: string, secondary: string) {
         }
       );
     });
-    const results = response as Weapon[];
-    return { primary: results[0], secondary: results[1] };
+
+    const results = response as WeaponSet[];
+    const randPrimaryLoadout = selectAttachments(results[0]);
+    const randSecondaryLoadout = selectAttachments(results[1]);
+
+    return { primary: randPrimaryLoadout, secondary: randSecondaryLoadout };
   } catch (error) {
     return error;
   }
@@ -99,10 +126,11 @@ export async function GET(req: NextRequest) {
     const opQuery = await operatorQuery(query);
 
     if (opQuery instanceof Error) {
-      return NextResponse.json({ Error: opQuery });
+      return NextResponse.json({ Error: opQuery.message });
     }
 
     const operator_data = opQuery as OperatorResponse;
+
     const primaries = operator_data.operator.primary;
     const secondaries = operator_data.operator.secondary;
 
@@ -112,10 +140,18 @@ export async function GET(req: NextRequest) {
     );
 
     if (gunQuery instanceof Error) {
-      return NextResponse.json({ Error: gunQuery });
+      return NextResponse.json({ Error: gunQuery.message });
     }
 
     const weapon_data = gunQuery as WeaponResponse;
-    return NextResponse.json({ operator_data, weapon_data });
+
+    const gadgets = operator_data.operator.gadgets;
+    const gadget = gadgets[Math.floor(Math.random() * gadgets.length)];
+
+    return NextResponse.json({
+      operator_data,
+      weapon_data,
+      gadget,
+    });
   }
 }

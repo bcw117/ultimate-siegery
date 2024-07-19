@@ -6,12 +6,22 @@ export type Operator = {
   side: string;
 };
 
-export type Weapon = {
+export type WeaponSet = {
   name: string;
   type: string;
   scopes: string[];
   barrels: string[];
   grips: string[];
+  icon_url: string;
+};
+
+export type Weapon = {
+  name: string;
+  type: string;
+  scope: string;
+  barrel: string;
+  grip: string;
+  underbarrel: string;
   icon_url: string;
 };
 
