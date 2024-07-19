@@ -5,7 +5,7 @@ const rules = () => {
     <div>
       <h1>RULES</h1>
       <ul>
-        <li>Select the correct mode you're playing and starting side.</li>
+        <li>Select the correct mode you&apos;re playing and starting side.</li>
         <li>
           You must to play with the given operators, weapons, attachments and
           gadgets.
