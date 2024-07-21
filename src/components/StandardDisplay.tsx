@@ -7,7 +7,7 @@ import BanDisplay from "./BanDisplay";
 
 const ScoutItalic = localFont({ src: "../fonts/ScoutCond-BoldItalic.otf" });
 
-const RankedDisplay = () => {
+const StandardDisplay = () => {
   const [sidePicked, setSidePicked] = useState("picking");
 
   return (
@@ -16,22 +16,19 @@ const RankedDisplay = () => {
         <>
           {sidePicked === "attacking" ? (
             <div className="wrapper">
-              <BanDisplay side="A" />
-              <OperatorDisplay side="A" />
               <OperatorDisplay side="A" />
               <OperatorDisplay side="A" />
               <OperatorDisplay side="D" />
               <OperatorDisplay side="D" />
-              <OperatorDisplay side="D" />
+              <OperatorDisplay side="A" />
             </div>
           ) : (
             <div className="wrapper">
               <OperatorDisplay side="D" />
               <OperatorDisplay side="D" />
+              <OperatorDisplay side="A" />
+              <OperatorDisplay side="A" />
               <OperatorDisplay side="D" />
-              <OperatorDisplay side="A" />
-              <OperatorDisplay side="A" />
-              <OperatorDisplay side="A" />
             </div>
           )}
         </>
@@ -64,4 +61,4 @@ const RankedDisplay = () => {
   );
 };
 
-export default RankedDisplay;
+export default StandardDisplay;

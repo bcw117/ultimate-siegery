@@ -34,7 +34,7 @@ const OperatorDisplay = (props: Props) => {
   const getData = async () => {
     try {
       const response = await fetch(
-        `http://localhost:3000/api/operators?side=${side}`,
+        `${window.location.origin}/api/operators?side=${side}`,
         {
           method: "GET",
           headers: {
@@ -66,7 +66,9 @@ const OperatorDisplay = (props: Props) => {
       {operator && primary && secondary && portrait ? (
         <>
           <div className="operator-image-container">
-            <h1 className={ScoutItalic.className}>{operator.name}</h1>
+            <h1 className={ScoutItalic.className + " text-6xl"}>
+              {operator.name}
+            </h1>
             <img
               className="operator-portrait"
               src={portrait}
@@ -79,7 +81,7 @@ const OperatorDisplay = (props: Props) => {
             />
           </div>
           <div className="loadout-container">
-            <h1 className={ScoutItalic.className}>Loadout</h1>
+            <h1 className={ScoutItalic.className + " text-5xl"}>Loadout</h1>
             <WeaponDisplay weapon_details={primary} weapon_type="Primary" />
             <WeaponDisplay weapon_details={secondary} weapon_type="Secondary" />
             <div>
