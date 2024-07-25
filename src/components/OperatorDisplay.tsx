@@ -43,10 +43,6 @@ const OperatorDisplay = (props: Props) => {
         }
       );
 
-      if (response instanceof Error) {
-        return console.log(response.message);
-      }
-
       if (response) {
         const results = await response.json();
         const data = results as Response;
