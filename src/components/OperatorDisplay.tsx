@@ -66,8 +66,7 @@ const OperatorDisplay = (props: Props) => {
     <>
       {operator && primary && secondary && portrait ? (
         <>
-          <div></div>
-          {/* <div className="operator-image-container">
+          <div className="operator-image-container">
             <h1 className={ScoutItalic.className + " text-6xl"}>
               {operator.name}
             </h1>
@@ -89,13 +88,13 @@ const OperatorDisplay = (props: Props) => {
             <div>
               <h2 className={ScoutItalic.className}>Gadget</h2>
               <h3>{gadget}</h3>
-              <img
+              {/* <img
                 className="gadget"
                 src={`/gadgets/${loadout?.gadget}.png`}
                 alt={loadout?.gadget + "Icon"}
-              />
+              /> */}
             </div>
-          </div> */}
+          </div>
         </>
       ) : (
         <>
@@ -103,14 +102,6 @@ const OperatorDisplay = (props: Props) => {
         </>
       )}
     </>
-
-    // <div className="operator-container">
-    //   {opInfo ? (
-
-    //   ) : (
-    //     <div className="">Loading..</div>
-    //   )}
-    // </div>
   );
 };
 
