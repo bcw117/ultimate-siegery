@@ -5,27 +5,22 @@ import {
   OperatorResponse,
   WeaponResponse,
 } from "@/types/operator";
+import pg from "pg";
 
+const { Pool } = pg;
 const { getSignedUrl } = require("@aws-sdk/s3-request-presigner");
 const { S3Client, GetObjectCommand } = require("@aws-sdk/client-s3");
-const Pool = require("pg").Pool;
 
 require("dotenv").config();
 
-const dbConfig = {
-  user: process.env.DB_USERNAME,
-  password: process.env.DB_PASSWORD,
-  host: process.env.DB_HOST,
-  port: process.env.DB_PORT,
-  database: process.env.DB_NAME,
-};
-
+const pool = new Pool({
+  connectionString: process.env.POSTGRES_URL,
+});
 const BUCKET_NAME = process.env.BUCKET_NAME;
 const BUCKET_REGION = process.env.BUCKET_REGION;
 const ACCESS_KEY = process.env.ACCESS_KEY;
 const SECRET_ACCESS_KEY = process.env.SECRET_ACCESS_KEY;
 
-const pool = new Pool(dbConfig);
 const s3 = new S3Client({
   credentials: {
     accessKeyId: ACCESS_KEY,
@@ -33,9 +28,6 @@ const s3 = new S3Client({
   },
   region: BUCKET_REGION,
 });
-
-export const maxDuration = 60;
-export const dynamic = "force-dynamic";
 
 function selectAttachments(weapon: WeaponSet) {
   const scope = weapon.scopes[Math.floor(Math.random() * weapon.scopes.length)];
@@ -64,16 +56,8 @@ async function operatorQuery(side: string) {
   const sql =
     "SELECT * FROM operator WHERE side = $1 ORDER BY RANDOM() LIMIT 1";
   try {
-    const response = await new Promise((resolve, reject) => {
-      pool.query(sql, [side], (error: any, results: any, fields: any) => {
-        if (error) {
-          reject(error);
-        } else {
-          resolve(results.rows[0]);
-        }
-      });
-    });
-    const results = response as Operator;
+    const response = await pool.query(sql, [side]);
+    const results = response.rows[0] as Operator;
     const getObjectParams = {
       Bucket: BUCKET_NAME,
       Key: `portraits/${results.name.toUpperCase()}.png`,
@@ -89,21 +73,8 @@ async function operatorQuery(side: string) {
 async function weaponQuery(primary: string, secondary: string) {
   const sql = "SELECT * FROM weapon WHERE name = $1 or name = $2";
   try {
-    const response = await new Promise((resolve, reject) => {
-      pool.query(
-        sql,
-        [primary, secondary],
-        (error: any, results: any, fields: any) => {
-          if (error) {
-            reject(error);
-          } else {
-            resolve(results.rows);
-          }
-        }
-      );
-    });
-
-    const results = response as WeaponSet[];
+    const response = await pool.query(sql, [primary, secondary]);
+    const results = response.rows as WeaponSet[];
     const randPrimaryLoadout = selectAttachments(results[0]);
     const randSecondaryLoadout = selectAttachments(results[1]);
 
@@ -116,6 +87,7 @@ async function weaponQuery(primary: string, secondary: string) {
 export async function GET(req: NextRequest) {
   const searchParams = req.nextUrl.searchParams;
   const query = searchParams.get("side");
+
   if (query) {
     const opQuery = await operatorQuery(query);
 
