@@ -43,6 +43,7 @@ client
     console.error("Error connecting to PostgreSQL database", err);
   });
 
+export const maxDuration = 60;
 export const dynamic = "force-dynamic";
 
 function selectAttachments(weapon: WeaponSet) {
