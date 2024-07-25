@@ -8,7 +8,7 @@ import {
 
 const { getSignedUrl } = require("@aws-sdk/s3-request-presigner");
 const { S3Client, GetObjectCommand } = require("@aws-sdk/client-s3");
-const { Client } = require("pg");
+const Pool = require("pg").Pool;
 
 require("dotenv").config();
 
@@ -25,7 +25,7 @@ const BUCKET_REGION = process.env.BUCKET_REGION;
 const ACCESS_KEY = process.env.ACCESS_KEY;
 const SECRET_ACCESS_KEY = process.env.SECRET_ACCESS_KEY;
 
-const client = new Client(dbConfig);
+const pool = new Pool(dbConfig);
 const s3 = new S3Client({
   credentials: {
     accessKeyId: ACCESS_KEY,
@@ -33,15 +33,6 @@ const s3 = new S3Client({
   },
   region: BUCKET_REGION,
 });
-
-client
-  .connect()
-  .then(() => {
-    console.log("Connected to PostgreSQL database");
-  })
-  .catch((err: any) => {
-    console.error("Error connecting to PostgreSQL database", err);
-  });
 
 export const maxDuration = 60;
 export const dynamic = "force-dynamic";
@@ -74,7 +65,7 @@ async function operatorQuery(side: string) {
     "SELECT * FROM operator WHERE side = $1 ORDER BY RANDOM() LIMIT 1";
   try {
     const response = await new Promise((resolve, reject) => {
-      client.query(sql, [side], (error: any, results: any, fields: any) => {
+      pool.query(sql, [side], (error: any, results: any, fields: any) => {
         if (error) {
           reject(error);
         } else {
@@ -99,7 +90,7 @@ async function weaponQuery(primary: string, secondary: string) {
   const sql = "SELECT * FROM weapon WHERE name = $1 or name = $2";
   try {
     const response = await new Promise((resolve, reject) => {
-      client.query(
+      pool.query(
         sql,
         [primary, secondary],
         (error: any, results: any, fields: any) => {
