@@ -43,6 +43,8 @@ client
     console.error("Error connecting to PostgreSQL database", err);
   });
 
+export const dynamic = "force-dynamic";
+
 function selectAttachments(weapon: WeaponSet) {
   const scope = weapon.scopes[Math.floor(Math.random() * weapon.scopes.length)];
   const barrel =
@@ -120,38 +122,49 @@ async function weaponQuery(primary: string, secondary: string) {
 }
 
 export async function GET(req: NextRequest) {
-  const searchParams = req.nextUrl.searchParams;
-  const query = searchParams.get("side");
-  if (query) {
-    const opQuery = await operatorQuery(query);
+  const getObjectParams = {
+    Bucket: BUCKET_NAME,
+    Key: `portraits/${"buck".toUpperCase()}.png`,
+  };
+  const command = new GetObjectCommand(getObjectParams);
+  const url = await getSignedUrl(s3, command, { expiresIn: 3600 });
+  return NextResponse.json({
+    operator_data: { hi: "Hello" },
+    weapon_data: { hi: url },
+    gadget: {},
+  });
+  // const searchParams = req.nextUrl.searchParams;
+  // const query = searchParams.get("side");
+  // if (query) {
+  //   const opQuery = await operatorQuery(query);
 
-    if (opQuery instanceof Error) {
-      return NextResponse.json({ Error: opQuery.message });
-    }
+  //   if (opQuery instanceof Error) {
+  //     return NextResponse.json({ Error: opQuery.message });
+  //   }
 
-    const operator_data = opQuery as OperatorResponse;
+  //   const operator_data = opQuery as OperatorResponse;
 
-    const primaries = operator_data.operator.primary;
-    const secondaries = operator_data.operator.secondary;
+  //   const primaries = operator_data.operator.primary;
+  //   const secondaries = operator_data.operator.secondary;
 
-    const gunQuery = await weaponQuery(
-      primaries[Math.floor(Math.random() * primaries.length)],
-      secondaries[Math.floor(Math.random() * secondaries.length)]
-    );
+  //   const gunQuery = await weaponQuery(
+  //     primaries[Math.floor(Math.random() * primaries.length)],
+  //     secondaries[Math.floor(Math.random() * secondaries.length)]
+  //   );
 
-    if (gunQuery instanceof Error) {
-      return NextResponse.json({ Error: gunQuery.message });
-    }
+  //   if (gunQuery instanceof Error) {
+  //     return NextResponse.json({ Error: gunQuery.message });
+  //   }
 
-    const weapon_data = gunQuery as WeaponResponse;
+  //   const weapon_data = gunQuery as WeaponResponse;
 
-    const gadgets = operator_data.operator.gadgets;
-    const gadget = gadgets[Math.floor(Math.random() * gadgets.length)];
+  //   const gadgets = operator_data.operator.gadgets;
+  //   const gadget = gadgets[Math.floor(Math.random() * gadgets.length)];
 
-    return NextResponse.json({
-      operator_data,
-      weapon_data,
-      gadget,
-    });
-  }
+  //   return NextResponse.json({
+  //     operator_data,
+  //     weapon_data,
+  //     gadget,
+  //   });
+  // }
 }
