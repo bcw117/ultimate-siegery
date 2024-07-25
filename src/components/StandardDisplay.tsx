@@ -17,9 +17,17 @@ const StandardDisplay = () => {
           {sidePicked === "attacking" ? (
             <div className="wrapper">
               <OperatorDisplay side="A" />
+              <OperatorDisplay side="A" />
+              <OperatorDisplay side="D" />
+              <OperatorDisplay side="D" />
+              <OperatorDisplay side="A" />
             </div>
           ) : (
             <div className="wrapper">
+              <OperatorDisplay side="D" />
+              <OperatorDisplay side="D" />
+              <OperatorDisplay side="A" />
+              <OperatorDisplay side="A" />
               <OperatorDisplay side="D" />
             </div>
           )}
