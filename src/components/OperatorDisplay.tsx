@@ -43,8 +43,6 @@ const OperatorDisplay = (props: Props) => {
         }
       );
 
-      console.log(response);
-
       if (response) {
         const results = await response.json();
         const data = results as Response;
@@ -71,7 +69,7 @@ const OperatorDisplay = (props: Props) => {
             <h1 className={ScoutItalic.className + " text-6xl"}>
               {operator.name}
             </h1>
-            <img
+            {/* <img
               className="operator-portrait"
               src={portrait}
               alt={operator.name}
@@ -80,7 +78,7 @@ const OperatorDisplay = (props: Props) => {
               className="operator-icon"
               src={`/icons/${operator.name.toLowerCase()}.svg`}
               alt={operator.name + "Icon"}
-            />
+            /> */}
           </div>
           <div className="loadout-container">
             <h1 className={ScoutItalic.className + " text-5xl"}>Loadout</h1>
