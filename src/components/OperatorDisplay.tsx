@@ -45,6 +45,7 @@ const OperatorDisplay = (props: Props) => {
 
       if (response) {
         const results = await response.json();
+        console.log(results);
         const data = results as Response;
         setOperator(data.operator_data.operator);
         setPrimary(data.weapon_data.primary);
@@ -65,11 +66,12 @@ const OperatorDisplay = (props: Props) => {
     <>
       {operator && primary && secondary && portrait ? (
         <>
-          <div className="operator-image-container">
+          <div></div>
+          {/* <div className="operator-image-container">
             <h1 className={ScoutItalic.className + " text-6xl"}>
               {operator.name}
             </h1>
-            {/* <img
+            <img
               className="operator-portrait"
               src={portrait}
               alt={operator.name}
@@ -78,7 +80,7 @@ const OperatorDisplay = (props: Props) => {
               className="operator-icon"
               src={`/icons/${operator.name.toLowerCase()}.svg`}
               alt={operator.name + "Icon"}
-            /> */}
+            />
           </div>
           <div className="loadout-container">
             <h1 className={ScoutItalic.className + " text-5xl"}>Loadout</h1>
@@ -87,13 +89,13 @@ const OperatorDisplay = (props: Props) => {
             <div>
               <h2 className={ScoutItalic.className}>Gadget</h2>
               <h3>{gadget}</h3>
-              {/* <img
+              <img
                 className="gadget"
                 src={`/gadgets/${loadout?.gadget}.png`}
                 alt={loadout?.gadget + "Icon"}
-              /> */}
+              />
             </div>
-          </div>
+          </div> */}
         </>
       ) : (
         <>
