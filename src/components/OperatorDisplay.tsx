@@ -43,6 +43,8 @@ const OperatorDisplay = (props: Props) => {
         }
       );
 
+      console.log(response);
+
       if (response) {
         const results = await response.json();
         const data = results as Response;
