@@ -20,46 +20,43 @@ const WeaponDisplay = (props: Props) => {
         <img className="weapon" src={""} alt={weapon_details.name} />
       </div>
       <div className="attachments">
-        {weapon_details.scope === "NA" ? (
+        {weapon_details.scope[0] === "NA" ? (
           <></>
         ) : (
           <div className="grid-item">
             <p className={ScoutItalic.className}>Scope</p>
             <div className="inner-attachment">
               <img
-                src={`/attachments/${weapon_details.scope}.png`}
-                alt={weapon_details.scope}
+                src={weapon_details.scope[1]}
+                alt={weapon_details.scope[0]}
               />
-              <p>{weapon_details.scope}</p>
+              <p>{weapon_details.scope[0]}</p>
             </div>
           </div>
         )}
-        {weapon_details.barrel === "NA" ? (
+        {weapon_details.barrel[0] === "NA" ? (
           <></>
         ) : (
           <div className="grid-item">
             <p className={ScoutItalic.className}>Barrel</p>
             <div className="inner-attachment">
               <img
-                src={`/attachments/${weapon_details.barrel}.png`}
-                alt={weapon_details.barrel}
+                src={weapon_details.barrel[1]}
+                alt={weapon_details.barrel[0]}
               />
-              <p>{weapon_details.barrel}</p>
+              <p>{weapon_details.barrel[0]}</p>
             </div>
           </div>
         )}
 
-        {weapon_details.grip === "NA" ? (
+        {weapon_details.grip[0] === "NA" ? (
           <></>
         ) : (
           <div className="grid-item">
             <p className={ScoutItalic.className}>Grip</p>
             <div className="inner-attachment">
-              <img
-                src={`/attachments/${weapon_details.grip}.png`}
-                alt={weapon_details.grip}
-              />
-              <p>{weapon_details.grip} Grip</p>
+              <img src={weapon_details.grip[1]} alt={weapon_details.grip[0]} />
+              <p>{weapon_details.grip[0]} Grip</p>
             </div>
           </div>
         )}
@@ -67,7 +64,7 @@ const WeaponDisplay = (props: Props) => {
           <div className="grid-item">
             <p className={ScoutItalic.className}>Underbarrel</p>
             <div className="inner-attachment">
-              <img src={`/attachments/laser.png`} alt="Laser"></img>
+              <img src={weapon_details.underbarrel[1]} alt="Laser"></img>
               <p>Laser Sight</p>
             </div>
           </div>

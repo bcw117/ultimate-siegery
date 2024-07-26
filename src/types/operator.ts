@@ -18,9 +18,9 @@ export type WeaponSet = {
 export type Weapon = {
   name: string;
   type: string;
-  scope: string;
-  barrel: string;
-  grip: string;
+  scope: string[];
+  barrel: string[];
+  grip: string[];
   underbarrel: string;
   icon_url: string;
 };

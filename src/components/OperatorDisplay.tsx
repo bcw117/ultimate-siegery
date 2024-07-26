@@ -65,7 +65,7 @@ const OperatorDisplay = (props: Props) => {
   return (
     <>
       {operator && primary && secondary && portrait ? (
-        <>
+        <div className="flex flex-row ">
           <div className="operator-image-container">
             <h1 className={ScoutItalic.className + " text-6xl"}>
               {operator.name}
@@ -82,7 +82,7 @@ const OperatorDisplay = (props: Props) => {
             />
           </div>
           <div className="loadout-container">
-            <h1 className={ScoutItalic.className + " text-5xl"}>Loadout</h1>
+            <h1 className={ScoutItalic.className + " text-6xl"}>Loadout</h1>
             <WeaponDisplay weapon_details={primary} weapon_type="Primary" />
             <WeaponDisplay weapon_details={secondary} weapon_type="Secondary" />
             <div>
@@ -95,7 +95,7 @@ const OperatorDisplay = (props: Props) => {
               /> */}
             </div>
           </div>
-        </>
+        </div>
       ) : (
         <>
           <div>Loading</div>

@@ -29,25 +29,42 @@ const s3 = new S3Client({
   region: BUCKET_REGION,
 });
 
-function selectAttachments(weapon: WeaponSet) {
+async function getAttachmentIcon(attachmentName: string) {
+  if (attachmentName !== "NA") {
+    const getObjectParams = {
+      Bucket: BUCKET_NAME,
+      Key: `attachments/${attachmentName}.png`,
+    };
+    const command = new GetObjectCommand(getObjectParams);
+    const url = await getSignedUrl(s3, command, { expiresIn: 3600 });
+    return url as string;
+  }
+  return "";
+}
+
+async function selectAttachments(weapon: WeaponSet) {
   const scope = weapon.scopes[Math.floor(Math.random() * weapon.scopes.length)];
+  const scopeIcon = await getAttachmentIcon(scope);
   const barrel =
     weapon.barrels[Math.floor(Math.random() * weapon.barrels.length)];
-  const grips = weapon.grips[Math.floor(Math.random() * weapon.grips.length)];
+  const barrelIcon = await getAttachmentIcon(barrel);
+  const grip = weapon.grips[Math.floor(Math.random() * weapon.grips.length)];
+  const gripIcon = await getAttachmentIcon(grip);
   const underbarrels = ["Laser", "None"];
   var underbarrel =
     underbarrels[Math.floor(Math.random() * underbarrels.length)];
   if (weapon.type === "Hand Cannon" || weapon.type === "Shield") {
     underbarrel = "NA";
   }
+  const underbarrelIcon = await getAttachmentIcon(underbarrel);
 
   return {
     name: weapon.name,
     type: weapon.type,
-    scope,
-    barrel,
-    grips,
-    underbarrel,
+    scope: [scope, scopeIcon],
+    barrel: [barrel, barrelIcon],
+    grip: [grip, gripIcon],
+    underbarrel: [underbarrel, underbarrelIcon],
     icon_url: weapon.icon_url,
   };
 }
@@ -75,8 +92,8 @@ async function weaponQuery(primary: string, secondary: string) {
   try {
     const response = await pool.query(sql, [primary, secondary]);
     const results = response.rows as WeaponSet[];
-    const randPrimaryLoadout = selectAttachments(results[0]);
-    const randSecondaryLoadout = selectAttachments(results[1]);
+    const randPrimaryLoadout = await selectAttachments(results[0]);
+    const randSecondaryLoadout = await selectAttachments(results[1]);
 
     return { primary: randPrimaryLoadout, secondary: randSecondaryLoadout };
   } catch (error) {
