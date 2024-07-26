@@ -16,13 +16,13 @@
 
 .operator-image-container {
   position: relative;
-  max-height: 725px;
+  max-height: 600px;
 }
 
 .operator-portrait {
   height: auto;
   width: auto;
-  max-height: 725px;
+  max-height: 600px;
   position: relative;
   top: 0;
   left: 0;
@@ -49,6 +49,12 @@
 
 .loadout-container h2 {
   font-size: 2.25rem;
+}
+
+.gadget-container {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
 }
 
 .gadget {

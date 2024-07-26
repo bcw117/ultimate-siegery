@@ -17,7 +17,11 @@ const WeaponDisplay = (props: Props) => {
       <div className="weapon">
         <h2 className={ScoutItalic.className}>{weapon_type}</h2>
         <h3>{weapon_details.name}</h3>
-        <img className="weapon" src={""} alt={weapon_details.name} />
+        <img
+          className="weapon"
+          src={weapon_details.icon_url}
+          alt={weapon_details.name}
+        />
       </div>
       <div className="attachments">
         {weapon_details.scope[0] === "NA" ? (

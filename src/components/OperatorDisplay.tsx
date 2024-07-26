@@ -20,7 +20,7 @@ interface Props {
 type Response = {
   operator_data: OperatorResponse;
   weapon_data: WeaponResponse;
-  gadget: string;
+  gadget: string[];
 };
 
 const OperatorDisplay = (props: Props) => {
@@ -28,7 +28,7 @@ const OperatorDisplay = (props: Props) => {
   const [operator, setOperator] = useState<Operator | undefined>(undefined);
   const [primary, setPrimary] = useState<Weapon | undefined>(undefined);
   const [secondary, setSecondary] = useState<Weapon | undefined>(undefined);
-  const [gadget, setGadget] = useState("");
+  const [gadget, setGadget] = useState([""]);
   const [portrait, setPortrait] = useState("");
 
   const getData = async () => {
@@ -65,7 +65,7 @@ const OperatorDisplay = (props: Props) => {
   return (
     <>
       {operator && primary && secondary && portrait ? (
-        <div className="flex flex-row ">
+        <div className="flex flex-row">
           <div className="operator-image-container">
             <h1 className={ScoutItalic.className + " text-6xl"}>
               {operator.name}
@@ -85,14 +85,14 @@ const OperatorDisplay = (props: Props) => {
             <h1 className={ScoutItalic.className + " text-6xl"}>Loadout</h1>
             <WeaponDisplay weapon_details={primary} weapon_type="Primary" />
             <WeaponDisplay weapon_details={secondary} weapon_type="Secondary" />
-            <div>
+            <div className="gadget-container">
               <h2 className={ScoutItalic.className}>Gadget</h2>
-              <h3>{gadget}</h3>
-              {/* <img
+              <h3>{gadget[0]}</h3>
+              <img
                 className="gadget"
-                src={`/gadgets/${loadout?.gadget}.png`}
-                alt={loadout?.gadget + "Icon"}
-              /> */}
+                src={gadget[1]}
+                alt={gadget[0] + "Icon"}
+              />
             </div>
           </div>
         </div>

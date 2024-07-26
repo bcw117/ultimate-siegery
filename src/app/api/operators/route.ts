@@ -42,6 +42,16 @@ async function getAttachmentIcon(attachmentName: string) {
   return "";
 }
 
+async function getGadgetIcon(gadgetName: string) {
+  const getObjectParams = {
+    Bucket: BUCKET_NAME,
+    Key: `gadgets/${gadgetName}.png`,
+  };
+  const command = new GetObjectCommand(getObjectParams);
+  const url = await getSignedUrl(s3, command, { expiresIn: 3600 });
+  return url as string;
+}
+
 async function selectAttachments(weapon: WeaponSet) {
   const scope = weapon.scopes[Math.floor(Math.random() * weapon.scopes.length)];
   const scopeIcon = await getAttachmentIcon(scope);
@@ -130,11 +140,12 @@ export async function GET(req: NextRequest) {
 
     const gadgets = operator_data.operator.gadgets;
     const gadget = gadgets[Math.floor(Math.random() * gadgets.length)];
+    const gadgetIcon = await getGadgetIcon(gadget);
 
     return NextResponse.json({
       operator_data,
       weapon_data,
-      gadget,
+      gadget: [gadget, gadgetIcon],
     });
   }
 }

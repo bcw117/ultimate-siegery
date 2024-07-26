@@ -15,6 +15,9 @@
 }
 
 .weapon {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
   max-width: 200px;
 }
 

@@ -15,7 +15,7 @@ const RankedDisplay = () => {
       {sidePicked !== "picking" ? (
         <>
           {sidePicked === "attacking" ? (
-            <div className="wrapper">
+            <div className="wrapper gap-20 p-4">
               <BanDisplay side="A" />
               <OperatorDisplay side="A" />
               <OperatorDisplay side="A" />
@@ -25,7 +25,7 @@ const RankedDisplay = () => {
               <OperatorDisplay side="D" />
             </div>
           ) : (
-            <div className="wrapper">
+            <div className="wrapper gap-20 p-4">
               <OperatorDisplay side="D" />
               <OperatorDisplay side="D" />
               <OperatorDisplay side="D" />
