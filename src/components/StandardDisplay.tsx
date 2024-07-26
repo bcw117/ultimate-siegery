@@ -15,7 +15,7 @@ const StandardDisplay = () => {
       {sidePicked !== "picking" ? (
         <>
           {sidePicked === "attacking" ? (
-            <div className="wrapper">
+            <div className="wrapper gap-20 p-4">
               <OperatorDisplay side="A" />
               <OperatorDisplay side="A" />
               <OperatorDisplay side="D" />
@@ -23,7 +23,7 @@ const StandardDisplay = () => {
               <OperatorDisplay side="A" />
             </div>
           ) : (
-            <div className="wrapper">
+            <div className="wrapper gap-20 p-4">
               <OperatorDisplay side="D" />
               <OperatorDisplay side="D" />
               <OperatorDisplay side="A" />
