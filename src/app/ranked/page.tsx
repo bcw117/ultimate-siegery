@@ -1,8 +1,8 @@
 import React from "react";
-import RankedDisplay from "@/components/RankedDisplay";
+import Classic from "@/components/Classic";
 
 const page = () => {
-  return <RankedDisplay />;
+  return <Classic bans={true} maxRounds={9} maxOT={3} />;
 };
 
 export default page;

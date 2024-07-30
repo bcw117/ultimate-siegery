@@ -34,3 +34,9 @@ export type WeaponResponse = {
   primary: Weapon;
   secondary: Weapon;
 };
+
+export type OperatorFilter = {
+  name: string;
+  side: string;
+  selected: boolean;
+};

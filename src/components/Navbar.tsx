@@ -15,12 +15,14 @@ export function Navbar() {
 
       <ul className="navMenu">
         <li>
-          <Link href="/standard">Quick Play</Link>
+          <Link href="/casual">Quick Match</Link>
         </li>
         <li>
-          <Link href="/ranked">Ranked/Standard</Link>
+          <Link href="/standard">Standard</Link>
         </li>
-
+        <li>
+          <Link href="/ranked">Ranked</Link>
+        </li>
         <li>
           <Link href="/rules">Rules</Link>
         </li>

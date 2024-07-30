@@ -79,11 +79,11 @@ async function selectAttachments(weapon: WeaponSet) {
   };
 }
 
-async function operatorQuery(side: string) {
+async function operatorQuery(name: string) {
   const sql =
-    "SELECT * FROM operator WHERE side = $1 ORDER BY RANDOM() LIMIT 1";
+    "SELECT * FROM operator WHERE name = $1 ORDER BY RANDOM() LIMIT 1";
   try {
-    const response = await pool.query(sql, [side]);
+    const response = await pool.query(sql, [name]);
     const results = response.rows[0] as Operator;
     const getObjectParams = {
       Bucket: BUCKET_NAME,
@@ -113,7 +113,7 @@ async function weaponQuery(primary: string, secondary: string) {
 
 export async function GET(req: NextRequest) {
   const searchParams = req.nextUrl.searchParams;
-  const query = searchParams.get("side");
+  const query = searchParams.get("name");
 
   if (query) {
     const opQuery = await operatorQuery(query);

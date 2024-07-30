@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 type Props = {
   side: string;
@@ -6,6 +6,12 @@ type Props = {
 
 const BanDisplay = (props: Props) => {
   const { side } = props;
+
+  const getOperatorData = async () => {};
+
+  useEffect(() => {
+    getOperatorData();
+  });
   return (
     <>
       <h1>BANS</h1>

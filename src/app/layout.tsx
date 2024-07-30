@@ -1,11 +1,16 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import "./globals.css";
+import localFont from "next/font/local";
 import { Navbar } from "@/components/Navbar";
-import { Providers } from "@/providers/providers";
+import { Theme } from "@/providers/Theme";
 import Footer from "@/components/Footer";
+import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
+const ScoutBoldItalic = localFont({
+  src: "../fonts/ScoutCond-BoldItalic.otf",
+  variable: "--font-ScoutCond-BoldItalic",
+});
 
 export const metadata: Metadata = {
   title: "Ultimate Siegery",
@@ -19,12 +24,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>
-        <Providers>
+      <body className={`${inter.className} ${ScoutBoldItalic.variable}`}>
+        <Theme>
           <Navbar />
           {children}
           <Footer />
-        </Providers>
+        </Theme>
       </body>
     </html>
   );

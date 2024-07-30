@@ -16,7 +16,6 @@
 
 .operator-image-container {
   position: relative;
-  max-height: 600px;
 }
 
 .operator-portrait {
@@ -37,7 +36,7 @@
   max-width: 175px;
   max-height: 175px;
   position: absolute;
-  bottom: -5%;
+  bottom: 0%;
   left: 50%;
   transform: translateX(-50%);
 }
@@ -54,10 +53,13 @@
 .gadget-container {
   display: flex;
   flex-direction: column;
-  gap: 5px;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: 20px;
 }
 
 .gadget {
   max-height: 150px;
   max-width: 100px;
+  margin-top: 0.75rem;
 }

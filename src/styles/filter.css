@@ -1,0 +1,12 @@
+.filter-container {
+  display: grid;
+  grid-template-columns: repeat(6, auto);
+}
+
+.filter-container img {
+  min-width: 40px;
+}
+
+.grid-icon {
+  background-color: #262626;
+}

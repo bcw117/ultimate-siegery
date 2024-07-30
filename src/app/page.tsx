@@ -3,13 +3,12 @@ import localFont from "next/font/local";
 import "@styles/home.css";
 
 const ScoutBold = localFont({ src: "../fonts/ScoutCond-Bold.otf" });
-const ScoutItalic = localFont({ src: "../fonts/ScoutCond-BoldItalic.otf" });
 
 export default function Home() {
   return (
     <main className="home-wrapper">
       <header className="text-center">
-        <h1 className={ScoutItalic.className + " text-7xl"}>Welcome to</h1>
+        <h1 className={ScoutBold.className + " text-7xl"}>Welcome to</h1>
         <h1 className={ScoutBold.className + " text-9xl"}>ULTIMATE SIEGERY</h1>
       </header>
       <h3>
@@ -20,7 +19,7 @@ export default function Home() {
       </h3>
       <Link href="/ranked">
         <div className="classic-button">
-          <p className={ScoutItalic.className + " text-3xl"}>
+          <p className={"font-ScoutCond-BoldItalic text-3xl"}>
             Let&apos;s Get Sieging!
           </p>
         </div>

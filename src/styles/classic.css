@@ -5,23 +5,3 @@
   flex-direction: column;
   min-height: 100vh;
 }
-
-.button-wrapper {
-  display: flex;
-  justify-content: center;
-  gap: 25px;
-  margin-top: 25px;
-}
-
-.button-wrapper button {
-  padding: 6px 30px 6px 30px;
-  font-size: 25px;
-}
-
-.attack-button {
-  background-color: #f72425;
-}
-
-.defense-button {
-  background-color: #2399fe;
-}
