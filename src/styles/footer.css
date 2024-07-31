@@ -1,5 +1,12 @@
 .footer {
   display: flex;
+  text-align: center;
   justify-content: center;
   align-items: center;
+}
+
+.footer p {
+  font-size: 10px;
+  max-width: 600px;
+  max-height: 4rem;
 }

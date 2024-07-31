@@ -1,9 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
 import {
   Operator,
-  WeaponSet,
+  Weapon,
   OperatorResponse,
   WeaponResponse,
+  WeaponOptions,
 } from "@/types/operator";
 import pg from "pg";
 
@@ -52,14 +53,18 @@ async function getGadgetIcon(gadgetName: string) {
   return url as string;
 }
 
-async function selectAttachments(weapon: WeaponSet) {
-  const scope = weapon.scopes[Math.floor(Math.random() * weapon.scopes.length)];
-  const scopeIcon = await getAttachmentIcon(scope);
-  const barrel =
-    weapon.barrels[Math.floor(Math.random() * weapon.barrels.length)];
-  const barrelIcon = await getAttachmentIcon(barrel);
-  const grip = weapon.grips[Math.floor(Math.random() * weapon.grips.length)];
-  const gripIcon = await getAttachmentIcon(grip);
+async function getAttachment(attachments: string[]) {
+  const attachment =
+    attachments[Math.floor(Math.random() * attachments.length)];
+  const attachmentIcon = await getAttachmentIcon(attachment);
+  return [attachment, attachmentIcon];
+}
+
+async function selectAttachments(weapon: WeaponOptions) {
+  const scopeData = await getAttachment(weapon.scopes);
+  const barrelData = await getAttachment(weapon.barrels);
+  const gripData = await getAttachment(weapon.grips);
+
   const underbarrels = ["Laser", "None"];
   var underbarrel =
     underbarrels[Math.floor(Math.random() * underbarrels.length)];
@@ -71,9 +76,9 @@ async function selectAttachments(weapon: WeaponSet) {
   return {
     name: weapon.name,
     type: weapon.type,
-    scope: [scope, scopeIcon],
-    barrel: [barrel, barrelIcon],
-    grip: [grip, gripIcon],
+    scope: scopeData,
+    barrel: barrelData,
+    grip: gripData,
     underbarrel: [underbarrel, underbarrelIcon],
     icon_url: weapon.icon_url,
   };
@@ -101,11 +106,11 @@ async function weaponQuery(primary: string, secondary: string) {
   const sql = "SELECT * FROM weapon WHERE name = $1 or name = $2";
   try {
     const response = await pool.query(sql, [primary, secondary]);
-    const results = response.rows as WeaponSet[];
-    const randPrimaryLoadout = await selectAttachments(results[0]);
-    const randSecondaryLoadout = await selectAttachments(results[1]);
+    const results = response.rows as WeaponOptions[];
+    const primaryLoadout = await selectAttachments(results[0]);
+    const secondaryLoadout = await selectAttachments(results[1]);
 
-    return { primary: randPrimaryLoadout, secondary: randSecondaryLoadout };
+    return { primary: primaryLoadout, secondary: secondaryLoadout };
   } catch (error) {
     return error;
   }
@@ -122,10 +127,10 @@ export async function GET(req: NextRequest) {
       return NextResponse.json({ Error: opQuery.message });
     }
 
-    const operator_data = opQuery as OperatorResponse;
+    const operatorData = opQuery as OperatorResponse;
 
-    const primaries = operator_data.operator.primary;
-    const secondaries = operator_data.operator.secondary;
+    const primaries = operatorData.operator.primary;
+    const secondaries = operatorData.operator.secondary;
 
     const gunQuery = await weaponQuery(
       primaries[Math.floor(Math.random() * primaries.length)],
@@ -136,15 +141,15 @@ export async function GET(req: NextRequest) {
       return NextResponse.json({ Error: gunQuery.message });
     }
 
-    const weapon_data = gunQuery as WeaponResponse;
+    const weaponData = gunQuery as WeaponResponse;
 
-    const gadgets = operator_data.operator.gadgets;
+    const gadgets = operatorData.operator.gadgets;
     const gadget = gadgets[Math.floor(Math.random() * gadgets.length)];
     const gadgetIcon = await getGadgetIcon(gadget);
 
     return NextResponse.json({
-      operator_data,
-      weapon_data,
+      operatorData,
+      weaponData,
       gadget: [gadget, gadgetIcon],
     });
   }

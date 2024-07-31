@@ -14,14 +14,15 @@
 }
 
 .button-wrapper button {
-  padding: 6px 30px 6px 30px;
   font-size: 25px;
 }
 
 .attack-button {
+  padding: 6px 30px 6px 30px;
   background-color: #f72425;
 }
 
 .defense-button {
+  padding: 6px 30px 6px 30px;
   background-color: #2399fe;
 }

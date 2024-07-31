@@ -4,9 +4,12 @@ import "@styles/footer.css";
 const Footer = () => {
   return (
     <div className="footer">
-      Ultimate Siegery not affiliated or endorsed by Ubisoft and does not
-      represent any of the beliefs or values of those developing Rainbow Six
-      Siege.
+      <p>
+        Ultimate Siegery is an independent application and is not affiliated
+        with, endorsed by, or associated with Ubisoft Entertainment in any way.
+        All trademarks and copyrights related to Ubisoft products are the
+        property of their respective owners.
+      </p>
     </div>
   );
 };

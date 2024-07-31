@@ -11,17 +11,24 @@
   "dependencies": {
     "@aws-sdk/client-s3": "^3.614.0",
     "@aws-sdk/s3-request-presigner": "^3.614.0",
+    "@radix-ui/react-alert-dialog": "^1.1.1",
+    "@radix-ui/react-slot": "^1.1.0",
     "@vercel/postgres": "^0.9.0",
+    "class-variance-authority": "^0.7.0",
+    "clsx": "^2.1.1",
     "convert-svg-react": "^1.0.0",
     "dotenv": "^16.4.5",
     "iconify": "^1.4.0",
+    "lucide-react": "^0.418.0",
     "next": "14.2.4",
     "next-themes": "^0.3.0",
     "pg": "^8.12.0",
     "r6operators": "^2.9.0",
     "react": "^18",
     "react-dom": "^18",
-    "react-scroll": "^1.9.0"
+    "react-scroll": "^1.9.0",
+    "tailwind-merge": "^2.4.0",
+    "tailwindcss-animate": "^1.0.7"
   },
   "devDependencies": {
     "@iconify/react": "^5.0.1",

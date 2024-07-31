@@ -6,7 +6,7 @@ export type Operator = {
   side: string;
 };
 
-export type WeaponSet = {
+export type WeaponOptions = {
   name: string;
   type: string;
   scopes: string[];

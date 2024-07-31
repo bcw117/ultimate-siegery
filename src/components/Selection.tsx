@@ -1,7 +1,17 @@
-import React from "react";
+"use client";
+import React, { useState } from "react";
 import "@styles/selection.css";
 import FilterOperator from "./FilterOperator";
 import { OperatorFilter } from "@/types/operator";
+import {
+  AlertDialog,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 
 type Props = {
   data: OperatorFilter[];
@@ -11,28 +21,98 @@ type Props = {
 
 const Selection = (props: Props) => {
   const setSidePicked = props.setSidePicked;
+  const [opened, setOpen] = useState(false);
+
+  const checkFilter = () => {
+    const operatorFiltering = props.data;
+    const defenderExists = operatorFiltering.filter((operator) => {
+      return operator.selected === false && operator.side === "D";
+    });
+    const attackerExists = operatorFiltering.filter((operator) => {
+      return operator.selected === false && operator.side === "A";
+    });
+
+    if (defenderExists.length !== 0 && attackerExists.length !== 0) {
+      return true;
+    }
+
+    return false;
+  };
   return (
     <div className="flex flex-row justify-center items-center">
       <div className="selection font-ScoutCond-BoldItalic">
         <h1 className={"text-4xl"}>RANKED</h1>
         <h2 className={"text-4xl"}>Select the side your are starting on:</h2>
         <div className="button-wrapper">
-          <button
-            className="attack-button"
-            onClick={() => {
-              setSidePicked("attacking");
-            }}
-          >
-            ATTACKERS
-          </button>
-          <button
-            className="defense-button"
-            onClick={() => {
-              setSidePicked("defending");
-            }}
-          >
-            DEFENDERS
-          </button>
+          <AlertDialog open={opened}>
+            <AlertDialogTrigger>
+              <button
+                className="attack-button"
+                onClick={() => {
+                  if (checkFilter()) {
+                    setSidePicked("attacking");
+                  } else {
+                    setOpen(true);
+                  }
+                }}
+              >
+                ATTACKERS
+              </button>
+            </AlertDialogTrigger>
+            <AlertDialogContent>
+              <AlertDialogHeader>
+                <AlertDialogTitle>
+                  You must select at least one defender and one attacker
+                </AlertDialogTitle>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                <AlertDialogCancel>
+                  <button
+                    onClick={() => {
+                      setOpen(false);
+                    }}
+                  >
+                    Ok
+                  </button>
+                </AlertDialogCancel>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
+
+          <AlertDialog open={opened}>
+            <AlertDialogTrigger>
+              <button
+                className="defense-button"
+                onClick={() => {
+                  if (checkFilter()) {
+                    setSidePicked("defending");
+                  } else {
+                    setOpen(true);
+                  }
+                }}
+              >
+                DEFENDERS
+              </button>
+            </AlertDialogTrigger>
+            <AlertDialogContent>
+              <AlertDialogHeader>
+                <AlertDialogTitle>
+                  You must select at least one defender and one attacker
+                </AlertDialogTitle>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                <AlertDialogCancel>
+                  <button
+                    onClick={() => {
+                      setOpen(false);
+                    }}
+                  >
+                    Ok
+                  </button>
+                </AlertDialogCancel>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
         </div>
       </div>
       <FilterOperator handleClick={props.handleClick} data={props.data} />

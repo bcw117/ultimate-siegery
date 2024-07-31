@@ -1,10 +1,11 @@
 import React from "react";
+import "@styles/rules.css";
 
 const rules = () => {
   return (
-    <div>
+    <div className="rules">
       <h1>RULES</h1>
-      <ul>
+      <ol className="list-decimal">
         <li>Select the correct mode you&apos;re playing and starting side.</li>
         <li>
           You must to play with the given operators, weapons, attachments and
@@ -14,7 +15,7 @@ const rules = () => {
           Finish the game only playing with the given operators and loadouts.
         </li>
         <li>GLHF!</li>
-      </ul>
+      </ol>
     </div>
   );
 };

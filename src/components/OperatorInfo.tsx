@@ -7,6 +7,7 @@ import {
   OperatorResponse,
   WeaponResponse,
 } from "@customTypes/operator";
+
 import "@styles/operatordisplay.css";
 import WeaponDisplay from "./WeaponDisplay";
 
@@ -15,8 +16,8 @@ interface Props {
 }
 
 type Response = {
-  operator_data: OperatorResponse;
-  weapon_data: WeaponResponse;
+  operatorData: OperatorResponse;
+  weaponData: WeaponResponse;
   gadget: string[];
 };
 
@@ -29,7 +30,7 @@ const OperatorInfo = (props: Props) => {
   const [portrait, setPortrait] = useState("");
 
   useEffect(() => {
-    const getData = async () => {
+    const getOperatorData = async () => {
       try {
         const response = await fetch(
           `${window.location.origin}/api/operators?name=${
@@ -45,19 +46,18 @@ const OperatorInfo = (props: Props) => {
 
         if (response) {
           const results = await response.json();
-          console.log(results);
-          const data = results as Response;
-          setOperator(data.operator_data.operator);
-          setPrimary(data.weapon_data.primary);
-          setSecondary(data.weapon_data.secondary);
-          setGadget(data.gadget);
-          setPortrait(data.operator_data.portrait);
+          const { operatorData, weaponData, gadget } = results as Response;
+          setOperator(operatorData.operator);
+          setPrimary(weaponData.primary);
+          setSecondary(weaponData.secondary);
+          setGadget(gadget);
+          setPortrait(operatorData.portrait);
         }
       } catch (error) {
         console.log(error);
       }
     };
-    getData();
+    getOperatorData();
   }, [name]);
 
   return (

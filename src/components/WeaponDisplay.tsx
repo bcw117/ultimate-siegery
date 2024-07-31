@@ -64,20 +64,14 @@ const WeaponDisplay = (props: Props) => {
             </div>
           </div>
         )}
-        {weapon_details.underbarrel ? (
-          <div className="grid-item">
-            <p className={ScoutItalic.className}>Underbarrel</p>
-            <div className="inner-attachment">
-              <img src={weapon_details.underbarrel[1]} alt="Laser"></img>
-              <p>Laser Sight</p>
-            </div>
-          </div>
+        {weapon_details.underbarrel[0] === "NA" ? (
+          <></>
         ) : (
           <div className="grid-item">
             <p className={ScoutItalic.className}>Underbarrel</p>
             <div className="inner-attachment">
-              <img src={`/attachments/none.png`} alt="None"></img>
-              <p>None</p>
+              <img src={weapon_details.underbarrel[1]} alt="None"></img>
+              <p>{weapon_details.underbarrel[0]}</p>
             </div>
           </div>
         )}
