@@ -40,7 +40,7 @@ const Selection = (props: Props) => {
     return false;
   };
   return (
-    <div className="flex flex-row justify-center items-center">
+    <div className="w-full flex flex-row justify-evenly items-center ">
       <div className="selection font-ScoutCond-BoldItalic">
         <h1 className={"text-4xl"}>{props.gameMode.toUpperCase()}</h1>
         <h2 className={"text-4xl"}>Select the side your are starting on:</h2>

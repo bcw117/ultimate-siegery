@@ -1,6 +1,7 @@
 .filter-container {
   display: grid;
-  grid-template-columns: repeat(6, auto);
+  grid-template-columns: repeat(8, auto);
+  grid-gap: 3px;
 }
 
 .filter-container img {
