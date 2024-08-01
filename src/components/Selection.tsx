@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/alert-dialog";
 
 type Props = {
+  gameMode: string;
   data: OperatorFilter[];
   setSidePicked: Function;
   handleClick: Function;
@@ -41,23 +42,21 @@ const Selection = (props: Props) => {
   return (
     <div className="flex flex-row justify-center items-center">
       <div className="selection font-ScoutCond-BoldItalic">
-        <h1 className={"text-4xl"}>RANKED</h1>
+        <h1 className={"text-4xl"}>{props.gameMode.toUpperCase()}</h1>
         <h2 className={"text-4xl"}>Select the side your are starting on:</h2>
         <div className="button-wrapper">
           <AlertDialog open={opened}>
-            <AlertDialogTrigger>
-              <button
-                className="attack-button"
-                onClick={() => {
-                  if (checkFilter()) {
-                    setSidePicked("attacking");
-                  } else {
-                    setOpen(true);
-                  }
-                }}
-              >
-                ATTACKERS
-              </button>
+            <AlertDialogTrigger
+              className="attack-button"
+              onClick={() => {
+                if (checkFilter()) {
+                  setSidePicked("attacking");
+                } else {
+                  setOpen(true);
+                }
+              }}
+            >
+              ATTACKERS
             </AlertDialogTrigger>
             <AlertDialogContent>
               <AlertDialogHeader>
@@ -80,19 +79,17 @@ const Selection = (props: Props) => {
           </AlertDialog>
 
           <AlertDialog open={opened}>
-            <AlertDialogTrigger>
-              <button
-                className="defense-button"
-                onClick={() => {
-                  if (checkFilter()) {
-                    setSidePicked("defending");
-                  } else {
-                    setOpen(true);
-                  }
-                }}
-              >
-                DEFENDERS
-              </button>
+            <AlertDialogTrigger
+              className="defense-button"
+              onClick={() => {
+                if (checkFilter()) {
+                  setSidePicked("attacking");
+                } else {
+                  setOpen(true);
+                }
+              }}
+            >
+              DEFENDERS
             </AlertDialogTrigger>
             <AlertDialogContent>
               <AlertDialogHeader>

@@ -2,6 +2,7 @@ import localFont from "next/font/local";
 import "@styles/weapondisplay.css";
 import React from "react";
 import { Weapon } from "@/types/operator";
+import { Card, CardContent, CardTitle } from "@/components/ui/card";
 
 const ScoutItalic = localFont({ src: "../fonts/ScoutCond-BoldItalic.otf" });
 
@@ -27,53 +28,55 @@ const WeaponDisplay = (props: Props) => {
         {weapon_details.scope[0] === "NA" ? (
           <></>
         ) : (
-          <div className="grid-item">
-            <p className={ScoutItalic.className}>Scope</p>
-            <div className="inner-attachment">
+          <Card className="grid-item">
+            <CardTitle>
+              <h2 className="font-ScoutCond-BoldItalic">Scope</h2>
+            </CardTitle>
+            <CardContent className="inner-attachment">
               <img
                 src={weapon_details.scope[1]}
                 alt={weapon_details.scope[0]}
               />
               <p>{weapon_details.scope[0]}</p>
-            </div>
-          </div>
+            </CardContent>
+          </Card>
         )}
         {weapon_details.barrel[0] === "NA" ? (
           <></>
         ) : (
-          <div className="grid-item">
-            <p className={ScoutItalic.className}>Barrel</p>
-            <div className="inner-attachment">
+          <Card className="grid-item">
+            <h2 className={ScoutItalic.className}>Barrel</h2>
+            <CardContent className="inner-attachment">
               <img
                 src={weapon_details.barrel[1]}
                 alt={weapon_details.barrel[0]}
               />
               <p>{weapon_details.barrel[0]}</p>
-            </div>
-          </div>
+            </CardContent>
+          </Card>
         )}
 
         {weapon_details.grip[0] === "NA" ? (
           <></>
         ) : (
-          <div className="grid-item">
-            <p className={ScoutItalic.className}>Grip</p>
-            <div className="inner-attachment">
+          <Card className="grid-item">
+            <h2 className={ScoutItalic.className}>Grip</h2>
+            <CardContent className="inner-attachment">
               <img src={weapon_details.grip[1]} alt={weapon_details.grip[0]} />
               <p>{weapon_details.grip[0]} Grip</p>
-            </div>
-          </div>
+            </CardContent>
+          </Card>
         )}
         {weapon_details.underbarrel[0] === "NA" ? (
           <></>
         ) : (
-          <div className="grid-item">
-            <p className={ScoutItalic.className}>Underbarrel</p>
-            <div className="inner-attachment">
+          <Card className="grid-item">
+            <h2 className={ScoutItalic.className}>Underbarrel</h2>
+            <CardContent className="inner-attachment">
               <img src={weapon_details.underbarrel[1]} alt="None"></img>
               <p>{weapon_details.underbarrel[0]}</p>
-            </div>
-          </div>
+            </CardContent>
+          </Card>
         )}
       </div>
     </div>

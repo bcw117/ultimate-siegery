@@ -6,6 +6,7 @@ import GameDisplay from "./GameDisplay";
 import { OperatorFilter } from "@/types/operator";
 
 type Props = {
+  gameMode: string;
   bans: boolean;
   maxRounds: number;
   maxOT: number;
@@ -148,6 +149,7 @@ const Classic = (props: Props) => {
         </div>
       ) : (
         <Selection
+          gameMode={props.gameMode}
           data={filterOperators}
           setSidePicked={setSidePicked}
           handleClick={handleClick}

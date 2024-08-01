@@ -22,7 +22,7 @@
 }
 
 .attachments .grid-item {
-  background-color: #a6a9b4;
+  background-color: #727984;
 }
 
 .attachments img {
@@ -33,7 +33,7 @@
   max-height: 85px;
 }
 
-.grid-item p {
+.grid-item h2 {
   color: #24262a;
   font-size: 2rem;
   line-height: 0.9;
@@ -52,4 +52,5 @@
 
 .inner-attachment p {
   font-size: 1rem;
+  color: #24262a;
 }

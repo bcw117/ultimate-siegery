@@ -42,7 +42,6 @@
 }
 
 .loadout-container {
-  display: grid;
   margin-left: 2rem;
 }
 
@@ -55,7 +54,6 @@
   flex-direction: column;
   align-items: center;
   gap: 0.75rem;
-  margin-top: 20px;
 }
 
 .gadget {
