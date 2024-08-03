@@ -62,8 +62,8 @@ const FilterOperator = (props: Props) => {
   };
 
   return (
-    <div className="flex flex-col items-center relative min-w-[375px]">
-      <div className="flex absolute w-full max-w-sm items-end space-x-2 mb-2">
+    <div className="flex relative -top-20 flex-col items-center min-w-[375px] align-middle">
+      <div className="flex absolute -top-20 w-full max-w-sm items-end space-x-2 mb-2">
         <div className="flex flex-col gap-[5px] w-full">
           <Label className="text-lg" htmlFor="filter">
             Search
@@ -121,7 +121,7 @@ const FilterOperator = (props: Props) => {
           </PopoverContent>
         </Popover>
       </div>
-      <div className="filter-container absolute top-20">
+      <div className="filter-container absolute">
         {filterOperators
           .filter((operator) => {
             return checkFilters(operator);

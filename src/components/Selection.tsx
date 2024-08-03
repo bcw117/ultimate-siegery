@@ -40,7 +40,7 @@ const Selection = (props: Props) => {
     return false;
   };
   return (
-    <div className="w-full flex flex-row justify-evenly items-center ">
+    <div className="w-full flex flex-row justify-evenly items-center">
       <div className="selection font-ScoutCond-BoldItalic">
         <h1 className={"text-4xl"}>{props.gameMode.toUpperCase()}</h1>
         <h2 className={"text-4xl"}>Select the side your are starting on:</h2>
@@ -112,9 +112,7 @@ const Selection = (props: Props) => {
           </AlertDialog>
         </div>
       </div>
-      <div className="min-h-[65vh]">
-        <FilterOperator handleClick={props.handleClick} data={props.data} />
-      </div>
+      <FilterOperator handleClick={props.handleClick} data={props.data} />
     </div>
   );
 };
