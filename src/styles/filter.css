@@ -1,11 +1,12 @@
 .filter-container {
   display: grid;
   grid-template-columns: repeat(8, auto);
-  grid-gap: 3px;
+  grid-gap: 2px;
+  min-width: inherit;
 }
 
 .filter-container img {
-  min-width: 40px;
+  max-width: 40px;
 }
 
 .grid-icon {

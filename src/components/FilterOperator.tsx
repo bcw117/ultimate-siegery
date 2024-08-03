@@ -1,5 +1,5 @@
 "use client";
-import * as React from "react";
+import React, { useState } from "react";
 import { OperatorFilter } from "@/types/operator";
 import "@styles/filter.css";
 
@@ -41,19 +41,40 @@ const filters = [
 
 const FilterOperator = (props: Props) => {
   const filterOperators = props.data;
-  const [open, setOpen] = React.useState(false);
-  const [value, setValue] = React.useState("");
+  const [open, setOpen] = useState(false);
+  const [value, setValue] = useState("");
+  const [input, setInput] = useState("");
+
+  const checkFilters = (operator: OperatorFilter) => {
+    const userQuery = operator.name.substring(0, input.length) === input;
+
+    if (value === "attackers") {
+      return userQuery && operator.side === "A";
+    } else if (value === "defenders") {
+      return userQuery && operator.side === "D";
+    } else {
+      return userQuery;
+    }
+  };
+
+  const handleInput = (e: any) => {
+    setInput(e.target.value);
+  };
 
   return (
-    <div className="flex flex-col ">
-      <div className="flex w-full max-w-sm items-end space-x-2 mb-2">
+    <div className="flex flex-col items-center relative min-w-[375px]">
+      <div className="flex absolute w-full max-w-sm items-end space-x-2 mb-2">
         <div className="flex flex-col gap-[5px] w-full">
           <Label className="text-lg" htmlFor="filter">
             Search
           </Label>
-          <Input id="filter" type="text" placeholder="Filter operators..." />
+          <Input
+            id="filter"
+            type="text"
+            placeholder="Filter operators..."
+            onChange={handleInput}
+          />
         </div>
-
         <Popover open={open} onOpenChange={setOpen}>
           <PopoverTrigger asChild>
             <Button
@@ -71,7 +92,7 @@ const FilterOperator = (props: Props) => {
           <PopoverContent className="w-[200px] p-0">
             <Command>
               <CommandInput placeholder="Filters" />
-              <CommandEmpty>No framework found.</CommandEmpty>
+              <CommandEmpty>No filter found</CommandEmpty>
               <CommandList>
                 <CommandGroup>
                   {filters.map((framework) => (
@@ -100,21 +121,25 @@ const FilterOperator = (props: Props) => {
           </PopoverContent>
         </Popover>
       </div>
-      <div className="filter-container">
-        {filterOperators.map((operator: OperatorFilter, i) => {
-          return (
-            <img
-              className={
-                "grid-icon " +
-                (operator.selected ? "opacity-50" : "opacity-100")
-              }
-              src={`/icons/${operator.name}.svg`}
-              alt={operator + "Icon"}
-              onClick={() => props.handleClick(operator.name)}
-              key={i}
-            />
-          );
-        })}
+      <div className="filter-container absolute top-20">
+        {filterOperators
+          .filter((operator) => {
+            return checkFilters(operator);
+          })
+          .map((operator: OperatorFilter, i) => {
+            return (
+              <img
+                className={
+                  "grid-icon " +
+                  (operator.selected ? "opacity-50" : "opacity-100")
+                }
+                src={`/icons/${operator.name}.svg`}
+                alt={operator + "Icon"}
+                onClick={() => props.handleClick(operator.name)}
+                key={i}
+              />
+            );
+          })}
       </div>
     </div>
   );

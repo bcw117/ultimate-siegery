@@ -112,7 +112,9 @@ const Selection = (props: Props) => {
           </AlertDialog>
         </div>
       </div>
-      <FilterOperator handleClick={props.handleClick} data={props.data} />
+      <div className="min-h-[65vh]">
+        <FilterOperator handleClick={props.handleClick} data={props.data} />
+      </div>
     </div>
   );
 };
