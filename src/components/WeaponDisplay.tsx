@@ -32,11 +32,14 @@ const WeaponDisplay = (props: Props) => {
             <CardTitle>
               <h2 className="font-ScoutCond-BoldItalic">Scope</h2>
             </CardTitle>
-            <CardContent className="inner-attachment">
-              <img
-                src={weapon_details.scope[1]}
-                alt={weapon_details.scope[0]}
-              />
+            <CardContent className="attachment-content">
+              <div className="flex items-center min-h-[75px]">
+                <img
+                  src={weapon_details.scope[1]}
+                  alt={weapon_details.scope[0]}
+                />
+              </div>
+
               <p>{weapon_details.scope[0]}</p>
             </CardContent>
           </Card>
@@ -46,11 +49,14 @@ const WeaponDisplay = (props: Props) => {
         ) : (
           <Card className="grid-item">
             <h2 className={ScoutItalic.className}>Barrel</h2>
-            <CardContent className="inner-attachment">
-              <img
-                src={weapon_details.barrel[1]}
-                alt={weapon_details.barrel[0]}
-              />
+            <CardContent className="attachment-content">
+              <div className="flex items-center min-h-[75px]">
+                <img
+                  src={weapon_details.barrel[1]}
+                  alt={weapon_details.barrel[0]}
+                />
+              </div>
+
               <p>{weapon_details.barrel[0]}</p>
             </CardContent>
           </Card>
@@ -61,8 +67,14 @@ const WeaponDisplay = (props: Props) => {
         ) : (
           <Card className="grid-item">
             <h2 className={ScoutItalic.className}>Grip</h2>
-            <CardContent className="inner-attachment">
-              <img src={weapon_details.grip[1]} alt={weapon_details.grip[0]} />
+            <CardContent className="attachment-content">
+              <div className="flex items-center min-h-[75px]">
+                <img
+                  src={weapon_details.grip[1]}
+                  alt={weapon_details.grip[0]}
+                />
+              </div>
+
               <p>{weapon_details.grip[0]} Grip</p>
             </CardContent>
           </Card>
@@ -72,8 +84,11 @@ const WeaponDisplay = (props: Props) => {
         ) : (
           <Card className="grid-item">
             <h2 className={ScoutItalic.className}>Underbarrel</h2>
-            <CardContent className="inner-attachment">
-              <img src={weapon_details.underbarrel[1]} alt="None"></img>
+            <CardContent className="attachment-content">
+              <div className="flex items-center min-h-[75px]">
+                <img src={weapon_details.underbarrel[1]} alt="None"></img>
+              </div>
+
               <p>{weapon_details.underbarrel[0]}</p>
             </CardContent>
           </Card>

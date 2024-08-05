@@ -83,7 +83,7 @@ const Selection = (props: Props) => {
               className="defense-button"
               onClick={() => {
                 if (checkFilter()) {
-                  setSidePicked("attacking");
+                  setSidePicked("defending");
                 } else {
                   setOpen(true);
                 }

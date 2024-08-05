@@ -24,7 +24,7 @@ const GameDisplay = (props: Props) => {
     <div className="wrapper">
       {bans ? (
         <div>
-          <BanDisplay side="A" />
+          <BanDisplay attackers={attackers} defenders={defenders} />
         </div>
       ) : (
         <></>

@@ -7,7 +7,7 @@ import {
   OperatorResponse,
   WeaponResponse,
 } from "@customTypes/operator";
-import { Card, CardContent } from "@/components/ui/card";
+import { Card, CardContent, CardTitle } from "@/components/ui/card";
 import "@styles/operatordisplay.css";
 import WeaponDisplay from "./WeaponDisplay";
 
@@ -80,15 +80,19 @@ const OperatorInfo = (props: Props) => {
                 alt={operator.name + "Icon"}
               />
             </div>
-            <div className="gadget-container">
-              <h2 className="font-ScoutCond-BoldItalic text-4xl">Gadget</h2>
-              <h3>{gadget[0]}</h3>
-              <img
-                className="gadget"
-                src={gadget[1]}
-                alt={gadget[0] + "Icon"}
-              />
-            </div>
+            <Card className="gadget-container">
+              <CardTitle>
+                <h2 className="font-ScoutCond-BoldItalic text-4xl">Gadget</h2>
+              </CardTitle>
+              <CardContent className="flex flex-col gap-5">
+                <h3>{gadget[0]}</h3>
+                <img
+                  className="gadget"
+                  src={gadget[1]}
+                  alt={gadget[0] + "Icon"}
+                />
+              </CardContent>
+            </Card>
           </div>
           <div className="loadout-container">
             <h1 className="font-ScoutCond-BoldItalic text-6xl">Loadout</h1>
