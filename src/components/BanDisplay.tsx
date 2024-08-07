@@ -103,27 +103,31 @@ const BanDisplay = (props: Props) => {
     return false;
   }
 
-  const setBans = () => {
-    let attackingOperators = availableOperators.filter((operator) => {
-      return operator.side === "A";
-    });
-    let defendingOperators = availableOperators.filter((operator) => {
-      return operator.side === "D";
-    });
-
-    setBannedAttacker(
-      attackingOperators[Math.floor(Math.random() * attackingOperators.length)]
-    );
-    setBannedDefender(
-      defendingOperators[Math.floor(Math.random() * defendingOperators.length)]
-    );
-  };
-
   useEffect(() => {
+    const setBans = () => {
+      let attackingOperators = availableOperators.filter((operator) => {
+        return operator.side === "A";
+      });
+      let defendingOperators = availableOperators.filter((operator) => {
+        return operator.side === "D";
+      });
+
+      setBannedAttacker(
+        attackingOperators[
+          Math.floor(Math.random() * attackingOperators.length)
+        ]
+      );
+      setBannedDefender(
+        defendingOperators[
+          Math.floor(Math.random() * defendingOperators.length)
+        ]
+      );
+    };
+
     if (!bannedAttacker && !bannedDefender) {
       setBans();
     }
-  }, [bannedAttacker, bannedDefender]);
+  }, [bannedAttacker, bannedDefender, availableOperators]);
 
   return (
     <div className="text-center font-ScoutCond-BoldItalic mt-5 mb-10">
