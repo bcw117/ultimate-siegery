@@ -8,14 +8,18 @@
   line-height: 1;
 }
 
+.background-wrapper {
+  background: url("../../public/homepage.jpg");
+  background-position: center;
+  background-size: cover;
+}
+
 .home-wrapper {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 5vh;
   min-height: 100vh;
-  background-image: url("../../public/homepage.jpg");
-  background-position: center;
 }
 
 .home-wrapper header {

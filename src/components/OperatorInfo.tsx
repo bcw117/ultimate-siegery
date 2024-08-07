@@ -10,6 +10,7 @@ import {
 import { Card, CardContent, CardTitle } from "@/components/ui/card";
 import "@styles/operatordisplay.css";
 import WeaponDisplay from "./WeaponDisplay";
+import { Skeleton } from "@/components/ui/skeleton";
 
 interface Props {
   operatorName: string;
@@ -108,8 +109,13 @@ const OperatorInfo = (props: Props) => {
           </div>
         </div>
       ) : (
-        <div>
-          <h1>Loading</h1>
+        <div className="flex flex-row space-x-10">
+          <div className="space-y-4">
+            <Skeleton className="h-[30rem] w-[20rem]" />
+            <Skeleton className="h-[9rem] w-[20rem]" />
+          </div>
+
+          <Skeleton className="h-[40rem] w-[30rem]" />
         </div>
       )}
     </>

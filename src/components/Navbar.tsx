@@ -9,20 +9,21 @@ import {
   navigationMenuTriggerStyle,
   gameModeTriggerStyle,
 } from "@/components/ui/navigation-menu";
-import "@styles/navbar.css";
 
 export function Navbar() {
   return (
-    <div className="navbar">
+    <div className="flex flex-row justify-evenly items-center min-h-[5vh] p-3 bg-black">
       <Link href="/">
-        <p className="navbar-logo font-ScoutCond-BoldItalic">
+        <p className="text-4xl font-ScoutCond-Bold font-bold">
           Ultimate Siegery
         </p>
       </Link>
       <NavigationMenu>
         <NavigationMenuList>
           <NavigationMenuItem>
-            <NavigationMenuTrigger>Game Modes </NavigationMenuTrigger>
+            <NavigationMenuTrigger>
+              <p>Game Modes</p>
+            </NavigationMenuTrigger>
             <NavigationMenuContent>
               <Link href="/casual" legacyBehavior passHref>
                 <NavigationMenuLink className={gameModeTriggerStyle()}>

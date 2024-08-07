@@ -1,15 +1,26 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Inter, Poppins } from "next/font/google";
 import localFont from "next/font/local";
 import { Navbar } from "@/components/Navbar";
 import { Theme } from "@/providers/Theme";
 import Footer from "@/components/Footer";
 import "./globals.css";
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({ subsets: ["latin"], variable: "--font-Inter" });
+
+const poppins = Poppins({
+  subsets: ["latin"],
+  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
+  variable: "--font-Poppins",
+});
+
 const ScoutBoldItalic = localFont({
   src: "../fonts/ScoutCond-BoldItalic.otf",
   variable: "--font-ScoutCond-BoldItalic",
+});
+const ScoutBold = localFont({
+  src: "../fonts/ScoutCond-Bold.otf",
+  variable: "--font-ScoutCond-Bold",
 });
 
 export const metadata: Metadata = {
@@ -24,12 +35,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="dark" suppressHydrationWarning>
-      <body className={`${inter.className} ${ScoutBoldItalic.variable}`}>
-        <Theme>
-          <Navbar />
-          {children}
-          <Footer />
-        </Theme>
+      <body
+        className={`${inter.variable} ${poppins.variable} ${ScoutBoldItalic.variable} ${ScoutBold.variable}`}
+      >
+        <Theme>{children}</Theme>
       </body>
     </html>
   );

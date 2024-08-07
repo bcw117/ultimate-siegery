@@ -20,6 +20,12 @@ const config = {
     extend: {
       fontFamily: {
         "ScoutCond-BoldItalic": "var(--font-ScoutCond-BoldItalic)",
+        "ScoutCond-Bold": "var(--font-ScoutCond-Bold)",
+        Poppins: "var(--font-Poppins)",
+        Inter: "var(--font-Inter)",
+      },
+      backgroundImage: {
+        smoke: "url('../../public/smoke-background.jpg')",
       },
       colors: {
         border: "hsl(var(--border))",

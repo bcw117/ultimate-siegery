@@ -4,7 +4,7 @@ import "@styles/rules.css";
 const rules = () => {
   return (
     <div className="rules">
-      <h1>RULES</h1>
+      <h1 className="font-ScoutCond-BoldItalic text-[5rem]">RULES</h1>
       <ol className="list-decimal">
         <li>Select the correct mode you&apos;re playing and starting side.</li>
         <li>
