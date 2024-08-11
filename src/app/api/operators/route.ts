@@ -30,6 +30,24 @@ const s3 = new S3Client({
   region: BUCKET_REGION,
 });
 
+async function operatorQuery(name: string) {
+  const sql =
+    "SELECT * FROM operator WHERE name = $1 ORDER BY RANDOM() LIMIT 1";
+  try {
+    const response = await pool.query(sql, [name]);
+    const results = response.rows[0] as Operator;
+    const getObjectParams = {
+      Bucket: BUCKET_NAME,
+      Key: `portraits/${results.name.toUpperCase()}.png`,
+    };
+    const command = new GetObjectCommand(getObjectParams);
+    const url = await getSignedUrl(s3, command, { expiresIn: 3600 });
+    return { operator: results, portrait: url };
+  } catch (error) {
+    return error as Error;
+  }
+}
+
 async function getAttachmentIcon(attachmentName: string) {
   if (attachmentName !== "NA") {
     const getObjectParams = {
@@ -84,24 +102,6 @@ async function selectAttachments(weapon: WeaponOptions) {
   };
 }
 
-async function operatorQuery(name: string) {
-  const sql =
-    "SELECT * FROM operator WHERE name = $1 ORDER BY RANDOM() LIMIT 1";
-  try {
-    const response = await pool.query(sql, [name]);
-    const results = response.rows[0] as Operator;
-    const getObjectParams = {
-      Bucket: BUCKET_NAME,
-      Key: `portraits/${results.name.toUpperCase()}.png`,
-    };
-    const command = new GetObjectCommand(getObjectParams);
-    const url = await getSignedUrl(s3, command, { expiresIn: 3600 });
-    return { operator: results, portrait: url };
-  } catch (error) {
-    return error;
-  }
-}
-
 async function weaponQuery(primary: string, secondary: string) {
   const sql = "SELECT * FROM weapon WHERE name = $1 or name = $2";
   try {
@@ -124,7 +124,7 @@ export async function GET(req: NextRequest) {
     const opQuery = await operatorQuery(query);
 
     if (opQuery instanceof Error) {
-      return NextResponse.json({ Error: opQuery.message });
+      return NextResponse.json({ Error: opQuery.message }, { status: 404 });
     }
 
     const operatorData = opQuery as OperatorResponse;
@@ -147,10 +147,13 @@ export async function GET(req: NextRequest) {
     const gadget = gadgets[Math.floor(Math.random() * gadgets.length)];
     const gadgetIcon = await getGadgetIcon(gadget);
 
-    return NextResponse.json({
-      operatorData,
-      weaponData,
-      gadget: [gadget, gadgetIcon],
-    });
+    return NextResponse.json(
+      {
+        operatorData,
+        weaponData,
+        gadget: [gadget, gadgetIcon],
+      },
+      { status: 200 }
+    );
   }
 }

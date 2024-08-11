@@ -19,6 +19,7 @@
     ],
     "paths": {
       "@/*": ["./src/*"],
+      "@api/*": ["./src/app/api/*"],
       "@customTypes/*": ["./src/types/*"],
       "@public/*": ["./public/icons/*"],
       "@styles/*": ["./src/styles/*"]
