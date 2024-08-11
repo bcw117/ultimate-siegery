@@ -69,8 +69,6 @@ test("API contains correct operator information about a defender", async () => {
   const status = response.status;
   const operator = data.operatorData.operator;
 
-  console.log(data);
-
   expect(operator).toHaveProperty("id", 43);
   expect(operator).toHaveProperty("name", "Doc");
   expect(operator).toHaveProperty("primary");
@@ -99,8 +97,6 @@ test("API identifies an invalid operator name", async () => {
   );
   const data = await response.json();
   const status = response.status;
-
-  console.log(data);
 
   expect(data).toHaveProperty(
     "Error",
