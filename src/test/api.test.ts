@@ -34,7 +34,7 @@ test("API returns the correct response structure", async () => {
   expect(status).toBe(200);
 });
 
-test("API contains correct operator information about an attacker", async () => {
+test("API returns correct operator information about an operator", async () => {
   const response = await fetch(
     `${process.env.TEST_DOMAIN}/api/operators?name=Ace`
   );
@@ -61,32 +61,53 @@ test("API contains correct operator information about an attacker", async () => 
   expect(status).toBe(200);
 });
 
-test("API contains correct operator information about a defender", async () => {
+test("API contains correct weapon structure", async () => {
   const response = await fetch(
-    `${process.env.TEST_DOMAIN}/api/operators?name=Doc`
+    `${process.env.TEST_DOMAIN}/api/operators?name=Ace`
   );
   const data = (await response.json()) as APIResponse;
   const status = response.status;
-  const operator = data.operatorData.operator;
+  const primaryWeaponData = data.weaponData.primary;
+  const secondaryWeaponData = data.weaponData.secondary;
 
-  expect(operator).toHaveProperty("id", 43);
-  expect(operator).toHaveProperty("name", "Doc");
-  expect(operator).toHaveProperty("primary");
-  expect(operator).toHaveProperty("secondary");
-  expect(operator).toHaveProperty("gadgets");
+  expect(primaryWeaponData).toHaveProperty("name");
+  expect(primaryWeaponData).toHaveProperty("type");
+  expect(primaryWeaponData).toHaveProperty("scope");
+  expect(primaryWeaponData).toHaveProperty("barrel");
+  expect(primaryWeaponData).toHaveProperty("grip");
+  expect(primaryWeaponData).toHaveProperty("underbarrel");
+  expect(primaryWeaponData).toHaveProperty("icon_url");
 
-  expect(operator.primary).toContain("SG-CQB");
-  expect(operator.primary).toContain("MP5");
-  expect(operator.primary).toContain("P90");
+  expect(secondaryWeaponData).toHaveProperty("name");
+  expect(secondaryWeaponData).toHaveProperty("type");
+  expect(secondaryWeaponData).toHaveProperty("scope");
+  expect(secondaryWeaponData).toHaveProperty("barrel");
+  expect(secondaryWeaponData).toHaveProperty("grip");
+  expect(secondaryWeaponData).toHaveProperty("underbarrel");
+  expect(secondaryWeaponData).toHaveProperty("icon_url");
 
-  expect(operator.secondary).toContain("P9");
-  expect(operator.secondary).toContain("LFP586");
-  expect(operator.secondary).toContain("Bailiff 410");
+  expect(status).toBe(200);
+});
 
-  expect(operator.gadgets).toContain("Barbed Wire");
-  expect(operator.gadgets).toContain("Bulletproof Camera");
+test("API contains correct information a shield operator", async () => {
+  const response = await fetch(
+    `${process.env.TEST_DOMAIN}/api/operators?name=Clash`
+  );
+  const data = (await response.json()) as APIResponse;
+  const status = response.status;
+  const primaryWeaponData = data.weaponData.primary;
 
-  expect(operator).toHaveProperty("side", "D");
+  let expectedResponse = {
+    type: "NA",
+    icon_url: "",
+  };
+
+  expect(primaryWeaponData).toHaveProperty("name", "CCE SHIELD");
+  expect(primaryWeaponData).toHaveProperty("type", "Shield");
+  expect(primaryWeaponData).toHaveProperty("barrel", expectedResponse);
+  expect(primaryWeaponData).toHaveProperty("barrel", expectedResponse);
+  expect(primaryWeaponData).toHaveProperty("grip", expectedResponse);
+  expect(primaryWeaponData).toHaveProperty("underbarrel", expectedResponse);
 
   expect(status).toBe(200);
 });

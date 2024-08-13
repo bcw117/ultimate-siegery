@@ -31,8 +31,7 @@ const s3 = new S3Client({
 });
 
 async function operatorQuery(name: string) {
-  const sql =
-    "SELECT * FROM operator WHERE name = $1 ORDER BY RANDOM() LIMIT 1";
+  const sql = "SELECT * FROM operator WHERE name = $1 LIMIT 1";
   try {
     const response = await pool.query(sql, [name]);
     const results = response.rows[0] as Operator;
@@ -75,7 +74,7 @@ async function getAttachment(attachments: string[]) {
   const attachment =
     attachments[Math.floor(Math.random() * attachments.length)];
   const attachmentIcon = await getAttachmentIcon(attachment);
-  return [attachment, attachmentIcon];
+  return { type: attachment, icon_url: attachmentIcon };
 }
 
 async function selectAttachments(weapon: WeaponOptions) {
@@ -97,7 +96,7 @@ async function selectAttachments(weapon: WeaponOptions) {
     scope: scopeData,
     barrel: barrelData,
     grip: gripData,
-    underbarrel: [underbarrel, underbarrelIcon],
+    underbarrel: { type: underbarrel, icon_url: underbarrelIcon },
     icon_url: weapon.icon_url,
   };
 }

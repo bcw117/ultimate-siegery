@@ -18,10 +18,15 @@ export type WeaponOptions = {
 export type Weapon = {
   name: string;
   type: string;
-  scope: string[];
-  barrel: string[];
-  grip: string[];
-  underbarrel: string;
+  scope: Attachment;
+  barrel: Attachment;
+  grip: Attachment;
+  underbarrel: Attachment;
+  icon_url: string;
+};
+
+export type Attachment = {
+  type: string;
   icon_url: string;
 };
 
