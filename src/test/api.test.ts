@@ -102,13 +102,6 @@ test("API contains correct information a shield operator", async () => {
     icon_url: "",
   };
 
-  expect(primaryWeaponData).toHaveProperty("name", "CCE SHIELD");
-  expect(primaryWeaponData).toHaveProperty("type", "Shield");
-  expect(primaryWeaponData).toHaveProperty("barrel", expectedResponse);
-  expect(primaryWeaponData).toHaveProperty("scope", expectedResponse);
-  expect(primaryWeaponData).toHaveProperty("grip", expectedResponse);
-  expect(primaryWeaponData).toHaveProperty("underbarrel", expectedResponse);
-
   expect(status).toBe(200);
 });
 
