@@ -30,6 +30,66 @@ const s3 = new S3Client({
   region: BUCKET_REGION,
 });
 
+const defendersWithAcog = [
+  "Tubarao",
+  "Azami",
+  "Aruni",
+  "Goyo",
+  "Kaid",
+  "Alibi",
+  "Vigil",
+  "Echo",
+  "Frost",
+  "Castle",
+  "Doc",
+  "Rook",
+  "Tachanka",
+];
+
+export async function GET(req: NextRequest) {
+  const searchParams = req.nextUrl.searchParams;
+  const query = searchParams.get("name");
+
+  if (query) {
+    const opQuery = await operatorQuery(query);
+
+    if (opQuery instanceof Error) {
+      return NextResponse.json({ Error: opQuery.message }, { status: 404 });
+    }
+
+    const operatorData = opQuery as OperatorResponse;
+
+    const primaries = operatorData.operator.primary;
+    const secondaries = operatorData.operator.secondary;
+
+    const gunQuery = await weaponQuery(
+      primaries[Math.floor(Math.random() * primaries.length)],
+      secondaries[Math.floor(Math.random() * secondaries.length)],
+      operatorData.operator.side,
+      operatorData.operator.name
+    );
+
+    if (gunQuery instanceof Error) {
+      return NextResponse.json({ Error: gunQuery.message });
+    }
+
+    const weaponData = gunQuery as WeaponResponse;
+
+    const gadgets = operatorData.operator.gadgets;
+    const gadget = gadgets[Math.floor(Math.random() * gadgets.length)];
+    const gadgetIcon = await getGadgetIcon(gadget);
+
+    return NextResponse.json(
+      {
+        operatorData,
+        weaponData,
+        gadget: [gadget, gadgetIcon],
+      },
+      { status: 200 }
+    );
+  }
+}
+
 async function operatorQuery(name: string) {
   const sql = "SELECT * FROM operator WHERE name = $1 LIMIT 1";
   try {
@@ -70,17 +130,33 @@ async function getGadgetIcon(gadgetName: string) {
   return url as string;
 }
 
-async function getAttachment(attachments: string[]) {
+async function filterScopes(attachments: string[], side = "A", name: string) {
+  let viableAttachments = attachments;
+  if (side === "D" && !defendersWithAcog.includes(name)) {
+    viableAttachments = attachments.filter(
+      (attachment) =>
+        !attachment.includes("Magnified") || !attachment.includes("Telescopic")
+    );
+  }
+  return viableAttachments;
+}
+
+async function getRandomAttachment(attachments: string[]) {
   const attachment =
     attachments[Math.floor(Math.random() * attachments.length)];
   const attachmentIcon = await getAttachmentIcon(attachment);
   return { type: attachment, icon_url: attachmentIcon };
 }
 
-async function selectAttachments(weapon: WeaponOptions) {
-  const scopeData = await getAttachment(weapon.scopes);
-  const barrelData = await getAttachment(weapon.barrels);
-  const gripData = await getAttachment(weapon.grips);
+async function selectAttachments(
+  weapon: WeaponOptions,
+  side: string,
+  name: string
+) {
+  const scopes = await filterScopes(weapon.scopes, side, name);
+  const scopeData = await getRandomAttachment(scopes);
+  const barrelData = await getRandomAttachment(weapon.barrels);
+  const gripData = await getRandomAttachment(weapon.grips);
 
   const underbarrels = ["Laser", "None"];
   var underbarrel =
@@ -101,58 +177,21 @@ async function selectAttachments(weapon: WeaponOptions) {
   };
 }
 
-async function weaponQuery(primary: string, secondary: string) {
+async function weaponQuery(
+  primary: string,
+  secondary: string,
+  side: string,
+  name: string
+) {
   const sql = "SELECT * FROM weapon WHERE name = $1 or name = $2";
   try {
     const response = await pool.query(sql, [primary, secondary]);
     const results = response.rows as WeaponOptions[];
-    const primaryLoadout = await selectAttachments(results[0]);
-    const secondaryLoadout = await selectAttachments(results[1]);
+    const primaryLoadout = await selectAttachments(results[0], side, name);
+    const secondaryLoadout = await selectAttachments(results[1], side, name);
 
     return { primary: primaryLoadout, secondary: secondaryLoadout };
   } catch (error) {
     return error;
-  }
-}
-
-export async function GET(req: NextRequest) {
-  const searchParams = req.nextUrl.searchParams;
-  const query = searchParams.get("name");
-
-  if (query) {
-    const opQuery = await operatorQuery(query);
-
-    if (opQuery instanceof Error) {
-      return NextResponse.json({ Error: opQuery.message }, { status: 404 });
-    }
-
-    const operatorData = opQuery as OperatorResponse;
-
-    const primaries = operatorData.operator.primary;
-    const secondaries = operatorData.operator.secondary;
-
-    const gunQuery = await weaponQuery(
-      primaries[Math.floor(Math.random() * primaries.length)],
-      secondaries[Math.floor(Math.random() * secondaries.length)]
-    );
-
-    if (gunQuery instanceof Error) {
-      return NextResponse.json({ Error: gunQuery.message });
-    }
-
-    const weaponData = gunQuery as WeaponResponse;
-
-    const gadgets = operatorData.operator.gadgets;
-    const gadget = gadgets[Math.floor(Math.random() * gadgets.length)];
-    const gadgetIcon = await getGadgetIcon(gadget);
-
-    return NextResponse.json(
-      {
-        operatorData,
-        weaponData,
-        gadget: [gadget, gadgetIcon],
-      },
-      { status: 200 }
-    );
   }
 }
