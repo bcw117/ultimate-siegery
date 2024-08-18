@@ -54,47 +54,50 @@ function getRandomElement<T>(array: T[]): T {
   return array[Math.floor(Math.random() * array.length)];
 }
 
+async function getS3SignedUrl(bucketKey: string) {
+  const command = new GetObjectCommand({
+    Bucket: process.env.BUCKET_NAME,
+    Key: bucketKey,
+  });
+  return getSignedUrl(s3, command, { expiresIn: 3600 });
+}
+
 export async function GET(req: NextRequest) {
-  const searchParams = req.nextUrl.searchParams;
-  const query = searchParams.get("name");
+  const query = req.nextUrl.searchParams.get("name");
 
   if (query) {
-    const opQuery = await operatorQuery(query);
+    try {
+      const opQuery = await operatorQuery(query);
 
-    if (opQuery instanceof Error) {
-      handleError(opQuery);
+      const operatorData = opQuery as OperatorResponse;
+
+      const primaries = operatorData.operator.primary;
+      const secondaries = operatorData.operator.secondary;
+
+      const gunQuery = await weaponQuery(
+        getRandomElement(primaries),
+        getRandomElement(secondaries),
+        operatorData.operator.side,
+        operatorData.operator.name
+      );
+
+      const weaponData = gunQuery as WeaponResponse;
+
+      const gadgets = operatorData.operator.gadgets;
+      const gadget = getRandomElement(gadgets);
+      const gadgetIcon = await getS3SignedUrl(`gadgets/${gadget}.png`);
+
+      return NextResponse.json(
+        {
+          operatorData,
+          weaponData,
+          gadget: [gadget, gadgetIcon],
+        },
+        { status: 200 }
+      );
+    } catch (error) {
+      return handleError(error as Error);
     }
-
-    const operatorData = opQuery as OperatorResponse;
-
-    const primaries = operatorData.operator.primary;
-    const secondaries = operatorData.operator.secondary;
-
-    const gunQuery = await weaponQuery(
-      getRandomElement(primaries),
-      getRandomElement(secondaries),
-      operatorData.operator.side,
-      operatorData.operator.name
-    );
-
-    if (gunQuery instanceof Error) {
-      handleError(gunQuery);
-    }
-
-    const weaponData = gunQuery as WeaponResponse;
-
-    const gadgets = operatorData.operator.gadgets;
-    const gadget = getRandomElement(gadgets);
-    const gadgetIcon = await getGadgetIcon(gadget);
-
-    return NextResponse.json(
-      {
-        operatorData,
-        weaponData,
-        gadget: [gadget, gadgetIcon],
-      },
-      { status: 200 }
-    );
   }
 }
 
@@ -102,40 +105,32 @@ async function operatorQuery(name: string) {
   const sql = "SELECT * FROM operator WHERE name = $1 LIMIT 1";
   try {
     const response = await pool.query(sql, [name]);
-    const results = response.rows[0] as Operator;
-    const getObjectParams = {
-      Bucket: BUCKET_NAME,
-      Key: `portraits/${results.name.toUpperCase()}.png`,
-    };
-    const command = new GetObjectCommand(getObjectParams);
-    const url = await getSignedUrl(s3, command, { expiresIn: 3600 });
-    return { operator: results, portrait: url };
+    const operator = response.rows[0] as Operator;
+    const portraitUrl = await getS3SignedUrl(
+      `portraits/${operator.name.toUpperCase()}.png`
+    );
+    return { operator, portrait: portraitUrl };
   } catch (error) {
-    return error as Error;
+    throw error;
   }
 }
 
-async function getAttachmentIcon(attachmentName: string) {
-  if (attachmentName !== "NA") {
-    const getObjectParams = {
-      Bucket: BUCKET_NAME,
-      Key: `attachments/${attachmentName}.png`,
-    };
-    const command = new GetObjectCommand(getObjectParams);
-    const url = await getSignedUrl(s3, command, { expiresIn: 3600 });
-    return url as string;
-  }
-  return "";
-}
+async function weaponQuery(
+  primary: string,
+  secondary: string,
+  side: string,
+  name: string
+) {
+  const sql = "SELECT * FROM weapon WHERE name = ANY($1::text[])";
+  try {
+    const { rows } = await pool.query(sql, [[primary, secondary]]);
+    const primaryLoadout = await selectAttachments(rows[0], side, name);
+    const secondaryLoadout = await selectAttachments(rows[1], side, name);
 
-async function getGadgetIcon(gadgetName: string) {
-  const getObjectParams = {
-    Bucket: BUCKET_NAME,
-    Key: `gadgets/${gadgetName}.png`,
-  };
-  const command = new GetObjectCommand(getObjectParams);
-  const url = await getSignedUrl(s3, command, { expiresIn: 3600 });
-  return url as string;
+    return { primary: primaryLoadout, secondary: secondaryLoadout };
+  } catch (error) {
+    throw error;
+  }
 }
 
 async function filterScopes(attachments: string[], side = "A", name: string) {
@@ -151,7 +146,11 @@ async function filterScopes(attachments: string[], side = "A", name: string) {
 
 async function getRandomAttachment(attachments: string[]) {
   const attachment = getRandomElement(attachments);
-  const attachmentIcon = await getAttachmentIcon(attachment);
+  if (attachment === "NA") {
+    return { type: attachment, icon_url: "" };
+  }
+
+  const attachmentIcon = await getS3SignedUrl(`attachments/${attachment}.png`);
   return { type: attachment, icon_url: attachmentIcon };
 }
 
@@ -167,12 +166,16 @@ async function selectAttachments(
     getRandomAttachment(weapon.grips),
   ]);
 
+  let underbarrelIcon;
+
   const underbarrels = ["Laser", "None"];
   var underbarrel = getRandomElement(underbarrels);
-  if (weapon.type === "Hand Cannon" || weapon.type === "Shield") {
+  if (["Hand Cannon", "Shield"].includes(weapon.type)) {
     underbarrel = "NA";
+    underbarrelIcon = "";
+  } else {
+    underbarrelIcon = await getS3SignedUrl(`attachments/${underbarrel}.png`);
   }
-  const underbarrelIcon = await getAttachmentIcon(underbarrel);
 
   return {
     name: weapon.name,
@@ -183,23 +186,4 @@ async function selectAttachments(
     underbarrel: { type: underbarrel, icon_url: underbarrelIcon },
     icon_url: weapon.icon_url,
   };
-}
-
-async function weaponQuery(
-  primary: string,
-  secondary: string,
-  side: string,
-  name: string
-) {
-  const sql = "SELECT * FROM weapon WHERE name = ANY($1::text[])";
-  try {
-    const response = await pool.query(sql, [[primary, secondary]]);
-    const results = response.rows as WeaponOptions[];
-    const primaryLoadout = await selectAttachments(results[0], side, name);
-    const secondaryLoadout = await selectAttachments(results[1], side, name);
-
-    return { primary: primaryLoadout, secondary: secondaryLoadout };
-  } catch (error) {
-    return error;
-  }
 }

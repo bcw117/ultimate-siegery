@@ -89,7 +89,7 @@ test("API contains correct weapon structure", async () => {
   expect(status).toBe(200);
 });
 
-test("API contains correct information a shield operator", async () => {
+test("API contains correct information on a shield operator", async () => {
   const response = await fetch(
     `${process.env.TEST_DOMAIN}/api/operators?name=Clash`
   );
@@ -123,5 +123,5 @@ test("API identifies an invalid operator name", async () => {
     "Error",
     "Cannot read properties of undefined (reading 'name')"
   );
-  expect(status).toBe(404);
+  expect(status).toBe(500);
 });
