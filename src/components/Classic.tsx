@@ -45,7 +45,7 @@ const operatorList: OperatorFilter[] = [
   { name: "grim", side: "A", selected: false },
   { name: "hibana", side: "A", selected: false },
   { name: "iana", side: "A", selected: false },
-  { name: "IQ", side: "A", selected: false },
+  { name: "iq", side: "A", selected: false },
   { name: "jackal", side: "A", selected: false },
   { name: "jager", side: "D", selected: false },
   { name: "kaid", side: "D", selected: false },
