@@ -112,7 +112,7 @@ test("API contains correct information on a shield operator", async () => {
   expect(status).toBe(200);
 });
 
-test("API identifies an invalid operator name", async () => {
+test("API correctly responds to an invalid operator name", async () => {
   const response = await fetch(
     `${process.env.TEST_DOMAIN}/api/operators?name=InvalidName`
   );
