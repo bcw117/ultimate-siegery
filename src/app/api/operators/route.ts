@@ -46,6 +46,14 @@ const defendersWithAcog = [
   "Tachanka",
 ];
 
+function handleError(error: Error) {
+  return NextResponse.json({ Error: error.message }, { status: 500 });
+}
+
+function getRandomElement<T>(array: T[]): T {
+  return array[Math.floor(Math.random() * array.length)];
+}
+
 export async function GET(req: NextRequest) {
   const searchParams = req.nextUrl.searchParams;
   const query = searchParams.get("name");
@@ -54,7 +62,7 @@ export async function GET(req: NextRequest) {
     const opQuery = await operatorQuery(query);
 
     if (opQuery instanceof Error) {
-      return NextResponse.json({ Error: opQuery.message }, { status: 404 });
+      handleError(opQuery);
     }
 
     const operatorData = opQuery as OperatorResponse;
@@ -63,20 +71,20 @@ export async function GET(req: NextRequest) {
     const secondaries = operatorData.operator.secondary;
 
     const gunQuery = await weaponQuery(
-      primaries[Math.floor(Math.random() * primaries.length)],
-      secondaries[Math.floor(Math.random() * secondaries.length)],
+      getRandomElement(primaries),
+      getRandomElement(secondaries),
       operatorData.operator.side,
       operatorData.operator.name
     );
 
     if (gunQuery instanceof Error) {
-      return NextResponse.json({ Error: gunQuery.message });
+      handleError(gunQuery);
     }
 
     const weaponData = gunQuery as WeaponResponse;
 
     const gadgets = operatorData.operator.gadgets;
-    const gadget = gadgets[Math.floor(Math.random() * gadgets.length)];
+    const gadget = getRandomElement(gadgets);
     const gadgetIcon = await getGadgetIcon(gadget);
 
     return NextResponse.json(
@@ -142,8 +150,7 @@ async function filterScopes(attachments: string[], side = "A", name: string) {
 }
 
 async function getRandomAttachment(attachments: string[]) {
-  const attachment =
-    attachments[Math.floor(Math.random() * attachments.length)];
+  const attachment = getRandomElement(attachments);
   const attachmentIcon = await getAttachmentIcon(attachment);
   return { type: attachment, icon_url: attachmentIcon };
 }
@@ -154,13 +161,14 @@ async function selectAttachments(
   name: string
 ) {
   const scopes = await filterScopes(weapon.scopes, side, name);
-  const scopeData = await getRandomAttachment(scopes);
-  const barrelData = await getRandomAttachment(weapon.barrels);
-  const gripData = await getRandomAttachment(weapon.grips);
+  const [scopeData, barrelData, gripData] = await Promise.all([
+    getRandomAttachment(scopes),
+    getRandomAttachment(weapon.barrels),
+    getRandomAttachment(weapon.grips),
+  ]);
 
   const underbarrels = ["Laser", "None"];
-  var underbarrel =
-    underbarrels[Math.floor(Math.random() * underbarrels.length)];
+  var underbarrel = getRandomElement(underbarrels);
   if (weapon.type === "Hand Cannon" || weapon.type === "Shield") {
     underbarrel = "NA";
   }
@@ -183,9 +191,9 @@ async function weaponQuery(
   side: string,
   name: string
 ) {
-  const sql = "SELECT * FROM weapon WHERE name = $1 or name = $2";
+  const sql = "SELECT * FROM weapon WHERE name = ANY($1::text[])";
   try {
-    const response = await pool.query(sql, [primary, secondary]);
+    const response = await pool.query(sql, [[primary, secondary]]);
     const results = response.rows as WeaponOptions[];
     const primaryLoadout = await selectAttachments(results[0], side, name);
     const secondaryLoadout = await selectAttachments(results[1], side, name);
