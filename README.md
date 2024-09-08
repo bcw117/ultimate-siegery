@@ -6,9 +6,6 @@ Ultimate Siegery is an app that helps spice up your already unpredictable experi
 
 Developed using Next.js, and PostgreSQL and deployed using Vercel.
 
-## Notes
-Disabled VPC in order to stop AWS costs. Security groups and VPC must be added back for the website to function properly when hosted on the web.
-
 ## Disclaimer
 "Ultimate Siegery" is an independent application and is not affiliated with, endorsed by, or associated with Ubisoft Entertainment in any way. All trademarks and copyrights related to Ubisoft products are the property of their respective owners.
 
