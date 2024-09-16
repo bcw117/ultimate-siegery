@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Inter, Poppins } from "next/font/google";
 import localFont from "next/font/local";
 import { Navbar } from "@/components/Navbar";
-import { Theme } from "@/providers/Theme";
 import Footer from "@/components/Footer";
 import "./globals.css";
 
@@ -38,7 +37,7 @@ export default function RootLayout({
       <body
         className={`${inter.variable} ${poppins.variable} ${ScoutBoldItalic.variable} ${ScoutBold.variable}`}
       >
-        <Theme>{children}</Theme>
+        {children}
       </body>
     </html>
   );

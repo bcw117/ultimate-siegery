@@ -4,7 +4,6 @@ import React, { useState } from "react";
 import Selection from "./Selection";
 import GameDisplay from "./GameDisplay";
 import { OperatorFilter } from "@/types/operator";
-import "@styles/test.css";
 
 type Props = {
   gameMode: string;
