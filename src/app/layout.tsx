@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
 import { Inter, Poppins } from "next/font/google";
 import localFont from "next/font/local";
-import { Navbar } from "@/components/Navbar";
-import Footer from "@/components/Footer";
+import { Analytics } from "@vercel/analytics/react";
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-Inter" });
@@ -38,6 +37,7 @@ export default function RootLayout({
         className={`${inter.variable} ${poppins.variable} ${ScoutBoldItalic.variable} ${ScoutBold.variable}`}
       >
         {children}
+        <Analytics />
       </body>
     </html>
   );
