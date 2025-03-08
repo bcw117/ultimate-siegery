@@ -17,9 +17,10 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { AlertCircle } from "lucide-react";
+import { AlertCircle, Mail, User, Lock } from "lucide-react";
 import { signup } from "@/actions/auth";
 import { useUser } from "@/context/UserContext";
+import { Label } from "./ui/label";
 
 const passwordSchema = z
   .string()
@@ -132,13 +133,19 @@ export function SignUpForm() {
           control={form.control}
           name="username"
           render={({ field }) => (
-            <FormItem>
-              <FormLabel>Username</FormLabel>
-              <FormControl>
-                <Input placeholder="Harry" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
+            <div className="space-y-4">
+              <div className="space-y-2">
+                <Label htmlFor="fullName">Username</Label>
+                <div className="relative">
+                  <User className="absolute left-3 top-3 h-5 w-5 text-gray-400" />
+                  <Input
+                    placeholder="Enter your username"
+                    {...field}
+                    className="pl-10 bg-siege-dark border-siege-accent/30 focus:border-siege-accent"
+                  />
+                </div>
+              </div>
+            </div>
           )}
         />
 
@@ -147,13 +154,16 @@ export function SignUpForm() {
             control={form.control}
             name="firstName"
             render={({ field }) => (
-              <FormItem>
-                <FormLabel>First Name</FormLabel>
-                <FormControl>
-                  <Input placeholder="Harry" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
+              <div className="space-y-2">
+                <Label htmlFor="username">First Name</Label>
+                <div className="relative">
+                  <Input
+                    placeholder="Harry"
+                    {...field}
+                    className="bg-siege-dark border-siege-accent/30 focus:border-siege-accent"
+                  />
+                </div>
+              </div>
             )}
           />
 
@@ -161,13 +171,16 @@ export function SignUpForm() {
             control={form.control}
             name="lastName"
             render={({ field }) => (
-              <FormItem>
-                <FormLabel>Last Name</FormLabel>
-                <FormControl>
-                  <Input placeholder="Pandey" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
+              <div className="space-y-2">
+                <Label htmlFor="email">Last Name</Label>
+                <div className="relative">
+                  <Input
+                    placeholder="Pandey"
+                    {...field}
+                    className="bg-siege-dark border-siege-accent/30 focus:border-siege-accent"
+                  />
+                </div>
+              </div>
             )}
           />
         </div>
@@ -176,13 +189,18 @@ export function SignUpForm() {
           control={form.control}
           name="email"
           render={({ field }) => (
-            <FormItem>
-              <FormLabel>Email</FormLabel>
-              <FormControl>
-                <Input placeholder="you@example.com" type="email" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
+            <div className="space-y-2">
+              <Label htmlFor="email">Email</Label>
+              <div className="relative">
+                <Mail className="absolute left-3 top-3 h-5 w-5 text-gray-400" />
+                <Input
+                  type="email"
+                  placeholder="Enter your email"
+                  {...field}
+                  className="pl-10 bg-siege-dark border-siege-accent/30 focus:border-siege-accent"
+                />
+              </div>
+            </div>
           )}
         />
 
@@ -190,13 +208,18 @@ export function SignUpForm() {
           control={form.control}
           name="password"
           render={({ field }) => (
-            <FormItem>
-              <FormLabel>Password</FormLabel>
-              <FormControl>
-                <Input type="password" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
+            <div className="space-y-2">
+              <Label htmlFor="password">Password</Label>
+              <div className="relative">
+                <Lock className="absolute left-3 top-3 h-5 w-5 text-gray-400" />
+                <Input
+                  type="password"
+                  placeholder="Create a password"
+                  {...field}
+                  className="pl-10 bg-siege-dark border-siege-accent/30 focus:border-siege-accent"
+                />
+              </div>
+            </div>
           )}
         />
 
@@ -204,13 +227,18 @@ export function SignUpForm() {
           control={form.control}
           name="confirmPassword"
           render={({ field }) => (
-            <FormItem>
-              <FormLabel>Confirm Password</FormLabel>
-              <FormControl>
-                <Input type="password" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
+            <div className="space-y-2">
+              <Label htmlFor="password">Confirm Password</Label>
+              <div className="relative">
+                <Lock className="absolute left-3 top-3 h-5 w-5 text-gray-400" />
+                <Input
+                  type="password"
+                  placeholder="Create a password"
+                  {...field}
+                  className="pl-10 bg-siege-dark border-siege-accent/30 focus:border-siege-accent"
+                />
+              </div>
+            </div>
           )}
         />
 

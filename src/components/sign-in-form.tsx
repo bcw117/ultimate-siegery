@@ -17,9 +17,10 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { AlertCircle } from "lucide-react";
+import { AlertCircle, ArrowRight, Mail, Lock } from "lucide-react";
 import { signin } from "@/actions/auth";
 import { useUser } from "@/context/UserContext";
+import { Label } from "./ui/label";
 
 const signInSchema = z.object({
   email: z.string().email({ message: "Please enter a valid email address" }),
@@ -86,13 +87,20 @@ export function SignInForm() {
           control={form.control}
           name="email"
           render={({ field }) => (
-            <FormItem>
-              <FormLabel>Email</FormLabel>
-              <FormControl>
-                <Input placeholder="you@example.com" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
+            <div className="space-y-4">
+              <div className="space-y-2">
+                <Label htmlFor="email">Email</Label>
+                <div className="relative">
+                  <Mail className="absolute left-3 top-3 h-5 w-5 text-gray-400" />
+                  <Input
+                    type="email"
+                    placeholder="Enter your email"
+                    {...field}
+                    className="pl-10 bg-siege-dark border-siege-accent/30 focus:border-siege-accent"
+                  />
+                </div>
+              </div>
+            </div>
           )}
         />
 
@@ -100,18 +108,28 @@ export function SignInForm() {
           control={form.control}
           name="password"
           render={({ field }) => (
-            <FormItem>
-              <FormLabel>Password</FormLabel>
-              <FormControl>
-                <Input type="password" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
+            <div className="space-y-2">
+              <Label htmlFor="password">Password</Label>
+              <div className="relative">
+                <Lock className="absolute left-3 top-3 h-5 w-5 text-gray-400" />
+                <Input
+                  type="password"
+                  placeholder="Enter your password"
+                  {...field}
+                  className="pl-10 bg-siege-dark border-siege-accent/30 focus:border-siege-accent"
+                />
+              </div>
+            </div>
           )}
         />
 
-        <Button type="submit" className="w-full" disabled={isLoading}>
+        <Button
+          type="submit"
+          className="w-full bg-siege-accent hover:bg-siege-accent/90"
+          disabled={isLoading}
+        >
           {isLoading ? "Signing in..." : "Sign In"}
+          <ArrowRight className="ml-2 h-4 w-4" />
         </Button>
       </form>
     </Form>
