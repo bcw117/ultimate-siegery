@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Menu, X, User, Target } from "lucide-react";
+import Link from "next/link";
 
 const Navbar: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -64,7 +65,7 @@ const Navbar: React.FC = () => {
               variant="outline"
               className="border-white/20 hover:border-white/50 text-white bg-transparent"
             >
-              Sign In
+              <Link href="/auth/signin">Sign In</Link>
             </Button>
             <Button className="bg-siege-accent hover:bg-siege-accent/90 text-white">
               Get Started

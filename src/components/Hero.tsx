@@ -3,6 +3,7 @@ import React, { useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { useInView, useTextScramble } from "@/assets/animations";
 import { ChevronDown, Target, Shield, Shuffle, Save } from "lucide-react";
+import Link from "next/link";
 
 const Hero: React.FC = () => {
   const heroRef = useRef<HTMLDivElement>(null);
@@ -86,7 +87,7 @@ const Hero: React.FC = () => {
               size="lg"
               className="bg-siege-accent hover:bg-siege-accent/90 text-white px-8 h-12"
             >
-              Get Started
+              <Link href="/auth/signin">Get Started</Link>
             </Button>
             <Button
               size="lg"

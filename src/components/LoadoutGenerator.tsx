@@ -4,22 +4,23 @@ import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Shuffle, Shield, Save, ChevronRight } from "lucide-react";
 import { GenerationType, Operator, Weapon, Gadget } from "@/assets/types";
+import { getOperator } from "@/actions/operator";
 
 // Mock data for demonstration
 const attackers: Operator[] = [
-  { name: "Ace", side: "Attacker" },
-  { name: "Ash", side: "Attacker" },
-  { name: "Thermite", side: "Attacker" },
-  { name: "Sledge", side: "Attacker" },
-  { name: "Thatcher", side: "Attacker" },
+  { name: "Ace", side: "A" },
+  { name: "Ash", side: "A" },
+  { name: "Thermite", side: "A" },
+  { name: "Sledge", side: "A" },
+  { name: "Thatcher", side: "A" },
 ];
 
 const defenders: Operator[] = [
-  { name: "Bandit", side: "Defender" },
-  { name: "Caveira", side: "Defender" },
-  { name: "Doc", side: "Defender" },
-  { name: "Mute", side: "Defender" },
-  { name: "Rook", side: "Defender" },
+  { name: "Bandit", side: "D" },
+  { name: "Caveira", side: "D" },
+  { name: "Doc", side: "D" },
+  { name: "Mute", side: "D" },
+  { name: "Rook", side: "D" },
 ];
 
 const primaryWeapons: Weapon[] = [
@@ -49,7 +50,7 @@ const gadgets: Gadget[] = [
 const LoadoutGenerator: React.FC = () => {
   const [generationType, setGenerationType] =
     useState<GenerationType>("SingleOperator");
-  const [side, setSide] = useState<"Attacker" | "Defender">("Attacker");
+  const [side, setSide] = useState<"A" | "D">("A");
   const [selectedOperator, setSelectedOperator] = useState<Operator | null>(
     null
   );
@@ -67,21 +68,19 @@ const LoadoutGenerator: React.FC = () => {
   };
 
   // Generate random loadout
-  const generateLoadout = () => {
+  const generateLoadout = async () => {
     setIsGenerating(true);
     setShowResults(false);
+    const results = await getOperator(side);
+    if (!results) {
+      return;
+    }
+    console.log(results);
 
-    // Simulate a loading delay
-    setTimeout(() => {
-      const operatorPool = side === "Attacker" ? attackers : defenders;
-      setSelectedOperator(getRandomItem(operatorPool));
-      setSelectedPrimary(getRandomItem(primaryWeapons));
-      setSelectedSecondary(getRandomItem(secondaryWeapons));
-      setSelectedGadget(getRandomItem(gadgets));
+    setSelectedOperator({ name: results.name, side: results.side } as Operator);
 
-      setIsGenerating(false);
-      setShowResults(true);
-    }, 1200);
+    setIsGenerating(false);
+    setShowResults(true);
   };
 
   return (
@@ -145,24 +144,24 @@ const LoadoutGenerator: React.FC = () => {
                   <div className="space-y-6">
                     <div className="flex flex-wrap gap-4">
                       <Button
-                        variant={side === "Attacker" ? "default" : "outline"}
+                        variant={side === "A" ? "default" : "outline"}
                         className={
-                          side === "Attacker"
+                          side === "A"
                             ? "bg-siege-accent"
                             : "bg-transparent border-white/20 hover:border-white/50"
                         }
-                        onClick={() => setSide("Attacker")}
+                        onClick={() => setSide("A")}
                       >
                         Attacker
                       </Button>
                       <Button
-                        variant={side === "Defender" ? "default" : "outline"}
+                        variant={side === "D" ? "default" : "outline"}
                         className={
-                          side === "Defender"
+                          side === "D"
                             ? "bg-siege-accent"
                             : "bg-transparent border-white/20 hover:border-white/50"
                         }
-                        onClick={() => setSide("Defender")}
+                        onClick={() => setSide("D")}
                       >
                         Defender
                       </Button>
@@ -243,7 +242,7 @@ const LoadoutGenerator: React.FC = () => {
                       {selectedOperator?.name}
                     </p>
                     <div className="mt-1 inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-siege-accent/20 text-siege-accent">
-                      {selectedOperator?.side}
+                      {selectedOperator?.side === "A" ? "Attacker" : "Defender"}
                     </div>
                   </div>
 

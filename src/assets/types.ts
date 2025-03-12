@@ -1,6 +1,6 @@
 export interface Operator {
   name: string;
-  side: "Attacker" | "Defender";
+  side: "A" | "D";
   image?: string;
 }
 
