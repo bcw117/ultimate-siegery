@@ -1,11 +1,12 @@
 "use server";
 
-import { Operator } from "@/lib/types/operator";
-import { createClient } from "@/utils/supabase/server";
-import { OPERATOR_COUNT } from "@/utils/helpers";
 /**
  * Operator related functions
  */
+
+import { Operator } from "@/lib/types/operator";
+import { createClient } from "@/utils/supabase/server";
+import { OPERATOR_COUNT } from "@/utils/helpers";
 
 /**
  * Get random operator (single)
@@ -14,7 +15,7 @@ import { OPERATOR_COUNT } from "@/utils/helpers";
  */
 export async function getOperator(side: string): Promise<Operator | null> {
   const supabase = await createClient();
-
+  
   const { count, error: countError } = await supabase
     .from("operators")
     .select("*", { count: "exact", head: true })
@@ -25,12 +26,11 @@ export async function getOperator(side: string): Promise<Operator | null> {
   }
 
   if (!count || count === 0) {
-    return null; // Handle the case where no entries match
+    return null;
   }
 
-  const randomIdx = Math.floor(Math.random() * count) + 1;
+  const randomIdx = Math.floor(Math.random() * count);
 
-  // Step 3: Fetch the row at that random index for the given "side".
   const { data, error } = await supabase
     .from("operators")
     .select("*")

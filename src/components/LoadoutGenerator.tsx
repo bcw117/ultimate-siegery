@@ -5,6 +5,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Shuffle, Shield, Save, ChevronRight } from "lucide-react";
 import { GenerationType, Operator, Weapon, Gadget } from "@/assets/types";
 import { getOperator } from "@/actions/operator";
+import { getWeapons } from "@/actions/weapon";
 
 // Mock data for demonstration
 const attackers: Operator[] = [
@@ -71,13 +72,18 @@ const LoadoutGenerator: React.FC = () => {
   const generateLoadout = async () => {
     setIsGenerating(true);
     setShowResults(false);
-    const results = await getOperator(side);
-    if (!results) {
+    const operatorResults = await getOperator(side);
+    if (!operatorResults) {
       return;
     }
-    console.log(results);
 
-    setSelectedOperator({ name: results.name, side: results.side } as Operator);
+    const weaponResults = await getWeapons(operatorResults.id);
+    if (!weaponResults) {
+      return;
+    }
+    console.log(weaponResults);
+
+    setSelectedOperator({ name: operatorResults.name, side: operatorResults.side } as Operator);
 
     setIsGenerating(false);
     setShowResults(true);
