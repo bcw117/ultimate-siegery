@@ -3,9 +3,10 @@ import React, { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Shuffle, Shield, Save, ChevronRight } from "lucide-react";
-import { GenerationType, Operator, Weapon, Gadget } from "@/assets/types";
+import { GenerationType, Operator, Gadget } from "@/assets/types";
+import { Weapon } from "@/lib/types/weapon";
 import { getOperator } from "@/actions/operator";
-import { getWeapons } from "@/actions/weapon";
+import { getRandomWeapon, getWeapons } from "@/actions/weapon";
 
 // Mock data for demonstration
 const attackers: Operator[] = [
@@ -24,21 +25,6 @@ const defenders: Operator[] = [
   { name: "Rook", side: "D" },
 ];
 
-const primaryWeapons: Weapon[] = [
-  { name: "AK-12", type: "Primary" },
-  { name: "F2", type: "Primary" },
-  { name: "M4", type: "Primary" },
-  { name: "MP5", type: "Primary" },
-  { name: "416-C", type: "Primary" },
-];
-
-const secondaryWeapons: Weapon[] = [
-  { name: "P9", type: "Secondary" },
-  { name: "5.7 USG", type: "Secondary" },
-  { name: "P12", type: "Secondary" },
-  { name: "PMM", type: "Secondary" },
-  { name: "D-50", type: "Secondary" },
-];
 
 const gadgets: Gadget[] = [
   { name: "Frag Grenade" },
@@ -72,16 +58,16 @@ const LoadoutGenerator: React.FC = () => {
   const generateLoadout = async () => {
     setIsGenerating(true);
     setShowResults(false);
+    
     const operatorResults = await getOperator(side);
     if (!operatorResults) {
       return;
     }
 
-    const weaponResults = await getWeapons(operatorResults.id);
-    if (!weaponResults) {
-      return;
-    }
-    console.log(weaponResults);
+    const [primaryWeapon, secondaryWeapon] = await Promise.all([getRandomWeapon(operatorResults.id, "Primary"), getRandomWeapon(operatorResults.id, "Secondary")])
+    
+    console.log(primaryWeapon);
+    console.log(secondaryWeapon);
 
     setSelectedOperator({ name: operatorResults.name, side: operatorResults.side } as Operator);
 
