@@ -8,9 +8,12 @@ import { createClient } from "@/utils/supabase/server";
 import { OPERATOR_COUNT } from "@/utils/helpers";
 import { Weapon } from "@/lib/types/weapon";
 
-export async function getRandomWeapon(operatorId: number, weaponType? : 'Primary' | 'Secondary') : Promise<Weapon> {
-    const weapons = await getWeapons(operatorId, weaponType);
-    return getRandomElement(weapons) as Weapon;
+export async function getRandomWeapon(
+  operatorId: number,
+  weaponType?: "Primary" | "Secondary"
+): Promise<Weapon> {
+  const weapons = await getWeapons(operatorId, weaponType);
+  return getRandomElement(weapons) as Weapon;
 }
 
 /**
@@ -19,41 +22,40 @@ export async function getRandomWeapon(operatorId: number, weaponType? : 'Primary
  * @param weaponType Optional parameter of weapon type, if empty returns all weapons
  * @returns An array of weapon objects
  */
-export async function getWeapons(operatorId: number, weaponType? : 'Primary' | 'Secondary') : Promise<Weapon[]>{
-    const supabase = await createClient();
+export async function getWeapons(
+  operatorId: number,
+  weaponType?: "Primary" | "Secondary"
+): Promise<Weapon[]> {
+  const supabase = await createClient();
 
-    // Get weapon id's
-    const {data : weaponData, error : operatorWeaponError} = await supabase.from("operator_weapon").select("weapon_id")
-                                                            .eq("operator_id", operatorId);
-    
-    if (operatorWeaponError) {
-        throw operatorWeaponError;
-    }
+  // Get weapon id's through join
+  const { data: weaponData, error: operatorWeaponError } = await supabase
+    .from("operator_weapon")
+    .select("weapon_id, weapons:weapons(*)")
+    .eq("operator_id", operatorId);
 
-    if (!weaponData) {
-        throw new Error("This operator has no weapons");
-    }
+  if (operatorWeaponError) {
+    throw operatorWeaponError;
+  }
 
-    const weaponIds = weaponData.map((weapon) => {
-        return weapon.weapon_id;
-    })
+  if (!weaponData || weaponData.length == 0) {
+    throw new Error("Weapons not found");
+  }
 
-    let query = supabase.from("weapons").select().in('id', weaponIds);
+  let weapons = weaponData.map((weaponEntry) => {
+    return weaponEntry.weapons as unknown as Weapon;
+  });
 
-    if (weaponType) {
-        query = query.eq("type", weaponType);
-    }
+  if (weaponType) {
+    weapons = weapons.filter((weapon) => {
+      return weapon.type === (weaponType as string);
+    });
+  }
 
-    const {data : weapons, error: weaponError} = await query;
-    
-    if (weaponError) {
-        throw weaponError;
-    }
-
-    return weapons;
+  return weapons;
 }
 
 function getRandomElement(arr: unknown[]) {
-    const randomIndex = Math.floor(Math.random() * arr.length);
-    return arr[randomIndex];
+  const randomIndex = Math.floor(Math.random() * arr.length);
+  return arr[randomIndex];
 }

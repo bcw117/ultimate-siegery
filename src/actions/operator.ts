@@ -15,33 +15,27 @@ import { OPERATOR_COUNT } from "@/utils/helpers";
  */
 export async function getOperator(side: string): Promise<Operator | null> {
   const supabase = await createClient();
-  
-  const { count, error: countError } = await supabase
+
+  const { data: operators, error: countError } = await supabase
     .from("operators")
-    .select("*", { count: "exact", head: true })
+    .select("*")
     .eq("side", side);
 
   if (countError) {
     throw countError;
   }
 
-  if (!count || count === 0) {
+  if (!operators || operators.length === 0) {
     return null;
   }
 
+  const count = operators.length;
+
   const randomIdx = Math.floor(Math.random() * count);
 
-  const { data, error } = await supabase
-    .from("operators")
-    .select("*")
-    .eq("side", side)
-    .range(randomIdx, randomIdx)
-    .single();
+  const operator = operators[randomIdx];
 
-  if (error) {
-    throw new Error(error.message);
-  }
-  return data;
+  return operator;
 }
 
 /**
