@@ -15,7 +15,7 @@ export async function signin(formData: FormData) {
   const { error } = await supabase.auth.signInWithPassword(data);
 
   if (error) {
-    return { error: error.message };
+    throw error;
   }
 
   revalidatePath("/", "layout");
@@ -47,7 +47,7 @@ export async function signup(formData: FormData) {
   if (lastName) userData.last_name = lastName;
 
   // Sign up the user with Supabase
-  const { error, data: authData } = await supabase.auth.signUp({
+  const { error } = await supabase.auth.signUp({
     email: data.email,
     password: data.password,
     options: {
@@ -56,12 +56,7 @@ export async function signup(formData: FormData) {
   });
 
   if (error) {
-    return { error: error.message };
-  }
-
-  // If email confirmation is enabled, inform the user to check their email
-  if (authData?.user?.identities?.length === 0) {
-    return { message: "Check your email for the confirmation link." };
+    throw error;
   }
 
   revalidatePath("/", "layout");

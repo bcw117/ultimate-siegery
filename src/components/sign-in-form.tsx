@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
@@ -13,6 +12,7 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
 import { AlertCircle, Mail, Lock } from "lucide-react";
 import { signin } from "@/actions/auth";
 import { Label } from "./ui/label";
+import { isRedirectError } from "next/dist/client/components/redirect-error";
 
 const signInSchema = z.object({
   email: z.string().email({ message: "Please enter a valid email address" }),
@@ -22,7 +22,6 @@ const signInSchema = z.object({
 type SignInValues = z.infer<typeof signInSchema>;
 
 export function SignInForm() {
-  const router = useRouter();
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -45,21 +44,11 @@ export function SignInForm() {
       formData.append("password", data.password);
 
       // Call the server action for authentication
-      const result = await signin(formData);
-
-      // Check for errors
-      if (result?.error) {
-        setError(result.error);
-        setIsLoading(false);
-        return;
-      }
-
-      // Navigate to dashboard
-      router.push("/dashboard");
-      router.refresh();
+      await signin(formData);
     } catch (err) {
-      setError("Invalid email or password. Please try again.");
-      console.error("Login error:", err);
+      if (!isRedirectError(err)) {
+        setError("Invalid email or password. Please try again.");
+      }
       setIsLoading(false);
     }
   }

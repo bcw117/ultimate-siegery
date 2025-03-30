@@ -20,35 +20,7 @@ export default async function Navbar() {
             <span className="text-siege-accent">Ultimate</span> Siegery
           </span>
         </Link>
-
-        {/* Desktop Navigation */}
         <div className="hidden md:flex items-center space-x-10">
-          <ul className="flex space-x-8">
-            <li>
-              <a
-                href="#features"
-                className="text-white/70 hover:text-white transition-colors"
-              >
-                Features
-              </a>
-            </li>
-            <li>
-              <a
-                href="#demo"
-                className="text-white/70 hover:text-white transition-colors"
-              >
-                Demo
-              </a>
-            </li>
-            <li>
-              <a
-                href="#faq"
-                className="text-white/70 hover:text-white transition-colors"
-              >
-                FAQ
-              </a>
-            </li>
-          </ul>
           {user ? (
             <LogOutButton />
           ) : (

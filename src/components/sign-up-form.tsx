@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
@@ -13,6 +12,7 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
 import { AlertCircle, Mail, User, Lock } from "lucide-react";
 import { signup } from "@/actions/auth";
 import { Label } from "./ui/label";
+import { isRedirectError } from "next/dist/client/components/redirect-error";
 
 const passwordSchema = z
   .string()
@@ -50,7 +50,6 @@ const signUpSchema = z
 type SignUpValues = z.infer<typeof signUpSchema>;
 
 export function SignUpForm() {
-  const router = useRouter();
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -81,29 +80,11 @@ export function SignUpForm() {
       formData.append("firstName", data.firstName);
       formData.append("lastName", data.lastName);
 
-      // Call the server action for registration
-      const result = await signup(formData);
-
-      // Check for errors
-      if (result?.error) {
-        setError(result.error);
-        setIsLoading(false);
-        return;
+      await signup(formData);
+    } catch (error) {
+      if (!isRedirectError(error)) {
+        setError("An error occurred during registration. Please try again.");
       }
-
-      // If there's a message (like email verification needed), show it
-      if (result?.message) {
-        // Handle email verification message
-        router.push(
-          "/auth/verify-email?message=" + encodeURIComponent(result.message)
-        );
-        return;
-      }
-
-      // Note: The server action handles redirection on success
-    } catch (error: unknown) {
-      console.error("Registration error:", error);
-      setError("An error occurred during registration. Please try again.");
       setIsLoading(false);
     }
   }

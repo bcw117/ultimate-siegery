@@ -138,44 +138,6 @@ const Footer: React.FC = () => {
                 </li>
               </ul>
             </div>
-
-            <div>
-              <h3 className="text-white font-medium mb-4">Get Started</h3>
-              <ul className="space-y-2">
-                <li>
-                  <a
-                    href="#"
-                    className="text-white/60 hover:text-white transition-colors"
-                  >
-                    Sign Up
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="#"
-                    className="text-white/60 hover:text-white transition-colors"
-                  >
-                    Login
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="#"
-                    className="text-white/60 hover:text-white transition-colors"
-                  >
-                    Documentation
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="#"
-                    className="text-white/60 hover:text-white transition-colors"
-                  >
-                    Support
-                  </a>
-                </li>
-              </ul>
-            </div>
           </div>
         </div>
 
