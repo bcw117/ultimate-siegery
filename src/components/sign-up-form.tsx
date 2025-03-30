@@ -7,14 +7,7 @@ import { useForm } from "react-hook-form";
 import * as z from "zod";
 
 import { Button } from "@/components/ui/button";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
+import { Form, FormField, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { AlertCircle, Mail, User, Lock } from "lucide-react";
@@ -108,7 +101,8 @@ export function SignUpForm() {
       }
 
       // Note: The server action handles redirection on success
-    } catch (err) {
+    } catch (error: unknown) {
+      console.error("Registration error:", error);
       setError("An error occurred during registration. Please try again.");
       setIsLoading(false);
     }

@@ -5,7 +5,6 @@
  */
 
 import { createClient } from "@/utils/supabase/server";
-import { OPERATOR_COUNT } from "@/utils/helpers";
 import { Weapon } from "@/lib/types/weapon";
 
 export async function getRandomWeapon(

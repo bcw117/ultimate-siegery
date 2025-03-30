@@ -28,7 +28,7 @@ export async function getGadgets(operatorId: number): Promise<Gadget[]> {
     throw new Error("Gadgets not found");
   }
 
-  let gadgets = gadgetData.map((gadgetEntry) => {
+  const gadgets = gadgetData.map((gadgetEntry) => {
     return gadgetEntry.gadgets as unknown as Gadget;
   });
 

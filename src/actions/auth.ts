@@ -40,7 +40,7 @@ export async function signup(formData: FormData) {
   const lastName = formData.get("lastName") as string | null;
 
   // Create user metadata object if any of the fields are provided
-  const userData: { [key: string]: any } = {};
+  const userData: Record<string, string> = {};
   if (email) userData.email = email;
   if (username) userData.username = username;
   if (firstName) userData.first_name = firstName;

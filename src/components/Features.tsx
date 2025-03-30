@@ -14,7 +14,10 @@ import {
 
 const Features: React.FC = () => {
   const featuresRef = useRef<HTMLDivElement>(null);
-  const isInView = useInView(featuresRef, { threshold: 0.1 });
+  const isInView = useInView(featuresRef as React.RefObject<HTMLElement>, {
+    threshold: 0.1,
+    triggerOnce: true,
+  });
 
   const features = [
     {

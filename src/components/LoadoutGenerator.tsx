@@ -1,18 +1,16 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Shuffle, Shield, Save, ChevronRight } from "lucide-react";
-import { GenerationType, Operator } from "@/assets/types";
+import { Operator } from "@/assets/types";
 import { Weapon } from "@/lib/types/weapon";
 import { Gadget } from "@/lib/types/gadget";
 import { getOperator } from "@/actions/operator";
-import { getRandomWeapon, getWeapons } from "@/actions/weapon";
+import { getRandomWeapon } from "@/actions/weapon";
 import { getRandomGadget } from "@/actions/gadget";
 
 const LoadoutGenerator: React.FC = () => {
-  const [generationType, setGenerationType] =
-    useState<GenerationType>("SingleOperator");
   const [side, setSide] = useState<"A" | "D">("A");
   const [selectedOperator, setSelectedOperator] = useState<Operator | null>(
     null

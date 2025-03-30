@@ -7,7 +7,10 @@ import Link from "next/link";
 
 const Hero: React.FC = () => {
   const heroRef = useRef<HTMLDivElement>(null);
-  const isInView = useInView(heroRef, { threshold: 0.1, triggerOnce: true });
+  const isInView = useInView(heroRef as React.RefObject<HTMLElement>, {
+    threshold: 0.1,
+    triggerOnce: true,
+  });
   const titleText = useTextScramble("ULTIMATE SIEGERY");
 
   return (

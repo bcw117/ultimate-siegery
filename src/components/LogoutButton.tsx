@@ -3,14 +3,9 @@
 import { Loader2 } from "lucide-react";
 import { Button } from "./ui/button";
 import { useState } from "react";
-import { useToast } from "@/hooks/use-toast";
-import { useRouter } from "next/navigation";
 import { signOut } from "@/actions/auth";
 
 function LogOutButton() {
-  const { toast } = useToast();
-  const router = useRouter();
-
   const [loading, setLoading] = useState(false);
 
   const handleLogOut = async () => {

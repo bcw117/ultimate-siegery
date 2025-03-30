@@ -15,7 +15,7 @@ export async function updateSession(request: NextRequest) {
           return request.cookies.getAll();
         },
         setAll(cookiesToSet) {
-          cookiesToSet.forEach(({ name, value, options }) =>
+          cookiesToSet.forEach(({ name, value }) =>
             request.cookies.set(name, value)
           );
           supabaseResponse = NextResponse.next({
@@ -29,30 +29,27 @@ export async function updateSession(request: NextRequest) {
     }
   );
 
-  // Do not run code between createServerClient and
-  // supabase.auth.getUser(). A simple mistake could make it very hard to debug
-  // issues with users being randomly logged out.
-
-  // IMPORTANT: DO NOT REMOVE auth.getUser()
-
   const {
     data: { user },
   } = await supabase.auth.getUser();
 
+  console.log("user", user);
+
   if (
     !user &&
     !request.nextUrl.pathname.startsWith("/auth") &&
-    !request.nextUrl.pathname.startsWith("/")
+    request.nextUrl.pathname !== "/"
   ) {
     // no user, potentially respond by redirecting the user to the login page
     const url = request.nextUrl.clone();
-    url.pathname = "/auth/signin";
+    url.pathname = "/";
     return NextResponse.redirect(url);
   }
 
   if (
-    (user && request.nextUrl.pathname.startsWith("/auth")) ||
-    request.nextUrl.pathname === "/"
+    user &&
+    (request.nextUrl.pathname.startsWith("/auth") ||
+      request.nextUrl.pathname === "/")
   ) {
     const url = request.nextUrl.clone();
     url.pathname = "/dashboard";

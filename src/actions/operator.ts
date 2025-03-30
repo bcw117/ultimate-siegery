@@ -6,7 +6,6 @@
 
 import { Operator } from "@/lib/types/operator";
 import { createClient } from "@/utils/supabase/server";
-import { OPERATOR_COUNT } from "@/utils/helpers";
 
 /**
  * Get random operator (single)

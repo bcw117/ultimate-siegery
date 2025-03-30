@@ -48,17 +48,14 @@ export function useStaggeredAnimation(itemCount: number, baseDelay = 0.1) {
 export function useTextScramble(finalText: string, duration = 1500) {
   const [text, setText] = useState("");
   const characters = "!<>-_\\/[]{}—=+*^?#________";
-
   useEffect(() => {
     let interval: ReturnType<typeof setInterval>;
     let frame = 0;
-    let frameRate = 30;
+    const frameRate = 30;
     let complete = 0;
 
     const update = () => {
       let output = "";
-      let progress = frame / frameRate;
-
       if (frame === frameRate) {
         complete = 1;
         setText(finalText);
