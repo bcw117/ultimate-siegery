@@ -52,10 +52,18 @@ export async function getWeapons(
     });
   }
 
+  weapons.forEach((weapon) => {
+    weapon.name = removeUnderscores(weapon.name);
+  });
+
   return weapons;
 }
 
 function getRandomElement(arr: unknown[]) {
   const randomIndex = Math.floor(Math.random() * arr.length);
   return arr[randomIndex];
+}
+
+function removeUnderscores(name: string) {
+  return name.replace(/_/g, " ").trim();
 }

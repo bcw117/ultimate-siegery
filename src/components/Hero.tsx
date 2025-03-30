@@ -85,16 +85,9 @@ const Hero: React.FC = () => {
           >
             <Button
               size="lg"
-              className="bg-siege-accent hover:bg-siege-accent/90 text-white px-8 h-12"
+              className="bg-siege-accent hover:bg-siege-accent/90 text-white px-8 h-12 cursor-pointer"
             >
               <Link href="/auth/signin">Get Started</Link>
-            </Button>
-            <Button
-              size="lg"
-              variant="outline"
-              className="border-white/20 hover:border-white/50 text-white bg-transparent/10 backdrop-blur-sm px-8 h-12"
-            >
-              Watch Demo
             </Button>
           </div>
 

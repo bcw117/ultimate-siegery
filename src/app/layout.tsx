@@ -3,7 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 
 // Import the UserProvider
-import { UserProvider } from "@/context/UserContext";
+import Navbar from "@/components/Navbar";
 
 const inter = Inter({
   variable: "--font-geist-mono",
@@ -23,7 +23,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.variable} antialiased`}>
-        <UserProvider>{children}</UserProvider>
+        <Navbar />
+        {children}
       </body>
     </html>
   );

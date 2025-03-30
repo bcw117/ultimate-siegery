@@ -3,36 +3,12 @@ import React, { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Shuffle, Shield, Save, ChevronRight } from "lucide-react";
-import { GenerationType, Operator, Gadget } from "@/assets/types";
+import { GenerationType, Operator } from "@/assets/types";
 import { Weapon } from "@/lib/types/weapon";
+import { Gadget } from "@/lib/types/gadget";
 import { getOperator } from "@/actions/operator";
 import { getRandomWeapon, getWeapons } from "@/actions/weapon";
-
-// Mock data for demonstration
-const attackers: Operator[] = [
-  { name: "Ace", side: "A" },
-  { name: "Ash", side: "A" },
-  { name: "Thermite", side: "A" },
-  { name: "Sledge", side: "A" },
-  { name: "Thatcher", side: "A" },
-];
-
-const defenders: Operator[] = [
-  { name: "Bandit", side: "D" },
-  { name: "Caveira", side: "D" },
-  { name: "Doc", side: "D" },
-  { name: "Mute", side: "D" },
-  { name: "Rook", side: "D" },
-];
-
-
-const gadgets: Gadget[] = [
-  { name: "Frag Grenade" },
-  { name: "Smoke Grenade" },
-  { name: "Stun Grenade" },
-  { name: "Breach Charge" },
-  { name: "Claymore" },
-];
+import { getRandomGadget } from "@/actions/gadget";
 
 const LoadoutGenerator: React.FC = () => {
   const [generationType, setGenerationType] =
@@ -49,28 +25,29 @@ const LoadoutGenerator: React.FC = () => {
   const [isGenerating, setIsGenerating] = useState(false);
   const [showResults, setShowResults] = useState(false);
 
-  // Function to randomly select items
-  const getRandomItem = <T extends unknown>(items: T[]): T => {
-    return items[Math.floor(Math.random() * items.length)];
-  };
-
   // Generate random loadout
   const generateLoadout = async () => {
     setIsGenerating(true);
     setShowResults(false);
-    
+
     const operatorResults = await getOperator(side);
     if (!operatorResults) {
       return;
     }
 
-    const [primaryWeapon, secondaryWeapon] = await Promise.all([getRandomWeapon(operatorResults.id, "Primary"), getRandomWeapon(operatorResults.id, "Secondary")])
-    
-    console.log(primaryWeapon);
-    console.log(secondaryWeapon);
+    const [primaryWeapon, secondaryWeapon, gadget] = await Promise.all([
+      getRandomWeapon(operatorResults.id, "Primary"),
+      getRandomWeapon(operatorResults.id, "Secondary"),
+      getRandomGadget(operatorResults.id),
+    ]);
 
-    setSelectedOperator({ name: operatorResults.name, side: operatorResults.side } as Operator);
-
+    setSelectedOperator({
+      name: operatorResults.name,
+      side: operatorResults.side,
+    } as Operator);
+    setSelectedPrimary(primaryWeapon);
+    setSelectedSecondary(secondaryWeapon);
+    setSelectedGadget(gadget);
     setIsGenerating(false);
     setShowResults(true);
   };
@@ -252,7 +229,7 @@ const LoadoutGenerator: React.FC = () => {
                       Secondary Weapon
                     </h4>
                     <p className="text-white text-lg font-semibold">
-                      {selectedSecondary?.name}
+                      {selectedSecondary?.name ?? ""}
                     </p>
                   </div>
 

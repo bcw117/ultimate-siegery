@@ -9,10 +9,8 @@ import Image from "next/image";
 export default function Home() {
   return (
     <div className="min-h-screen bg-siege-red text-white overflow-hidden">
-      <Navbar />
       <Hero />
       <Features />
-      <LoadoutGenerator />
       <Footer />
     </div>
   );

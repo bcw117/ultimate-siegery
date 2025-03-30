@@ -19,7 +19,6 @@ import { Input } from "@/components/ui/input";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { AlertCircle, Mail, User, Lock } from "lucide-react";
 import { signup } from "@/actions/auth";
-import { useUser } from "@/context/UserContext";
 import { Label } from "./ui/label";
 
 const passwordSchema = z
@@ -61,7 +60,6 @@ export function SignUpForm() {
   const router = useRouter();
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
-  const { refreshUser } = useUser();
 
   const form = useForm<SignUpValues>({
     resolver: zodResolver(signUpSchema),
@@ -109,9 +107,6 @@ export function SignUpForm() {
         return;
       }
 
-      // Refresh the user context if successfully signed up
-      await refreshUser();
-
       // Note: The server action handles redirection on success
     } catch (err) {
       setError("An error occurred during registration. Please try again.");
@@ -121,7 +116,7 @@ export function SignUpForm() {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+      <form onSubmit={form.handleSubmit(onSubmit)}>
         {error && (
           <Alert variant="destructive">
             <AlertCircle className="h-4 w-4" />
@@ -133,7 +128,7 @@ export function SignUpForm() {
           control={form.control}
           name="username"
           render={({ field }) => (
-            <div className="space-y-4">
+            <div>
               <div className="space-y-2">
                 <Label htmlFor="fullName">Username</Label>
                 <div className="relative">
@@ -141,9 +136,12 @@ export function SignUpForm() {
                   <Input
                     placeholder="Enter your username"
                     {...field}
-                    className="pl-10 bg-siege-dark border-siege-accent/30 focus:border-siege-accent"
+                    className="pl-10 bg-siege-dark border-siege-accent/30 focus:border-siege-accent focus-visible:ring-0 focus-visible:ring-offset-0"
                   />
                 </div>
+              </div>
+              <div className="min-h-[20px] mt-1">
+                <FormMessage className="text-red-500 text-xs" />
               </div>
             </div>
           )}
@@ -154,14 +152,19 @@ export function SignUpForm() {
             control={form.control}
             name="firstName"
             render={({ field }) => (
-              <div className="space-y-2">
-                <Label htmlFor="username">First Name</Label>
-                <div className="relative">
-                  <Input
-                    placeholder="Harry"
-                    {...field}
-                    className="bg-siege-dark border-siege-accent/30 focus:border-siege-accent"
-                  />
+              <div>
+                <div className="space-y-2">
+                  <Label htmlFor="username">First Name</Label>
+                  <div className="relative">
+                    <Input
+                      placeholder="Harry"
+                      {...field}
+                      className="bg-siege-dark border-siege-accent/30 focus:border-siege-accent focus-visible:ring-0 focus-visible:ring-offset-0"
+                    />
+                  </div>
+                </div>
+                <div className="min-h-[20px] mt-1">
+                  <FormMessage className="text-red-500 text-xs" />
                 </div>
               </div>
             )}
@@ -171,14 +174,19 @@ export function SignUpForm() {
             control={form.control}
             name="lastName"
             render={({ field }) => (
-              <div className="space-y-2">
-                <Label htmlFor="email">Last Name</Label>
-                <div className="relative">
-                  <Input
-                    placeholder="Pandey"
-                    {...field}
-                    className="bg-siege-dark border-siege-accent/30 focus:border-siege-accent"
-                  />
+              <div>
+                <div className="space-y-2">
+                  <Label htmlFor="email">Last Name</Label>
+                  <div className="relative">
+                    <Input
+                      placeholder="Pandey"
+                      {...field}
+                      className="bg-siege-dark border-siege-accent/30 focus:border-siege-accent focus-visible:ring-0 focus-visible:ring-offset-0"
+                    />
+                  </div>
+                </div>
+                <div className="min-h-[20px] mt-1">
+                  <FormMessage className="text-red-500 text-xs" />
                 </div>
               </div>
             )}
@@ -189,16 +197,21 @@ export function SignUpForm() {
           control={form.control}
           name="email"
           render={({ field }) => (
-            <div className="space-y-2">
-              <Label htmlFor="email">Email</Label>
-              <div className="relative">
-                <Mail className="absolute left-3 top-3 h-5 w-5 text-gray-400" />
-                <Input
-                  type="email"
-                  placeholder="Enter your email"
-                  {...field}
-                  className="pl-10 bg-siege-dark border-siege-accent/30 focus:border-siege-accent"
-                />
+            <div>
+              <div className="space-y-2">
+                <Label htmlFor="email">Email</Label>
+                <div className="relative">
+                  <Mail className="absolute left-3 top-3 h-5 w-5 text-gray-400" />
+                  <Input
+                    type="email"
+                    placeholder="Enter your email"
+                    {...field}
+                    className="pl-10 bg-siege-dark border-siege-accent/30 focus:border-siege-accent focus-visible:ring-0 focus-visible:ring-offset-0"
+                  />
+                </div>
+              </div>
+              <div className="min-h-[20px] mt-1">
+                <FormMessage className="text-red-500 text-xs" />
               </div>
             </div>
           )}
@@ -208,16 +221,21 @@ export function SignUpForm() {
           control={form.control}
           name="password"
           render={({ field }) => (
-            <div className="space-y-2">
-              <Label htmlFor="password">Password</Label>
-              <div className="relative">
-                <Lock className="absolute left-3 top-3 h-5 w-5 text-gray-400" />
-                <Input
-                  type="password"
-                  placeholder="Create a password"
-                  {...field}
-                  className="pl-10 bg-siege-dark border-siege-accent/30 focus:border-siege-accent"
-                />
+            <div>
+              <div className="space-y-2">
+                <Label htmlFor="password">Password</Label>
+                <div className="relative">
+                  <Lock className="absolute left-3 top-3 h-5 w-5 text-gray-400" />
+                  <Input
+                    type="password"
+                    placeholder="Create a password"
+                    {...field}
+                    className="pl-10 bg-siege-dark border-siege-accent/30 focus:border-siege-accent focus-visible:ring-0 focus-visible:ring-offset-0"
+                  />
+                </div>
+              </div>
+              <div className="min-h-[20px] mt-1">
+                <FormMessage className="text-red-500 text-xs" />
               </div>
             </div>
           )}
@@ -227,22 +245,27 @@ export function SignUpForm() {
           control={form.control}
           name="confirmPassword"
           render={({ field }) => (
-            <div className="space-y-2">
-              <Label htmlFor="password">Confirm Password</Label>
-              <div className="relative">
-                <Lock className="absolute left-3 top-3 h-5 w-5 text-gray-400" />
-                <Input
-                  type="password"
-                  placeholder="Create a password"
-                  {...field}
-                  className="pl-10 bg-siege-dark border-siege-accent/30 focus:border-siege-accent"
-                />
+            <div>
+              <div className="space-y-2">
+                <Label htmlFor="password">Confirm Password</Label>
+                <div className="relative">
+                  <Lock className="absolute left-3 top-3 h-5 w-5 text-gray-400" />
+                  <Input
+                    type="password"
+                    placeholder="Create a password"
+                    {...field}
+                    className="pl-10 bg-siege-dark border-siege-accent/30 focus:border-siege-accent focus-visible:ring-0 focus-visible:ring-offset-0"
+                  />
+                </div>
+              </div>
+              <div className="min-h-[20px] mt-1">
+                <FormMessage className="text-red-500 text-xs" />
               </div>
             </div>
           )}
         />
 
-        <Button type="submit" className="w-full" disabled={isLoading}>
+        <Button type="submit" className="w-full mt-1" disabled={isLoading}>
           {isLoading ? "Creating account..." : "Create Account"}
         </Button>
       </form>
