@@ -14,12 +14,12 @@ export default async function Navbar() {
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 py-4 px-6 md:px-12`}
     >
       <div className="max-w-7xl mx-auto flex items-center justify-between">
-        <a href="/" className="flex items-center space-x-2 group">
+        <Link href="/" className="flex items-center space-x-2 group">
           <Target className="w-6 h-6 text-siege-accent transition-transform duration-500 group-hover:rotate-90" />
           <span className="font-bold text-xl tracking-tight text-white">
             <span className="text-siege-accent">Ultimate</span> Siegery
           </span>
-        </a>
+        </Link>
 
         {/* Desktop Navigation */}
         <div className="hidden md:flex items-center space-x-10">

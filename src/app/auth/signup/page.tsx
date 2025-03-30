@@ -1,5 +1,4 @@
 import { SignUpForm } from "@/components/sign-up-form";
-import { Target } from "lucide-react";
 import Link from "next/link";
 
 export default function SignUpPage() {

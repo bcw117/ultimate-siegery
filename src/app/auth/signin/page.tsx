@@ -1,5 +1,4 @@
 import { SignInForm } from "@/components/sign-in-form";
-import { Target } from "lucide-react";
 import Link from "next/link";
 
 export default function SignInPage() {
