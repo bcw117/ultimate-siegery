@@ -49,51 +49,28 @@ export async function getRandomLoadout(
 ): Promise<OperatorWithLoadout> {
   const supabase = await createClient();
 
-  // First get all operators matching the side
-  const { data: operators, error: operatorsError } = await supabase
-    .from("operators")
-    .select("id")
-    .eq("side", side);
+  const { data, error } = await supabase.rpc("get_random_loadout_for_side", {
+    target_side: side,
+  });
 
-  if (operatorsError) {
-    throw operatorsError;
+  if (error) {
+    throw error;
   }
 
-  if (!operators || operators.length === 0) {
-    throw new Error(`No operators found for side: ${side}`);
+  if (!data) {
+    throw new Error("Error fetching random loadout");
   }
 
-  const randomIdx = Math.floor(Math.random() * operators.length);
-  const operatorId = operators[randomIdx].id;
-
-  const { data, error: loadoutError } = await supabase
-    .from("operators")
-    .select("*, weapons(*), gadgets(*)")
-    .eq("id", operatorId);
-
-  if (loadoutError) {
-    throw loadoutError;
-  }
-
-  if (!data || data.length == 0) {
-    throw new Error("No operator found");
-  }
-
-  const result = data[0];
   const loadout: OperatorWithLoadout = {
-    id: result.id,
-    name: result.name,
-    side: result.side,
-    health: result.health,
-    difficulty: result.difficulty,
-    unique_ability: result.unique_ability,
-    primary_weapon: getRandomElement(
-      result.weapons.filter((weapon: Weapon) => weapon.type === "Primary")
-    ) as Weapon,
-    secondary_weapon: getRandomElement(
-      result.weapons.filter((weapon: Weapon) => weapon.type === "Secondary")
-    ) as Weapon,
-    gadget: getRandomElement(result.gadgets) as Gadget,
+    id: data.id,
+    name: data.name,
+    side: data.side,
+    health: data.health,
+    difficulty: data.difficulty,
+    unique_ability: data.unique_ability,
+    primary_weapon: data.primary_weapon,
+    secondary_weapon: data.secondary_weapon,
+    gadget: data.gadget,
   };
 
   return loadout;
