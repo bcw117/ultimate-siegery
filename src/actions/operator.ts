@@ -4,7 +4,10 @@
  * Operator related functions
  */
 
-import { Operator } from "@/lib/types/operator";
+import { Operator, OperatorWithLoadout } from "@/lib/types/operator";
+import { Weapon } from "@/lib/types/weapon";
+import { Gadget } from "@/lib/types/gadget";
+import { getRandomElement } from "@/utils/helpers";
 import { createClient } from "@/utils/supabase/server";
 
 /**
@@ -35,6 +38,49 @@ export async function getOperator(side: string): Promise<Operator | null> {
   const operator = operators[randomIdx];
 
   return operator;
+}
+
+/**
+ * Get random loadout for single operator
+ * @param operatorId: Operator ID
+ * @returns Loadout
+ */
+export async function getRandomLoadout(
+  operatorId: number
+): Promise<OperatorWithLoadout> {
+  const supabase = await createClient();
+
+  const { data, error: loadoutError } = await supabase
+    .from("operators")
+    .select("*, weapons(*), gadgets(*)")
+    .eq("id", operatorId);
+
+  if (loadoutError) {
+    throw loadoutError;
+  }
+
+  if (!data || data.length == 0) {
+    throw new Error("No operator found");
+  }
+
+  const result = data[0];
+  const loadout: OperatorWithLoadout = {
+    id: result.id,
+    name: result.name,
+    side: result.side,
+    health: result.health,
+    difficulty: result.difficulty,
+    unique_ability: result.unique_ability,
+    primary_weapon: getRandomElement(
+      result.weapons.filter((weapon: any) => weapon.type === "Primary")
+    ) as Weapon,
+    secondary_weapon: getRandomElement(
+      result.weapons.filter((weapon: any) => weapon.type === "Secondary")
+    ) as Weapon,
+    gadget: getRandomElement(result.gadgets) as Gadget,
+  };
+
+  return loadout;
 }
 
 /**

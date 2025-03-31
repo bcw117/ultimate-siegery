@@ -6,11 +6,9 @@ import { Shuffle, Shield, Save, ChevronRight } from "lucide-react";
 import { Operator } from "@/assets/types";
 import { Weapon } from "@/lib/types/weapon";
 import { Gadget } from "@/lib/types/gadget";
-import { getOperator } from "@/actions/operator";
-import { getRandomWeapon } from "@/actions/weapon";
-import { getRandomGadget } from "@/actions/gadget";
+import { getRandomLoadout } from "@/actions/operator";
 
-const LoadoutGenerator: React.FC = () => {
+const LoadoutGenerator = () => {
   const [side, setSide] = useState<"A" | "D">("A");
   const [selectedOperator, setSelectedOperator] = useState<Operator | null>(
     null
@@ -28,24 +26,15 @@ const LoadoutGenerator: React.FC = () => {
     setIsGenerating(true);
     setShowResults(false);
 
-    const operatorResults = await getOperator(side);
-    if (!operatorResults) {
-      return;
-    }
-
-    const [primaryWeapon, secondaryWeapon, gadget] = await Promise.all([
-      getRandomWeapon(operatorResults.id, "Primary"),
-      getRandomWeapon(operatorResults.id, "Secondary"),
-      getRandomGadget(operatorResults.id),
-    ]);
+    const loadout = await getRandomLoadout(1);
 
     setSelectedOperator({
-      name: operatorResults.name,
-      side: operatorResults.side,
+      name: loadout.name,
+      side: loadout.side,
     } as Operator);
-    setSelectedPrimary(primaryWeapon);
-    setSelectedSecondary(secondaryWeapon);
-    setSelectedGadget(gadget);
+    setSelectedPrimary(loadout.primary_weapon);
+    setSelectedSecondary(loadout.secondary_weapon);
+    setSelectedGadget(loadout.gadget);
     setIsGenerating(false);
     setShowResults(true);
   };
