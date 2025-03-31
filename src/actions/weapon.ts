@@ -6,6 +6,7 @@
 
 import { createClient } from "@/utils/supabase/server";
 import { Weapon } from "@/lib/types/weapon";
+import { getRandomElement } from "@/utils/helpers";
 
 export async function getRandomWeapon(
   operatorId: number,
@@ -51,18 +52,5 @@ export async function getWeapons(
     });
   }
 
-  weapons.forEach((weapon) => {
-    weapon.name = removeUnderscores(weapon.name);
-  });
-
   return weapons;
-}
-
-function getRandomElement(arr: unknown[]) {
-  const randomIndex = Math.floor(Math.random() * arr.length);
-  return arr[randomIndex];
-}
-
-function removeUnderscores(name: string) {
-  return name.replace(/_/g, " ").trim();
 }

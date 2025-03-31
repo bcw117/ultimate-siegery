@@ -7,7 +7,11 @@
 import { Operator, OperatorWithLoadout } from "@/lib/types/operator";
 import { Weapon } from "@/lib/types/weapon";
 import { Gadget } from "@/lib/types/gadget";
-import { getRandomElement } from "@/utils/helpers";
+import {
+  getRandomElement,
+  getRandomNumber,
+  OPERATOR_COUNT,
+} from "@/utils/helpers";
 import { createClient } from "@/utils/supabase/server";
 
 /**
@@ -42,13 +46,12 @@ export async function getOperator(side: string): Promise<Operator | null> {
 
 /**
  * Get random loadout for single operator
- * @param operatorId: Operator ID
  * @returns Loadout
  */
-export async function getRandomLoadout(
-  operatorId: number
-): Promise<OperatorWithLoadout> {
+export async function getRandomLoadout(): Promise<OperatorWithLoadout> {
   const supabase = await createClient();
+
+  const operatorId = getRandomNumber(1, OPERATOR_COUNT);
 
   const { data, error: loadoutError } = await supabase
     .from("operators")

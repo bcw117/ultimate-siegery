@@ -7,6 +7,8 @@ import { Operator } from "@/assets/types";
 import { Weapon } from "@/lib/types/weapon";
 import { Gadget } from "@/lib/types/gadget";
 import { getRandomLoadout } from "@/actions/operator";
+import { toTitleCase } from "@/utils/helpers";
+import { removeUnderscores } from "@/utils/helpers";
 
 const LoadoutGenerator = () => {
   const [side, setSide] = useState<"A" | "D">("A");
@@ -26,7 +28,7 @@ const LoadoutGenerator = () => {
     setIsGenerating(true);
     setShowResults(false);
 
-    const loadout = await getRandomLoadout(1);
+    const loadout = await getRandomLoadout();
 
     setSelectedOperator({
       name: loadout.name,
@@ -207,7 +209,7 @@ const LoadoutGenerator = () => {
                       Primary Weapon
                     </h4>
                     <p className="text-white text-lg font-semibold">
-                      {selectedPrimary?.name}
+                      {removeUnderscores(selectedPrimary?.name ?? "")}
                     </p>
                   </div>
 
@@ -216,14 +218,14 @@ const LoadoutGenerator = () => {
                       Secondary Weapon
                     </h4>
                     <p className="text-white text-lg font-semibold">
-                      {selectedSecondary?.name ?? ""}
+                      {removeUnderscores(selectedSecondary?.name ?? "")}
                     </p>
                   </div>
 
                   <div className="rounded-lg bg-siege-dark border border-white/10 p-5">
                     <h4 className="text-white/70 text-sm mb-2">Gadget</h4>
                     <p className="text-white text-lg font-semibold">
-                      {selectedGadget?.name}
+                      {toTitleCase(selectedGadget?.name ?? "")}
                     </p>
                   </div>
                 </div>
