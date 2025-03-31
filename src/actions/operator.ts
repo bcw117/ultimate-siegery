@@ -72,10 +72,10 @@ export async function getRandomLoadout(
     difficulty: result.difficulty,
     unique_ability: result.unique_ability,
     primary_weapon: getRandomElement(
-      result.weapons.filter((weapon: any) => weapon.type === "Primary")
+      result.weapons.filter((weapon: Weapon) => weapon.type === "Primary")
     ) as Weapon,
     secondary_weapon: getRandomElement(
-      result.weapons.filter((weapon: any) => weapon.type === "Secondary")
+      result.weapons.filter((weapon: Weapon) => weapon.type === "Secondary")
     ) as Weapon,
     gadget: getRandomElement(result.gadgets) as Gadget,
   };
