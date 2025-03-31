@@ -7,11 +7,7 @@
 import { Operator, OperatorWithLoadout } from "@/lib/types/operator";
 import { Weapon } from "@/lib/types/weapon";
 import { Gadget } from "@/lib/types/gadget";
-import {
-  getRandomElement,
-  getRandomNumber,
-  OPERATOR_COUNT,
-} from "@/utils/helpers";
+import { getRandomElement } from "@/utils/helpers";
 import { createClient } from "@/utils/supabase/server";
 
 /**
