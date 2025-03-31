@@ -48,10 +48,27 @@ export async function getOperator(side: string): Promise<Operator | null> {
  * Get random loadout for single operator
  * @returns Loadout
  */
-export async function getRandomLoadout(): Promise<OperatorWithLoadout> {
+export async function getRandomLoadout(
+  side: string
+): Promise<OperatorWithLoadout> {
   const supabase = await createClient();
 
-  const operatorId = getRandomNumber(1, OPERATOR_COUNT);
+  // First get all operators matching the side
+  const { data: operators, error: operatorsError } = await supabase
+    .from("operators")
+    .select("id")
+    .eq("side", side);
+
+  if (operatorsError) {
+    throw operatorsError;
+  }
+
+  if (!operators || operators.length === 0) {
+    throw new Error(`No operators found for side: ${side}`);
+  }
+
+  const randomIdx = Math.floor(Math.random() * operators.length);
+  const operatorId = operators[randomIdx].id;
 
   const { data, error: loadoutError } = await supabase
     .from("operators")

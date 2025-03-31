@@ -28,7 +28,7 @@ const LoadoutGenerator = () => {
     setIsGenerating(true);
     setShowResults(false);
 
-    const loadout = await getRandomLoadout();
+    const loadout = await getRandomLoadout(side);
 
     setSelectedOperator({
       name: loadout.name,
