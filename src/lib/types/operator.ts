@@ -5,6 +5,7 @@ export type Operator = {
   id: number;
   name: string;
   side: string;
+  speed: number;
   health: number;
   difficulty: number;
   unique_ability: string;
