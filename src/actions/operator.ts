@@ -5,7 +5,6 @@
  */
 
 import { Operator, OperatorWithLoadout } from "@/lib/types/operator";
-import { randomOperator } from "@/server/db/queries/operators";
 import { createClient } from "@/utils/supabase/server";
 
 /**
@@ -36,23 +35,6 @@ export async function getOperator(side: string): Promise<Operator | null> {
   const operator = operators[randomIdx];
 
   return operator;
-}
-
-/**
- * Get random operator with loadout
- * @param side: Attacker or Defender (Optional)
- * @returns OperatorWithLoadout
- */
-export async function getRandomOperatorWithLoadout(
-  side: string
-): Promise<OperatorWithLoadout> {
-  const result = await randomOperator(side);
-
-  if (!result) {
-    throw new Error("No operator found");
-  }
-
-  return result;
 }
 
 /**

@@ -28,6 +28,6 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "src/app/(legal)/terms/page.mdx"
-  ],
+, "src/app/api/operator"  ],
   "exclude": ["node_modules"]
 }

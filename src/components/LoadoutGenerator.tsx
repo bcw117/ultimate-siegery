@@ -6,7 +6,6 @@ import { Shuffle, Shield, Save, ChevronRight } from "lucide-react";
 import { Operator } from "@/assets/types";
 import { Weapon } from "@/lib/types/weapon";
 import { Gadget } from "@/lib/types/gadget";
-import { getRandomOperatorWithLoadout } from "@/actions/operator";
 import { toTitleCase } from "@/utils/helpers";
 import { removeUnderscores } from "@/utils/helpers";
 
@@ -28,7 +27,8 @@ const LoadoutGenerator = () => {
     setIsGenerating(true);
     setShowResults(false);
 
-    const loadout = await getRandomOperatorWithLoadout(side);
+    const response = await fetch(`/api/operator?side=${side}`)
+    const loadout = await response.json();
 
     setSelectedOperator({
       name: loadout.name,

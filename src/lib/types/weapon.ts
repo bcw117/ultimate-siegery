@@ -1,9 +1,9 @@
 export type Weapon = {
-    name: string;
-    class: string;
-    base_damage: number;
-    mag_size: number;
-    ammo_cap: number;
-    rof: number;
-    type: string;
-}
+  name: string | null;
+  class: string | null;
+  type: string | null;
+  base_damage: number | null;
+  mag_size: number | null;
+  ammo_cap: number | null;
+  rof: number | null;
+};
