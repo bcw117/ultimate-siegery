@@ -7,7 +7,7 @@ import {
   operators,
   weapons,
 } from "@/db/schema";
-import { eq, sql, and } from "drizzle-orm";
+import { eq, sql } from "drizzle-orm";
 import { OperatorWithLoadout } from "@/lib/types/operator";
 import { Weapon } from "@/lib/types/weapon";
 import { getRandomElement } from "@/utils/helpers";

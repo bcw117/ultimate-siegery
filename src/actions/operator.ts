@@ -4,7 +4,7 @@
  * Operator related functions
  */
 
-import { Operator, OperatorWithLoadout } from "@/lib/types/operator";
+import { Operator } from "@/lib/types/operator";
 import { createClient } from "@/utils/supabase/server";
 
 /**
