@@ -10,7 +10,7 @@ import { Form, FormField, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { AlertCircle, Mail, Lock } from "lucide-react";
-import { signin } from "@/actions/auth";
+import { signin } from "@/app/auth/auth";
 import { Label } from "./ui/label";
 import { isRedirectError } from "next/dist/client/components/redirect-error";
 

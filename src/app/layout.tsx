@@ -4,6 +4,7 @@ import "./globals.css";
 
 // Import the UserProvider
 import Navbar from "@/components/Navbar";
+import { Toaster } from "@/components/ui/sonner"
 
 const inter = Inter({
   variable: "--font-geist-mono",
@@ -25,6 +26,7 @@ export default function RootLayout({
       <body className={`${inter.variable} antialiased`}>
         <Navbar />
         {children}
+        <Toaster/>
       </body>
     </html>
   );

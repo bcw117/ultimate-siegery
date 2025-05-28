@@ -22,7 +22,12 @@ export default async function Navbar() {
         </Link>
         <div className="hidden md:flex items-center space-x-10">
           {user ? (
-            <LogOutButton />
+            <>
+              <Link href="/profile">Dashboard</Link>
+              <Link href="/loadouts">Loadouts</Link>
+              <Link href="/profile">Profile</Link>
+              <LogOutButton />
+            </>
           ) : (
             <div className="flex items-center space-x-4">
               <Link href="/auth/signin">

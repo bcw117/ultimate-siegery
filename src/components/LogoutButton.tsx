@@ -3,7 +3,7 @@
 import { Loader2 } from "lucide-react";
 import { Button } from "./ui/button";
 import { useState } from "react";
-import { signOut } from "@/actions/auth";
+import { signOut } from "@/app/auth/auth";
 
 function LogOutButton() {
   const [loading, setLoading] = useState(false);

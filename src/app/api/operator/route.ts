@@ -8,10 +8,8 @@ import {
   weapons,
 } from "@/db/schema";
 import { eq, sql } from "drizzle-orm";
-import { OperatorWithLoadout } from "@/lib/types/operator";
-import { Weapon } from "@/lib/types/weapon";
+import { Weapon, Gadget, OperatorWithLoadout } from "@/lib/types/loadout";
 import { getRandomElement } from "@/utils/helpers";
-import { Gadget } from "@/lib/types/gadget";
 
 export async function GET(request: NextRequest) {
   try {
