@@ -1,9 +1,17 @@
 import React from "react";
 import { getLoadouts } from "./actions";
 import { removeUnderscores, toTitleCase } from "@/utils/helpers";
+import PaginationControls from "@/components/PaginationControls";
 
-export default async function Loadouts() {
-  const loadouts = await getLoadouts();
+export default async function Loadouts({
+  searchParams,
+}: {
+  searchParams: { [key: string]: string | undefined };
+}) {
+  const cursor = (await searchParams["cursor"]) ?? null;
+  const limit = (await searchParams["limit"]) ?? "10";
+
+  const { loadouts, new_cursor } = await getLoadouts(cursor, limit);
   return (
     <div className="min-h-screen flex flex-col items-center mx-auto gap-y-20 mt-16">
       Loadouts
@@ -52,6 +60,7 @@ export default async function Loadouts() {
           </div>
         );
       })}
+      <PaginationControls new_cursor={new_cursor} />
     </div>
   );
 }
