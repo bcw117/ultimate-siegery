@@ -5,9 +5,11 @@ import React from "react";
 import { Button } from "./ui/button";
 
 export default function PaginationControls({
-  new_cursor,
+  prev_cursor,
+  next_cursor,
 }: {
-  new_cursor: string;
+  prev_cursor: string | null;
+  next_cursor: string | null;
 }) {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -17,16 +19,26 @@ export default function PaginationControls({
     <div className="flex gap-2">
       <Button
         variant="outline"
+        disabled={!prev_cursor}
         onClick={() => {
-          router.push(`loadouts/?cursor=${new_cursor}&limit=${limit}`);
+          if (prev_cursor) {
+            router.push(
+              `loadouts/?cursor=${prev_cursor}&limit=${limit}&getNext=false`
+            );
+          }
         }}
       >
         Previous Page
       </Button>
       <Button
         variant="outline"
+        disabled={!next_cursor}
         onClick={() => {
-          router.push(`loadouts/?cursor=${new_cursor}&limit=${limit}`);
+          if (next_cursor) {
+            router.push(
+              `loadouts/?cursor=${next_cursor}&limit=${limit}&getNext=true`
+            );
+          }
         }}
       >
         Next Page
