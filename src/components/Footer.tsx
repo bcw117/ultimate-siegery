@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { Target, Twitter, Instagram, Youtube, Github } from "lucide-react";
+import { Target } from "lucide-react";
 
 const Footer: React.FC = () => {
   return (
@@ -22,36 +22,6 @@ const Footer: React.FC = () => {
                   <span className="text-siege-accent">Ultimate</span> Siegery
                 </span>
               </a>
-              <p className="text-white/60 mb-6">
-                The ultimate companion app for Rainbow Six Siege players looking
-                to add randomness to their gameplay experience.
-              </p>
-              <div className="flex space-x-4">
-                <a
-                  href="#"
-                  className="text-white/60 hover:text-white transition-colors"
-                >
-                  <Twitter className="w-5 h-5" />
-                </a>
-                <a
-                  href="#"
-                  className="text-white/60 hover:text-white transition-colors"
-                >
-                  <Instagram className="w-5 h-5" />
-                </a>
-                <a
-                  href="#"
-                  className="text-white/60 hover:text-white transition-colors"
-                >
-                  <Youtube className="w-5 h-5" />
-                </a>
-                <a
-                  href="#"
-                  className="text-white/60 hover:text-white transition-colors"
-                >
-                  <Github className="w-5 h-5" />
-                </a>
-              </div>
             </div>
 
             {/* Links */}
@@ -72,30 +42,6 @@ const Footer: React.FC = () => {
                     className="text-white/60 hover:text-white transition-colors"
                   >
                     Features
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="#demo"
-                    className="text-white/60 hover:text-white transition-colors"
-                  >
-                    Demo
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="#"
-                    className="text-white/60 hover:text-white transition-colors"
-                  >
-                    Pricing
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="#"
-                    className="text-white/60 hover:text-white transition-colors"
-                  >
-                    Blog
                   </a>
                 </li>
               </ul>
@@ -120,22 +66,6 @@ const Footer: React.FC = () => {
                     Privacy Policy
                   </a>
                 </li>
-                <li>
-                  <a
-                    href="#"
-                    className="text-white/60 hover:text-white transition-colors"
-                  >
-                    Cookies
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="#"
-                    className="text-white/60 hover:text-white transition-colors"
-                  >
-                    Licenses
-                  </a>
-                </li>
               </ul>
             </div>
           </div>
@@ -144,7 +74,7 @@ const Footer: React.FC = () => {
         {/* Footer Bottom */}
         <div className="py-6 flex flex-col md:flex-row items-center justify-between">
           <p className="text-white/60 text-sm mb-4 md:mb-0">
-            © {new Date().getFullYear()} Ultimate Siegery. All rights reserved.
+            © 2025 Ultimate Siegery. All rights reserved.
           </p>
           <p className="text-white/60 text-sm">
             Not affiliated with Ubisoft or Rainbow Six Siege.

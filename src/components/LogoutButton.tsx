@@ -3,7 +3,7 @@
 import { Loader2 } from "lucide-react";
 import { Button } from "./ui/button";
 import { useState } from "react";
-import { signOut } from "@/app/auth/auth";
+import { SignOutButton } from "@clerk/nextjs";
 
 function LogOutButton() {
   const [loading, setLoading] = useState(false);
@@ -11,20 +11,22 @@ function LogOutButton() {
   const handleLogOut = async () => {
     setLoading(true);
 
-    await signOut();
+    console.log("HERE");
 
     setLoading(false);
   };
 
   return (
-    <Button
-      variant="outline"
-      onClick={handleLogOut}
-      disabled={loading}
-      className="w-24 cursor-pointer"
-    >
-      {loading ? <Loader2 className="animate-spin" /> : "Sign Out"}
-    </Button>
+    <SignOutButton>
+      <Button
+        variant="outline"
+        onClick={handleLogOut}
+        disabled={loading}
+        className="w-24 cursor-pointer"
+      >
+        {loading ? <Loader2 className="animate-spin" /> : "Sign Out"}
+      </Button>
+    </SignOutButton>
   );
 }
 

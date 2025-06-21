@@ -27,14 +27,3 @@ export async function createClient() {
     }
   );
 }
-
-export async function getUser() {
-  const supabase = await createClient();
-  try {
-    const { data } = await supabase.auth.getUser();
-    return data.user;
-  } catch (error) {
-    console.error("Error fetching user:", error);
-    return null;
-  }
-}

@@ -3,11 +3,11 @@
 import { Loadout } from "@/lib/types/loadout";
 import { db } from "@/db";
 import { loadouts } from "@/db/schema";
-import { getUser } from "@/utils/supabase/server";
+import { currentUser } from "@clerk/nextjs/server";
 
 export async function saveLoadout(loadout: Loadout) {
   try {
-    const user = await getUser();
+    const user = await currentUser();
 
     if (!user) {
       return {

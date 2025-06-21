@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Shuffle, Shield, Save, ChevronRight } from "lucide-react";
+import { Shuffle, Shield, Save } from "lucide-react";
 import { Gadget, Operator, Weapon } from "@/lib/types/loadout";
 import { toTitleCase } from "@/utils/helpers";
 import { removeUnderscores } from "@/utils/helpers";
@@ -27,7 +27,7 @@ export default function Dashboard() {
     setIsGenerating(true);
     setShowResults(false);
 
-    const response = await fetch(`/api/operator?side=${side}`)
+    const response = await fetch(`/api/operator?side=${side}`);
     const loadout = await response.json();
 
     setSelectedOperator({
@@ -43,19 +43,24 @@ export default function Dashboard() {
   };
 
   const handleSave = async () => {
-    if (!selectedGadget || !selectedOperator || !selectedPrimary || !selectedSecondary) {
+    if (
+      !selectedGadget ||
+      !selectedOperator ||
+      !selectedPrimary ||
+      !selectedSecondary
+    ) {
       toast.error("Please generate a loadout first");
       return;
     }
-    
+
     try {
       const result = await saveLoadout({
-        operator: selectedOperator, 
-        pweapon: selectedPrimary, 
-        sweapon: selectedSecondary, 
-        gadget: selectedGadget
+        operator: selectedOperator,
+        pweapon: selectedPrimary,
+        sweapon: selectedSecondary,
+        gadget: selectedGadget,
       });
-      
+
       if (result.success) {
         toast.success("Loadout saved successfully!");
       } else {
@@ -64,7 +69,7 @@ export default function Dashboard() {
     } catch (error) {
       toast.error("An unexpected error occurred:" + (error as Error).message);
     }
-  }
+  };
 
   return (
     <section
@@ -176,26 +181,60 @@ export default function Dashboard() {
                 </TabsContent>
 
                 <TabsContent value="team" className="mt-4">
-                  <div className="text-center p-6 bg-siege-dark/30 rounded-lg border border-white/10">
-                    <p className="text-white/70 mb-3">
-                      Create an account to unlock full team randomization
-                    </p>
-                    <Button className="bg-siege-accent hover:bg-siege-accent/90">
-                      Sign Up for Full Access
-                      <ChevronRight className="ml-1 w-4 h-4" />
-                    </Button>
+                  <div className="space-y-6">
+                    <div className="flex flex-wrap gap-4">
+                      <Button
+                        variant={side === "A" ? "default" : "outline"}
+                        className={
+                          side === "A"
+                            ? "bg-siege-accent"
+                            : "bg-transparent border-white/20 hover:border-white/50"
+                        }
+                        onClick={() => setSide("A")}
+                      >
+                        Attacker
+                      </Button>
+                      <Button
+                        variant={side === "D" ? "default" : "outline"}
+                        className={
+                          side === "D"
+                            ? "bg-siege-accent"
+                            : "bg-transparent border-white/20 hover:border-white/50"
+                        }
+                        onClick={() => setSide("D")}
+                      >
+                        Defender
+                      </Button>
+                    </div>
                   </div>
                 </TabsContent>
 
                 <TabsContent value="bans" className="mt-4">
-                  <div className="text-center p-6 bg-siege-dark/30 rounded-lg border border-white/10">
-                    <p className="text-white/70 mb-3">
-                      Create an account to unlock ban suggestions
-                    </p>
-                    <Button className="bg-siege-accent hover:bg-siege-accent/90">
-                      Sign Up for Full Access
-                      <ChevronRight className="ml-1 w-4 h-4" />
-                    </Button>
+                  <div className="space-y-6">
+                    <div className="flex flex-wrap gap-4">
+                      <Button
+                        variant={side === "A" ? "default" : "outline"}
+                        className={
+                          side === "A"
+                            ? "bg-siege-accent"
+                            : "bg-transparent border-white/20 hover:border-white/50"
+                        }
+                        onClick={() => setSide("A")}
+                      >
+                        Attacker
+                      </Button>
+                      <Button
+                        variant={side === "D" ? "default" : "outline"}
+                        className={
+                          side === "D"
+                            ? "bg-siege-accent"
+                            : "bg-transparent border-white/20 hover:border-white/50"
+                        }
+                        onClick={() => setSide("D")}
+                      >
+                        Defender
+                      </Button>
+                    </div>
                   </div>
                 </TabsContent>
               </Tabs>
@@ -275,4 +314,4 @@ export default function Dashboard() {
       </div>
     </section>
   );
-};
+}

@@ -3,12 +3,10 @@ import React from "react";
 import { Button } from "@/components/ui/button";
 import { Target } from "lucide-react";
 import Link from "next/link";
-import { getUser } from "@/utils/supabase/server";
 import LogOutButton from "./LogoutButton";
+import { SignedIn, SignedOut, SignInButton, SignUpButton } from "@clerk/nextjs";
 
 export default async function Navbar() {
-  const user = await getUser();
-
   return (
     <nav
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 py-4 px-6 md:px-12`}
@@ -21,30 +19,29 @@ export default async function Navbar() {
           </span>
         </Link>
         <div className="hidden md:flex items-center space-x-10">
-          {user ? (
-            <>
-              <Link href="/dashboard">Dashboard</Link>
-              <Link href="/loadouts">Loadouts</Link>
-              <Link href="/profile">Profile</Link>
-              <LogOutButton />
-            </>
-          ) : (
+          <SignedIn>
+            <Link href="/dashboard">Dashboard</Link>
+            <Link href="/loadouts">Loadouts</Link>
+            <Link href="/profile">Profile</Link>
+            <LogOutButton />
+          </SignedIn>
+          <SignedOut>
             <div className="flex items-center space-x-4">
-              <Link href="/auth/signin">
+              <SignInButton>
                 <Button
                   variant="outline"
                   className="border-white/20 hover:border-white/50 text-white bg-transparent cursor-pointer"
                 >
                   Sign In
                 </Button>
-              </Link>
-              <Link href="/auth/signup">
+              </SignInButton>
+              <SignUpButton>
                 <Button className="bg-siege-accent hover:bg-siege-accent/90 text-white cursor-pointer">
                   Sign Up
                 </Button>
-              </Link>
+              </SignUpButton>
             </div>
-          )}
+          </SignedOut>
         </div>
       </div>
     </nav>
