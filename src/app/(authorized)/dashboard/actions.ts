@@ -8,13 +8,13 @@ import { currentUser } from "@clerk/nextjs/server";
 export async function saveLoadout(loadout: Loadout) {
   try {
     const user = await currentUser();
-
     if (!user) {
       return {
         success: false,
         error: "Authentication required. Please sign in.",
       };
     }
+
     const user_id = user.id;
 
     const operator_id = loadout.operator.id;

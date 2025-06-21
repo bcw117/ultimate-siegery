@@ -1,21 +1,30 @@
 import {
-  pgSchema,
   pgTable,
-  serial,
+  unique,
   text,
+  timestamp,
+  serial,
   integer,
   foreignKey,
-  uuid,
-  timestamp,
   primaryKey,
+  bigint,
 } from "drizzle-orm/pg-core";
 import { sql } from "drizzle-orm";
 
-const authSchema = pgSchema("auth");
-
-export const users = authSchema.table("users", {
-  id: uuid("id").primaryKey(),
-});
+export const profiles = pgTable(
+  "profiles",
+  {
+    username: text().notNull(),
+    first_name: text().notNull(),
+    last_name: text().notNull(),
+    avatar_url: text(),
+    created_at: timestamp({ withTimezone: true, mode: "string" }).default(
+      sql`CURRENT_TIMESTAMP`
+    ),
+    id: text().primaryKey().notNull(),
+  },
+  (table) => [unique("profiles_id_key").on(table.id)]
+);
 
 export const operators = pgTable("operators", {
   id: serial().primaryKey().notNull(),
@@ -28,54 +37,17 @@ export const operators = pgTable("operators", {
   image_url: text(),
 });
 
-export const profiles = pgTable(
-  "profiles",
-  {
-    id: uuid().primaryKey().notNull(),
-    username: text().notNull(),
-    first_name: text().notNull(),
-    last_name: text().notNull(),
-    email: text().notNull(),
-    avatar_url: text(),
-    created_at: timestamp({ withTimezone: true, mode: "string" }).default(
-      sql`CURRENT_TIMESTAMP`
-    ),
-  },
-  (table) => [
-    foreignKey({
-      columns: [table.id],
-      foreignColumns: [users.id],
-      name: "profiles_id_users_id_fk",
-    }).onDelete("cascade"),
-  ]
-);
-
-export const gadgets = pgTable("gadgets", {
-  id: serial().primaryKey().notNull(),
-  name: text().notNull(),
-});
-
-export const weapons = pgTable("weapons", {
-  id: serial().primaryKey().notNull(),
-  name: text().notNull(),
-  class: text().notNull(),
-  type: text().notNull(),
-  base_damage: integer(),
-  mag_size: integer(),
-  ammo_cap: integer(),
-  rof: integer(),
-});
-
 export const loadouts = pgTable(
   "loadouts",
   {
     id: serial().primaryKey().notNull(),
-    user_id: uuid().notNull(),
     operator_id: integer().notNull(),
     gadget_id: integer().notNull(),
     pweapon_id: integer().notNull(),
     sweapon_id: integer().notNull(),
-    created_at: timestamp({ mode: "date" }).defaultNow().notNull(),
+    created_at: timestamp({ mode: "string" }).defaultNow().notNull(),
+    user_id: text().notNull(),
+    name: text().default(""),
   },
   (table) => [
     foreignKey({
@@ -100,11 +72,42 @@ export const loadouts = pgTable(
     }).onDelete("cascade"),
     foreignKey({
       columns: [table.user_id],
-      foreignColumns: [users.id],
-      name: "loadouts_user_id_users_id_fk",
-    }).onDelete("cascade"),
+      foreignColumns: [profiles.id],
+      name: "loadouts_user_id_fkey",
+    })
+      .onUpdate("cascade")
+      .onDelete("cascade"),
   ]
 );
+
+export const gadgets = pgTable("gadgets", {
+  id: serial().primaryKey().notNull(),
+  name: text().notNull(),
+});
+
+export const weapons = pgTable("weapons", {
+  id: serial().primaryKey().notNull(),
+  name: text().notNull(),
+  class: text().notNull(),
+  type: text().notNull(),
+  base_damage: integer(),
+  mag_size: integer(),
+  ammo_cap: integer(),
+  rof: integer(),
+});
+
+export const attachments = pgTable("attachments", {
+  id: integer().primaryKey().generatedByDefaultAsIdentity({
+    name: "attachments_id_seq",
+    startWith: 1,
+    increment: 1,
+    minValue: 1,
+    maxValue: 2147483647,
+    cache: 1,
+  }),
+  name: text().notNull(),
+  type: text().notNull(),
+});
 
 export const operator_gadgets = pgTable(
   "operator_gadgets",
@@ -150,6 +153,35 @@ export const operator_weapons = pgTable(
     primaryKey({
       columns: [table.operator_id, table.weapon_id],
       name: "operator_weapons_operator_id_weapon_id_pk",
+    }),
+  ]
+);
+
+export const weapon_attachments = pgTable(
+  "weapon_attachments",
+  {
+    weapon_id: integer().notNull(),
+    // You can use { mode: "bigint" } if numbers are exceeding js number limitations
+    attachment_id: bigint({ mode: "number" }).notNull(),
+  },
+  (table) => [
+    foreignKey({
+      columns: [table.attachment_id],
+      foreignColumns: [attachments.id],
+      name: "weapon_attachments_attachment_id_fkey",
+    })
+      .onUpdate("cascade")
+      .onDelete("cascade"),
+    foreignKey({
+      columns: [table.weapon_id],
+      foreignColumns: [weapons.id],
+      name: "weapon_attachments_weapon_id_fkey",
+    })
+      .onUpdate("cascade")
+      .onDelete("cascade"),
+    primaryKey({
+      columns: [table.weapon_id, table.attachment_id],
+      name: "weapon_attachments_pkey",
     }),
   ]
 );

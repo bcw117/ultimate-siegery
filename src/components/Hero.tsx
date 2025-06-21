@@ -90,7 +90,7 @@ const Hero: React.FC = () => {
               size="lg"
               className="bg-siege-accent hover:bg-siege-accent/90 text-white px-8 h-12 cursor-pointer"
             >
-              <Link href="/auth/signin">Get Started</Link>
+              <Link href="/signin">Get Started</Link>
             </Button>
           </div>
 

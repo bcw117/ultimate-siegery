@@ -1,17 +1,5 @@
 import { relations } from "drizzle-orm/relations";
-import { usersInAuth, profiles, gadgets, loadouts, operators, weapons, operator_gadgets, operator_weapons } from "./schema";
-
-export const profilesRelations = relations(profiles, ({one}) => ({
-	usersInAuth: one(usersInAuth, {
-		fields: [profiles.id],
-		references: [usersInAuth.id]
-	}),
-}));
-
-export const usersInAuthRelations = relations(usersInAuth, ({many}) => ({
-	profiles: many(profiles),
-	loadouts: many(loadouts),
-}));
+import { gadgets, loadouts, operators, weapons, profiles, operator_gadgets, operator_weapons, attachments, weapon_attachments } from "./schema";
 
 export const loadoutsRelations = relations(loadouts, ({one}) => ({
 	gadget: one(gadgets, {
@@ -32,9 +20,9 @@ export const loadoutsRelations = relations(loadouts, ({one}) => ({
 		references: [weapons.id],
 		relationName: "loadouts_sweapon_id_weapons_id"
 	}),
-	usersInAuth: one(usersInAuth, {
+	profile: one(profiles, {
 		fields: [loadouts.user_id],
-		references: [usersInAuth.id]
+		references: [profiles.id]
 	}),
 }));
 
@@ -57,6 +45,11 @@ export const weaponsRelations = relations(weapons, ({many}) => ({
 		relationName: "loadouts_sweapon_id_weapons_id"
 	}),
 	operator_weapons: many(operator_weapons),
+	weapon_attachments: many(weapon_attachments),
+}));
+
+export const profilesRelations = relations(profiles, ({many}) => ({
+	loadouts: many(loadouts),
 }));
 
 export const operator_gadgetsRelations = relations(operator_gadgets, ({one}) => ({
@@ -79,4 +72,19 @@ export const operator_weaponsRelations = relations(operator_weapons, ({one}) => 
 		fields: [operator_weapons.weapon_id],
 		references: [weapons.id]
 	}),
+}));
+
+export const weapon_attachmentsRelations = relations(weapon_attachments, ({one}) => ({
+	attachment: one(attachments, {
+		fields: [weapon_attachments.attachment_id],
+		references: [attachments.id]
+	}),
+	weapon: one(weapons, {
+		fields: [weapon_attachments.weapon_id],
+		references: [weapons.id]
+	}),
+}));
+
+export const attachmentsRelations = relations(attachments, ({many}) => ({
+	weapon_attachments: many(weapon_attachments),
 }));

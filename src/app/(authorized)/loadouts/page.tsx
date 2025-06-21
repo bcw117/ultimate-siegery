@@ -21,7 +21,10 @@ export default async function Loadouts({
 
   return (
     <div className="min-h-screen flex flex-col items-center mx-auto gap-y-20 py-16">
-      Loadouts
+      <h1 className="text-4xl font-bold text-slate-900 dark:text-slate-100">
+        Loadouts
+      </h1>
+
       {loadouts.map((loadout, idx) => {
         return (
           <div

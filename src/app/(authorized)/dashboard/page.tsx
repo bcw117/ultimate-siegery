@@ -61,6 +61,8 @@ export default function Dashboard() {
         gadget: selectedGadget,
       });
 
+      console.log(result);
+
       if (result.success) {
         toast.success("Loadout saved successfully!");
       } else {
@@ -74,13 +76,8 @@ export default function Dashboard() {
   return (
     <section
       id="demo"
-      className="relative py-24 bg-siege-darker overflow-hidden w-full"
+      className="min-h-screen relative py-24 overflow-hidden w-full"
     >
-      {/* Background Elements */}
-      <div className="absolute inset-0">
-        <div className="noise-bg w-full h-full"></div>
-      </div>
-
       <div className="w-full relative z-10">
         {/* Section Header */}
         <div className="text-center">
