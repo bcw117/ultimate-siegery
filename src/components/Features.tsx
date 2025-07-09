@@ -96,16 +96,6 @@ const Features: React.FC = () => {
       <div className="container mx-auto px-6 relative z-10">
         {/* Section Header */}
         <div className="text-center mb-16">
-          <div
-            className={`inline-flex items-center bg-white/5 rounded-full backdrop-blur-sm px-4 py-2 mb-4 transition-all duration-500 ${
-              isInView ? "opacity-100" : "opacity-0 translate-y-4"
-            }`}
-          >
-            <span className="text-white/70 text-sm font-medium">
-              Why Choose Ultimate Siegery
-            </span>
-          </div>
-
           <h2
             className={`text-3xl md:text-4xl font-bold text-white mb-6 transition-all duration-500 delay-100 ${
               isInView ? "opacity-100" : "opacity-0 translate-y-4"

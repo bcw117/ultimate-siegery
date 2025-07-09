@@ -48,18 +48,6 @@ const Hero: React.FC = () => {
       {/* Content */}
       <div className="relative z-10 container mx-auto px-6 pt-32 pb-20 flex flex-col items-center justify-center min-h-screen">
         <div className="max-w-5xl mx-auto text-center">
-          {/* Badge */}
-          <div
-            className={`inline-flex items-center bg-white/10 rounded-full backdrop-blur-md px-4 py-2 mb-8 transition-all duration-700 ${
-              isInView ? "opacity-100" : "opacity-0 translate-y-8"
-            }`}
-          >
-            <div className="h-2 w-2 rounded-full bg-siege-accent mr-2 animate-pulse"></div>
-            <span className="text-white/80 text-sm font-medium">
-              Rainbow Six Siege Loadout Generator
-            </span>
-          </div>
-
           {/* Main Title */}
           <h1
             className={`text-4xl md:text-6xl lg:text-7xl font-bold text-white mb-6 tracking-tight transition-all duration-700 delay-100 text-glow ${
@@ -75,9 +63,8 @@ const Hero: React.FC = () => {
               isInView ? "opacity-100" : "opacity-0 translate-y-8"
             }`}
           >
-            Generate random loadouts for your Rainbow Six Siege operators.
-            Randomize weapons, gadgets, and customize your tactical approach to
-            every match.
+            Randomize your weapons, gadgets, and customize your tactical
+            approach to every match of Rainbow Six Siege.
           </p>
 
           {/* CTA Buttons */}
@@ -90,7 +77,7 @@ const Hero: React.FC = () => {
               size="lg"
               className="bg-siege-accent hover:bg-siege-accent/90 text-white px-8 h-12 cursor-pointer"
             >
-              <Link href="/signin">Get Started</Link>
+              <Link href="/sign-in">Get Started</Link>
             </Button>
           </div>
 

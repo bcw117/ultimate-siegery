@@ -13,6 +13,7 @@ import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { User, Calendar, Trophy, Target, Edit3 } from "lucide-react";
+import { getNumLoadouts } from "./actions";
 
 export default async function Profile() {
   const user = await currentUser();
@@ -20,6 +21,8 @@ export default async function Profile() {
   if (!user) {
     redirect("/");
   }
+
+  const { count } = await getNumLoadouts(user.id);
 
   // Format the creation date
   const joinDate = user.createdAt
@@ -159,7 +162,7 @@ export default async function Profile() {
                         <Target className="w-4 h-4 text-muted-foreground" />
                       </CardHeader>
                       <CardContent>
-                        <h1 className="text-2xl font-bold">12</h1>
+                        <h1 className="text-2xl font-bold">{count}</h1>
                       </CardContent>
                     </Card>
 

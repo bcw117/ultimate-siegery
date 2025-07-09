@@ -5,7 +5,7 @@ import { auth, currentUser } from "@clerk/nextjs/server";
 import { createClient } from "@/utils/supabase/server";
 import { gt, eq, asc, and, or, ne, lt } from "drizzle-orm";
 import { alias } from "drizzle-orm/pg-core";
-import { NextResponse } from "next/server";
+import { redirect } from "next/navigation";
 
 const primaryWeapons = alias(weapons, "primary_weapons");
 const secondaryWeapons = alias(weapons, "secondary_weapons");
@@ -20,15 +20,13 @@ export async function getLoadouts(cursor: string | null, getNext: string) {
   try {
     const { userId } = await auth();
 
-    // Protect the route by checking if the user is signed in
     if (!userId) {
-      return new NextResponse("Unauthorized", { status: 401 });
+      return redirect("/");
     }
 
-    // Use `currentUser()` to get the Backend API User object
     const user = await currentUser();
     if (!user) {
-      return new NextResponse("User does not exist", { status: 401 });
+      return redirect("/");
     }
 
     const id = user.id;
@@ -44,9 +42,9 @@ export async function getLoadouts(cursor: string | null, getNext: string) {
           ? and(
               eq(loadouts.user_id, id),
               or(
-                gt(loadouts.created_at, entry.created_at),
+                gt(loadouts.created_at, entry.created_at.toISOString()),
                 and(
-                  eq(loadouts.created_at, entry.created_at),
+                  eq(loadouts.created_at, entry.created_at.toISOString()),
                   gt(loadouts.id, entry.id)
                 )
               ),
@@ -55,9 +53,9 @@ export async function getLoadouts(cursor: string | null, getNext: string) {
           : and(
               eq(loadouts.user_id, id),
               or(
-                lt(loadouts.created_at, entry.created_at),
+                lt(loadouts.created_at, entry.created_at.toISOString()),
                 and(
-                  eq(loadouts.created_at, entry.created_at),
+                  eq(loadouts.created_at, entry.created_at.toISOString()),
                   lt(loadouts.id, entry.id)
                 )
               ),

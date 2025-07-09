@@ -120,9 +120,7 @@ export default function Dashboard() {
                       <Button
                         variant={side === "A" ? "default" : "outline"}
                         className={
-                          side === "A"
-                            ? "bg-siege-accent"
-                            : "bg-transparent border-white/20 hover:border-white/50"
+                          side === "A" ? "bg-siege-accent" : "bg-transparent"
                         }
                         onClick={() => setSide("A")}
                       >
@@ -131,9 +129,7 @@ export default function Dashboard() {
                       <Button
                         variant={side === "D" ? "default" : "outline"}
                         className={
-                          side === "D"
-                            ? "bg-siege-accent"
-                            : "bg-transparent border-white/20 hover:border-white/50"
+                          side === "D" ? "bg-siege-accent" : "bg-transparent "
                         }
                         onClick={() => setSide("D")}
                       >

@@ -14,10 +14,9 @@ export default async function Loadouts({
   const cursor = params["cursor"] ?? null;
   const getNext = params["getNext"] ?? "true";
 
-  const { loadouts, icons, prev_cursor, next_cursor } = await getLoadouts(
-    cursor,
-    getNext
-  );
+  const response = await getLoadouts(cursor, getNext);
+
+  const { loadouts, icons, prev_cursor, next_cursor } = response;
 
   return (
     <div className="min-h-screen flex flex-col items-center mx-auto gap-y-20 py-16">
