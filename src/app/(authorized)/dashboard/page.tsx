@@ -82,8 +82,7 @@ export default function Dashboard() {
         {/* Section Header */}
         <div className="text-center">
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
-            <span className="text-siege-accent">Interactive</span> Loadout
-            Generator
+            The Randomizer
           </h2>
         </div>
 
@@ -102,15 +101,17 @@ export default function Dashboard() {
                   </TabsTrigger>
                   <TabsTrigger
                     value="team"
+                    disabled
                     className="data-[state=active]:bg-siege-accent/20 data-[state=active]:text-siege-accent"
                   >
                     Full Team
                   </TabsTrigger>
                   <TabsTrigger
                     value="bans"
+                    disabled
                     className="data-[state=active]:bg-siege-accent/20 data-[state=active]:text-siege-accent"
                   >
-                    Ban Suggestions
+                    Challenges
                   </TabsTrigger>
                 </TabsList>
 

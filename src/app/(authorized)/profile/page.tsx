@@ -12,7 +12,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { User, Calendar, Trophy, Target, Edit3 } from "lucide-react";
+import { User, Calendar, Target, Edit3 } from "lucide-react";
 import { getNumLoadouts } from "./actions";
 
 export default async function Profile() {
@@ -45,7 +45,7 @@ export default async function Profile() {
   };
 
   return (
-    <div className="min-h-screen bg-background p-4 md:p-8">
+    <div className="min-h-screen bg-background p-4 md:p-8 relative mt-8">
       <div className="max-w-4xl mx-auto space-y-8">
         {/* Header Section */}
         <div className="text-center space-y-2">
@@ -163,18 +163,6 @@ export default async function Profile() {
                       </CardHeader>
                       <CardContent>
                         <h1 className="text-2xl font-bold">{count}</h1>
-                      </CardContent>
-                    </Card>
-
-                    <Card>
-                      <CardHeader className="flex flex-row items-center space-y-0 pb-2">
-                        <CardTitle className="text-sm font-medium mr-2">
-                          Matches Played
-                        </CardTitle>
-                        <Trophy className="w-4 h-4 text-muted-foreground" />
-                      </CardHeader>
-                      <CardContent>
-                        <h1 className="text-2xl font-bold">247</h1>
                       </CardContent>
                     </Card>
                   </div>

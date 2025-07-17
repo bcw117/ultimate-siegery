@@ -2,7 +2,7 @@
 import React, { useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { useInView, useTextScramble } from "@/assets/animations";
-import { ChevronDown, Target, Shield, Shuffle, Save } from "lucide-react";
+import { Shield, Shuffle, Save } from "lucide-react";
 import Link from "next/link";
 
 const Hero: React.FC = () => {
@@ -83,14 +83,13 @@ const Hero: React.FC = () => {
 
           {/* Feature Icons */}
           <div
-            className={`grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto transition-all duration-700 delay-400 ${
+            className={`grid grid-cols-3 md:grid-cols-3 gap-6 max-w-4xl mx-auto transition-all duration-700 delay-400 ${
               isInView ? "opacity-100" : "opacity-0 translate-y-8"
             }`}
           >
             {[
-              { icon: Shuffle, label: "Random Loadouts" },
-              { icon: Target, label: "Operator Selection" },
-              { icon: Shield, label: "Ban Recommendations" },
+              { icon: Shuffle, label: "Randomize Loadouts" },
+              { icon: Shield, label: "Complete Challenges" },
               { icon: Save, label: "Save Configurations" },
             ].map((feature, index) => (
               <div
@@ -105,17 +104,6 @@ const Hero: React.FC = () => {
             ))}
           </div>
         </div>
-
-        {/* Scroll Down Indicator */}
-        <a
-          href="#features"
-          className={`absolute bottom-8 left-1/2 transform -translate-x-1/2 flex flex-col items-center text-white/50 hover:text-white transition-all duration-500 ${
-            isInView ? "opacity-100" : "opacity-0"
-          }`}
-        >
-          <span className="text-sm mb-2">Scroll Down</span>
-          <ChevronDown className="w-5 h-5 animate-bounce" />
-        </a>
       </div>
     </div>
   );
