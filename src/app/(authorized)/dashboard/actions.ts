@@ -38,5 +38,3 @@ export async function saveLoadout(loadout: Loadout) {
     };
   }
 }
-
-export async function create() {}

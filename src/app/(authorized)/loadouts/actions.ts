@@ -2,7 +2,7 @@
 import { db } from "@/db";
 import { gadgets, loadouts, operators, weapons } from "@/db/schema";
 import { auth, currentUser } from "@clerk/nextjs/server";
-import { createClient } from "@/utils/supabase/server";
+import { supabase } from "@/utils/supabaseClient";
 import { gt, eq, asc, and, or, ne, lt } from "drizzle-orm";
 import { alias } from "drizzle-orm/pg-core";
 import { redirect } from "next/navigation";
@@ -157,8 +157,20 @@ export async function getLoadouts(cursor: string | null, getNext: string) {
       ? btoa(JSON.stringify(results[results.length - 1].loadout))
       : null;
 
-    let test = results.map((result) => result.operator.name);
-    const icons = await getOperatorIcon(test);
+    const operator_icons = results.map((result) => result.operator.name);
+    const gadget_icons = results.map((result) => result.gadget);
+
+    const icons1 = await getIcon({
+      prefix: "icons/operators",
+      values: operator_icons,
+      suffix: ".svg",
+    });
+    const icons2 = await getIcon({
+      prefix: "icons/gadgets",
+      values: gadget_icons,
+    });
+
+    const icons = { operator_icons: icons1, gadget_icons: icons2 };
 
     return {
       loadouts: results,
@@ -179,14 +191,21 @@ function decode_cursor(cursor: string) {
   return { created_at, id: loadout_id } as Entry;
 }
 
-async function getOperatorIcon(names: string[]) {
-  const supabase = await createClient();
-  const urlPromises = names.map(async (name) => {
+async function getIcon({
+  prefix,
+  values,
+  suffix = ".png",
+}: {
+  prefix: string;
+  values: string[];
+  suffix?: string;
+}) {
+  const urlPromises = values.map(async (value) => {
     const {
       data: { publicUrl },
     } = supabase.storage
-      .from("icons")
-      .getPublicUrl(`${name.toLowerCase()}.svg`);
+      .from(prefix)
+      .getPublicUrl(value.toLowerCase().replaceAll(" ", "_") + suffix);
     return publicUrl;
   });
 

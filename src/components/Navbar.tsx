@@ -1,10 +1,16 @@
-"use server";
 import React from "react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import LogOutButton from "./LogoutButton";
 import { SignedIn, SignedOut } from "@clerk/nextjs";
+import { LayoutDashboard, Backpack, User } from "lucide-react";
 import Image from "next/image";
+
+const links = [
+  { icon: LayoutDashboard, link: "/dashboard", value: "Dashboard" },
+  { icon: Backpack, link: "/loadouts", value: "Loadouts" },
+  { icon: User, link: "/profile", value: "Profile" },
+];
 
 export default async function Navbar() {
   return (
@@ -24,11 +30,17 @@ export default async function Navbar() {
             <span className="text-siege-accent">Ultimate</span> Siegery
           </span>
         </Link>
-        <div className="hidden md:flex items-center space-x-10">
+        <div className="hidden md:flex items-center space-x-10 font-medium">
           <SignedIn>
-            <Link href="/dashboard">Dashboard</Link>
-            <Link href="/loadouts">Loadouts</Link>
-            <Link href="/profile">Profile</Link>
+            {links.map((link, i) => {
+              return (
+                <div className="flex items-center space-x-2" key={i}>
+                  <link.icon className="w-4 h-4" />
+                  <Link href={link.link}>{link.value}</Link>
+                </div>
+              );
+            })}
+
             <LogOutButton />
           </SignedIn>
           <SignedOut>
