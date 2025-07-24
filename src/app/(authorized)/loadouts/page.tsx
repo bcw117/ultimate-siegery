@@ -45,7 +45,7 @@ export default async function Loadouts({
                 </div>
                 {icons ? (
                   <Image
-                    src={icons[idx]}
+                    src={icons.operator_icons[idx]}
                     width={500}
                     height={500}
                     alt="Operator Image Icon"
@@ -74,6 +74,16 @@ export default async function Loadouts({
                 <p className="text-white text-lg font-semibold">
                   {toTitleCase(loadout.gadget ?? "")}
                 </p>
+                {icons ? (
+                  <Image
+                    src={icons.gadget_icons[idx]}
+                    width={500}
+                    height={500}
+                    alt="Operator Image Icon"
+                  />
+                ) : (
+                  <></>
+                )}
               </div>
             </div>
           </div>

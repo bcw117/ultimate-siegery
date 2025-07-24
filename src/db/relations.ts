@@ -1,5 +1,5 @@
 import { relations } from "drizzle-orm/relations";
-import { gadgets, loadouts, operators, weapons, profiles, operator_gadgets, operator_weapons, attachments, weapon_attachments } from "./schema";
+import { gadgets, loadouts, operators, weapons, profiles, operator_weapons, operator_gadgets, attachments, weapon_attachments } from "./schema";
 
 export const loadoutsRelations = relations(loadouts, ({one}) => ({
 	gadget: one(gadgets, {
@@ -33,8 +33,8 @@ export const gadgetsRelations = relations(gadgets, ({many}) => ({
 
 export const operatorsRelations = relations(operators, ({many}) => ({
 	loadouts: many(loadouts),
-	operator_gadgets: many(operator_gadgets),
 	operator_weapons: many(operator_weapons),
+	operator_gadgets: many(operator_gadgets),
 }));
 
 export const weaponsRelations = relations(weapons, ({many}) => ({
@@ -52,17 +52,6 @@ export const profilesRelations = relations(profiles, ({many}) => ({
 	loadouts: many(loadouts),
 }));
 
-export const operator_gadgetsRelations = relations(operator_gadgets, ({one}) => ({
-	gadget: one(gadgets, {
-		fields: [operator_gadgets.gadget_id],
-		references: [gadgets.id]
-	}),
-	operator: one(operators, {
-		fields: [operator_gadgets.operator_id],
-		references: [operators.id]
-	}),
-}));
-
 export const operator_weaponsRelations = relations(operator_weapons, ({one}) => ({
 	operator: one(operators, {
 		fields: [operator_weapons.operator_id],
@@ -71,6 +60,17 @@ export const operator_weaponsRelations = relations(operator_weapons, ({one}) => 
 	weapon: one(weapons, {
 		fields: [operator_weapons.weapon_id],
 		references: [weapons.id]
+	}),
+}));
+
+export const operator_gadgetsRelations = relations(operator_gadgets, ({one}) => ({
+	gadget: one(gadgets, {
+		fields: [operator_gadgets.gadget_id],
+		references: [gadgets.id]
+	}),
+	operator: one(operators, {
+		fields: [operator_gadgets.operator_id],
+		references: [operators.id]
 	}),
 }));
 

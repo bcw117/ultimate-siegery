@@ -105,7 +105,9 @@ export default async function Profile() {
             <Tabs defaultValue="overview" className="w-full">
               <TabsList className="grid w-full grid-cols-2">
                 <TabsTrigger value="overview">Overview</TabsTrigger>
-                <TabsTrigger value="settings">Settings</TabsTrigger>
+                <TabsTrigger value="settings" disabled>
+                  Settings
+                </TabsTrigger>
               </TabsList>
 
               <TabsContent value="overview" className="space-y-6 mt-6">

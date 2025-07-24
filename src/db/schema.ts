@@ -1,15 +1,77 @@
 import {
   pgTable,
-  unique,
-  text,
-  timestamp,
-  serial,
+  pgPolicy,
   integer,
+  text,
+  serial,
+  timestamp,
   foreignKey,
   primaryKey,
   bigint,
 } from "drizzle-orm/pg-core";
 import { sql } from "drizzle-orm";
+
+export const attachments = pgTable(
+  "attachments",
+  {
+    id: integer().primaryKey().generatedByDefaultAsIdentity({
+      name: "attachments_id_seq",
+      startWith: 1,
+      increment: 1,
+      minValue: 1,
+      maxValue: 2147483647,
+      cache: 1,
+    }),
+    name: text().notNull(),
+    type: text().notNull(),
+  },
+  (table) => [
+    pgPolicy("Enable read access for all users", {
+      as: "permissive",
+      for: "select",
+      to: ["public"],
+      using: sql`true`,
+    }),
+  ]
+);
+
+export const gadgets = pgTable(
+  "gadgets",
+  {
+    id: serial().primaryKey().notNull(),
+    name: text().notNull(),
+  },
+  (table) => [
+    pgPolicy("Enable read access for all users", {
+      as: "permissive",
+      for: "select",
+      to: ["public"],
+      using: sql`true`,
+    }),
+  ]
+);
+
+export const weapons = pgTable(
+  "weapons",
+  {
+    id: serial().primaryKey().notNull(),
+    name: text().notNull(),
+    class: text().notNull(),
+    type: text().notNull(),
+    base_damage: integer(),
+    mag_size: integer(),
+    ammo_cap: integer(),
+    rof: integer(),
+  },
+  (table) => [
+    pgPolicy("Enable read access for all users", {
+      as: "permissive",
+      for: "select",
+      to: ["public"],
+      using: sql`true`,
+    }),
+  ]
+);
 
 export const profiles = pgTable(
   "profiles",
@@ -23,19 +85,15 @@ export const profiles = pgTable(
     ),
     id: text().primaryKey().notNull(),
   },
-  (table) => [unique("profiles_id_key").on(table.id)]
+  (table) => [
+    pgPolicy("User can view their own profile", {
+      as: "permissive",
+      for: "select",
+      to: ["authenticated"],
+      using: sql`(( SELECT (auth.jwt() ->> 'sub'::text)) = id)`,
+    }),
+  ]
 );
-
-export const operators = pgTable("operators", {
-  id: serial().primaryKey().notNull(),
-  name: text().notNull(),
-  side: text().notNull(),
-  health: integer().notNull(),
-  speed: integer().notNull(),
-  difficulty: integer().notNull(),
-  unique_ability: text().notNull(),
-  image_url: text(),
-});
 
 export const loadouts = pgTable(
   "loadouts",
@@ -77,58 +135,38 @@ export const loadouts = pgTable(
     })
       .onUpdate("cascade")
       .onDelete("cascade"),
+    pgPolicy("Users must insert their own loadouts", {
+      as: "permissive",
+      for: "insert",
+      to: ["authenticated"],
+      withCheck: sql`(( SELECT (auth.jwt() ->> 'sub'::text)) = user_id)`,
+    }),
+    pgPolicy("User can view their own loadouts", {
+      as: "permissive",
+      for: "select",
+      to: ["authenticated"],
+    }),
   ]
 );
 
-export const gadgets = pgTable("gadgets", {
-  id: serial().primaryKey().notNull(),
-  name: text().notNull(),
-});
-
-export const weapons = pgTable("weapons", {
-  id: serial().primaryKey().notNull(),
-  name: text().notNull(),
-  class: text().notNull(),
-  type: text().notNull(),
-  base_damage: integer(),
-  mag_size: integer(),
-  ammo_cap: integer(),
-  rof: integer(),
-});
-
-export const attachments = pgTable("attachments", {
-  id: integer().primaryKey().generatedByDefaultAsIdentity({
-    name: "attachments_id_seq",
-    startWith: 1,
-    increment: 1,
-    minValue: 1,
-    maxValue: 2147483647,
-    cache: 1,
-  }),
-  name: text().notNull(),
-  type: text().notNull(),
-});
-
-export const operator_gadgets = pgTable(
-  "operator_gadgets",
+export const operators = pgTable(
+  "operators",
   {
-    operator_id: integer().notNull(),
-    gadget_id: integer().notNull(),
+    id: serial().primaryKey().notNull(),
+    name: text().notNull(),
+    side: text().notNull(),
+    health: integer().notNull(),
+    speed: integer().notNull(),
+    difficulty: integer().notNull(),
+    unique_ability: text().notNull(),
+    image_url: text(),
   },
   (table) => [
-    foreignKey({
-      columns: [table.gadget_id],
-      foreignColumns: [gadgets.id],
-      name: "operator_gadgets_gadget_id_gadgets_id_fk",
-    }).onDelete("cascade"),
-    foreignKey({
-      columns: [table.operator_id],
-      foreignColumns: [operators.id],
-      name: "operator_gadgets_operator_id_operators_id_fk",
-    }).onDelete("cascade"),
-    primaryKey({
-      columns: [table.operator_id, table.gadget_id],
-      name: "operator_gadgets_operator_id_gadget_id_pk",
+    pgPolicy("Enable read access for all users", {
+      as: "permissive",
+      for: "select",
+      to: ["public"],
+      using: sql`true`,
     }),
   ]
 );
@@ -153,6 +191,42 @@ export const operator_weapons = pgTable(
     primaryKey({
       columns: [table.operator_id, table.weapon_id],
       name: "operator_weapons_operator_id_weapon_id_pk",
+    }),
+    pgPolicy("Enable read access for all users", {
+      as: "permissive",
+      for: "select",
+      to: ["public"],
+      using: sql`true`,
+    }),
+  ]
+);
+
+export const operator_gadgets = pgTable(
+  "operator_gadgets",
+  {
+    operator_id: integer().notNull(),
+    gadget_id: integer().notNull(),
+  },
+  (table) => [
+    foreignKey({
+      columns: [table.gadget_id],
+      foreignColumns: [gadgets.id],
+      name: "operator_gadgets_gadget_id_gadgets_id_fk",
+    }).onDelete("cascade"),
+    foreignKey({
+      columns: [table.operator_id],
+      foreignColumns: [operators.id],
+      name: "operator_gadgets_operator_id_operators_id_fk",
+    }).onDelete("cascade"),
+    primaryKey({
+      columns: [table.operator_id, table.gadget_id],
+      name: "operator_gadgets_operator_id_gadget_id_pk",
+    }),
+    pgPolicy("Enable read access for all users", {
+      as: "permissive",
+      for: "select",
+      to: ["public"],
+      using: sql`true`,
     }),
   ]
 );
@@ -182,6 +256,12 @@ export const weapon_attachments = pgTable(
     primaryKey({
       columns: [table.weapon_id, table.attachment_id],
       name: "weapon_attachments_pkey",
+    }),
+    pgPolicy("Enable read access for all users", {
+      as: "permissive",
+      for: "select",
+      to: ["public"],
+      using: sql`true`,
     }),
   ]
 );
