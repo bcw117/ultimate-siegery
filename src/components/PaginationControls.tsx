@@ -23,7 +23,7 @@ export default function PaginationControls({
         onClick={() => {
           if (prev_cursor) {
             router.push(
-              `loadouts/?cursor=${prev_cursor}&limit=${limit}&getNext=false`
+              `loadouts/?cursor=${prev_cursor}&limit=${limit}&forward=false`
             );
           }
         }}
@@ -36,7 +36,7 @@ export default function PaginationControls({
         onClick={() => {
           if (next_cursor) {
             router.push(
-              `loadouts/?cursor=${next_cursor}&limit=${limit}&getNext=true`
+              `loadouts/?cursor=${next_cursor}&limit=${limit}&forward=true`
             );
           }
         }}

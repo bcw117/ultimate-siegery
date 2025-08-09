@@ -1,10 +1,3 @@
-export type Loadout = {
-  operator: Operator;
-  pweapon: Weapon;
-  sweapon: Weapon;
-  gadget: Gadget;
-};
-
 export type Operator = {
   id: number;
   name: string;
@@ -13,17 +6,20 @@ export type Operator = {
   health: number;
   difficulty: number;
   unique_ability: string;
-};
-
-export type OperatorWithLoadout = Operator & {
-  primary_weapon: Weapon;
-  secondary_weapon: Weapon;
-  gadget: Gadget;
+  icon_url: string | null;
+  portrait_url: string | null;
 };
 
 export type Gadget = {
   id: number;
   name: string;
+  icon_url: string;
+};
+
+export type Attachment = {
+  id: number;
+  name: string;
+  type: string;
 };
 
 export type Weapon = {
@@ -35,4 +31,15 @@ export type Weapon = {
   mag_size: number | null;
   ammo_cap: number | null;
   rof: number | null;
+  scope?: Attachment;
+  grip?: Attachment;
+  barrel?: Attachment;
+  underbarrel?: Attachment;
+};
+
+export type Loadout = {
+  operator: Operator;
+  primary_weapon: Weapon;
+  secondary_weapon: Weapon;
+  gadget: Gadget;
 };
