@@ -2,7 +2,7 @@ import React from "react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import LogOutButton from "./LogoutButton";
-import { SignedIn, SignedOut } from "@clerk/nextjs";
+import { SignedIn, SignedOut, SignInButton, SignUpButton } from "@clerk/nextjs";
 import { LayoutDashboard, Backpack, User } from "lucide-react";
 import Image from "next/image";
 
@@ -34,10 +34,14 @@ export default async function Navbar() {
           <SignedIn>
             {links.map((link, i) => {
               return (
-                <div className="flex items-center space-x-2" key={i}>
+                <Link
+                  href={link.link}
+                  className="flex items-center space-x-2 transition-all hover:scale-105"
+                  key={i}
+                >
                   <link.icon className="w-4 h-4" />
-                  <Link href={link.link}>{link.value}</Link>
-                </div>
+                  <span>{link.value}</span>
+                </Link>
               );
             })}
 
@@ -45,19 +49,19 @@ export default async function Navbar() {
           </SignedIn>
           <SignedOut>
             <div className="flex items-center space-x-4">
-              <Link href="/sign-in">
+              <SignInButton mode="modal">
                 <Button
                   variant="outline"
                   className="border-white/20 hover:border-white/50 text-white bg-transparent cursor-pointer"
                 >
                   Sign In
                 </Button>
-              </Link>
-              <Link href="/sign-up">
+              </SignInButton>
+              <SignUpButton mode="modal">
                 <Button className="bg-siege-accent hover:bg-siege-accent/90 text-white cursor-pointer">
                   Sign Up
                 </Button>
-              </Link>
+              </SignUpButton>
             </div>
           </SignedOut>
         </div>

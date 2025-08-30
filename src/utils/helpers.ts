@@ -1,6 +1,40 @@
 export const OPERATOR_COUNT = 75;
+const DESCRIPTORS = [
+  "Potato Aim",
+  "Rage Inducing",
+  "Cringe",
+  "Tilt Proof",
+  "Big Brain",
+  "Cursed",
+  "Blessed",
+  "RNG Based",
+  "Hardcore",
+  "Highlight Reel",
+  "Cracked",
+  "Based",
+  "Sigma",
+  "Perfect",
+  "Weird",
+  "Interesting",
+  "Very Random",
+  "Suspicious",
+  "Epic",
+  "Ultimate",
+  "Copper",
+  "Silver",
+  "Bronze",
+  "Gold",
+  "Platinum",
+  "Emerald",
+  "Diamond",
+  "Champion",
+  "Genius",
+];
 
-export function getRandomElement(arr: unknown[]) {
+export function getRandomElement<T>(arr: T[]) {
+  if (!arr || arr.length === 0) {
+    return undefined;
+  }
   const randomIndex = Math.floor(Math.random() * arr.length);
   return arr[randomIndex];
 }
@@ -14,8 +48,19 @@ export function removeUnderscores(name: string) {
 }
 
 export function toTitleCase(name: string) {
+  if (!name) {
+    return null;
+  }
+
   return name.replace(
     /\w\S*/g,
     (text) => text.charAt(0).toUpperCase() + text.substring(1).toLowerCase()
   );
+}
+
+export function randomizedLoadoutName(name: string | undefined) {
+  if (!name) {
+    return `${getRandomElement(DESCRIPTORS)} Loadout`;
+  }
+  return `${getRandomElement(DESCRIPTORS)} ${toTitleCase(name)} Loadout`;
 }

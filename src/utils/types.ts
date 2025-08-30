@@ -31,13 +31,16 @@ export type Weapon = {
   mag_size: number | null;
   ammo_cap: number | null;
   rof: number | null;
-  scope?: Attachment;
-  grip?: Attachment;
-  barrel?: Attachment;
-  underbarrel?: Attachment;
+  attachments: {
+    scope?: Attachment;
+    grip?: Attachment;
+    barrel?: Attachment;
+    underbarrel?: Attachment;
+  };
 };
 
 export type Loadout = {
+  name: string;
   operator: Operator;
   primary_weapon: Weapon;
   secondary_weapon: Weapon;

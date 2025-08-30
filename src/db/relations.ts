@@ -1,7 +1,7 @@
 import { relations } from "drizzle-orm/relations";
-import { gadgets, loadouts, operators, weapons, profiles, operator_weapons, operator_gadgets, attachments, weapon_attachments } from "./schema";
+import { gadgets, loadouts, operators, weapons, operator_weapons, operator_gadgets, attachments, weapon_attachments, loadout_attachments } from "./schema";
 
-export const loadoutsRelations = relations(loadouts, ({one}) => ({
+export const loadoutsRelations = relations(loadouts, ({one, many}) => ({
 	gadget: one(gadgets, {
 		fields: [loadouts.gadget_id],
 		references: [gadgets.id]
@@ -20,10 +20,7 @@ export const loadoutsRelations = relations(loadouts, ({one}) => ({
 		references: [weapons.id],
 		relationName: "loadouts_sweapon_id_weapons_id"
 	}),
-	profile: one(profiles, {
-		fields: [loadouts.user_id],
-		references: [profiles.id]
-	}),
+	loadout_attachments: many(loadout_attachments),
 }));
 
 export const gadgetsRelations = relations(gadgets, ({many}) => ({
@@ -46,10 +43,7 @@ export const weaponsRelations = relations(weapons, ({many}) => ({
 	}),
 	operator_weapons: many(operator_weapons),
 	weapon_attachments: many(weapon_attachments),
-}));
-
-export const profilesRelations = relations(profiles, ({many}) => ({
-	loadouts: many(loadouts),
+	loadout_attachments: many(loadout_attachments),
 }));
 
 export const operator_weaponsRelations = relations(operator_weapons, ({one}) => ({
@@ -87,4 +81,20 @@ export const weapon_attachmentsRelations = relations(weapon_attachments, ({one})
 
 export const attachmentsRelations = relations(attachments, ({many}) => ({
 	weapon_attachments: many(weapon_attachments),
+	loadout_attachments: many(loadout_attachments),
+}));
+
+export const loadout_attachmentsRelations = relations(loadout_attachments, ({one}) => ({
+	attachment: one(attachments, {
+		fields: [loadout_attachments.attachment_id],
+		references: [attachments.id]
+	}),
+	loadout: one(loadouts, {
+		fields: [loadout_attachments.loadout_id],
+		references: [loadouts.id]
+	}),
+	weapon: one(weapons, {
+		fields: [loadout_attachments.weapon_id],
+		references: [weapons.id]
+	}),
 }));
