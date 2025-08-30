@@ -3,7 +3,7 @@ import React, { useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { useInView, useTextScramble } from "@/assets/animations";
 import { Shield, Shuffle, Save } from "lucide-react";
-import Link from "next/link";
+import { SignInButton } from "@clerk/nextjs";
 
 const Hero: React.FC = () => {
   const heroRef = useRef<HTMLDivElement>(null);
@@ -67,18 +67,19 @@ const Hero: React.FC = () => {
             approach to every match of Rainbow Six Siege.
           </p>
 
-          {/* CTA Buttons */}
           <div
             className={`flex flex-col sm:flex-row items-center justify-center gap-4 mb-16 transition-all duration-700 delay-300 ${
               isInView ? "opacity-100" : "opacity-0 translate-y-8"
             }`}
           >
-            <Button
-              size="lg"
-              className="bg-siege-accent hover:bg-siege-accent/90 text-white px-8 h-12 cursor-pointer"
-            >
-              <Link href="/sign-in">Get Started</Link>
-            </Button>
+            <SignInButton mode="modal">
+              <Button
+                size="lg"
+                className="bg-siege-accent hover:bg-siege-accent/90 text-white px-8 h-12 cursor-pointer"
+              >
+                Get Started
+              </Button>
+            </SignInButton>
           </div>
 
           {/* Feature Icons */}

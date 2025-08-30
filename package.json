@@ -20,7 +20,7 @@
     "@radix-ui/react-slot": "^1.2.3",
     "@radix-ui/themes": "^3.2.1",
     "@supabase/ssr": "^0.5.2",
-    "@supabase/supabase-js": "^2.49.1",
+    "@supabase/supabase-js": "^2.54.0",
     "@types/mdx": "^2.0.13",
     "@vercel/analytics": "^1.5.0",
     "class-variance-authority": "^0.7.1",

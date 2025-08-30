@@ -1,6 +1,7 @@
 "use client";
 import React from "react";
 import { Target } from "lucide-react";
+import Link from "next/link";
 
 const Footer: React.FC = () => {
   return (
@@ -51,20 +52,20 @@ const Footer: React.FC = () => {
               <h3 className="text-white font-medium mb-4">Legal</h3>
               <ul className="space-y-2">
                 <li>
-                  <a
-                    href="#"
+                  <Link
+                    href="/terms"
                     className="text-white/60 hover:text-white transition-colors"
                   >
                     Terms & Conditions
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a
-                    href="#"
+                  <Link
+                    href="/privacy"
                     className="text-white/60 hover:text-white transition-colors"
                   >
                     Privacy Policy
-                  </a>
+                  </Link>
                 </li>
               </ul>
             </div>

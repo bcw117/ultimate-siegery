@@ -1,15 +1,54 @@
 import {
   pgTable,
   pgPolicy,
-  integer,
-  text,
   serial,
-  timestamp,
+  text,
+  integer,
   foreignKey,
+  timestamp,
   primaryKey,
   bigint,
 } from "drizzle-orm/pg-core";
 import { sql } from "drizzle-orm";
+
+export const weapons = pgTable(
+  "weapons",
+  {
+    id: serial().primaryKey().notNull(),
+    name: text().notNull(),
+    class: text().notNull(),
+    type: text().notNull(),
+    base_damage: integer(),
+    mag_size: integer(),
+    ammo_cap: integer(),
+    rof: integer(),
+  },
+  (table) => [
+    pgPolicy("Enable read access for all users", {
+      as: "permissive",
+      for: "select",
+      to: ["public"],
+      using: sql`true`,
+    }),
+  ]
+);
+
+export const gadgets = pgTable(
+  "gadgets",
+  {
+    id: serial().primaryKey().notNull(),
+    name: text().notNull(),
+    icon_url: text(),
+  },
+  (table) => [
+    pgPolicy("Enable read access for all users", {
+      as: "permissive",
+      for: "select",
+      to: ["public"],
+      using: sql`true`,
+    }),
+  ]
+);
 
 export const attachments = pgTable(
   "attachments",
@@ -35,66 +74,6 @@ export const attachments = pgTable(
   ]
 );
 
-export const gadgets = pgTable(
-  "gadgets",
-  {
-    id: serial().primaryKey().notNull(),
-    name: text().notNull(),
-  },
-  (table) => [
-    pgPolicy("Enable read access for all users", {
-      as: "permissive",
-      for: "select",
-      to: ["public"],
-      using: sql`true`,
-    }),
-  ]
-);
-
-export const weapons = pgTable(
-  "weapons",
-  {
-    id: serial().primaryKey().notNull(),
-    name: text().notNull(),
-    class: text().notNull(),
-    type: text().notNull(),
-    base_damage: integer(),
-    mag_size: integer(),
-    ammo_cap: integer(),
-    rof: integer(),
-  },
-  (table) => [
-    pgPolicy("Enable read access for all users", {
-      as: "permissive",
-      for: "select",
-      to: ["public"],
-      using: sql`true`,
-    }),
-  ]
-);
-
-export const profiles = pgTable(
-  "profiles",
-  {
-    username: text().notNull(),
-    first_name: text().notNull(),
-    last_name: text().notNull(),
-    avatar_url: text(),
-    created_at: timestamp({ withTimezone: true, mode: "string" }).default(
-      sql`CURRENT_TIMESTAMP`
-    ),
-    id: text().primaryKey().notNull(),
-  },
-  (table) => [
-    pgPolicy("User can view their own profile", {
-      as: "permissive",
-      for: "select",
-      to: ["authenticated"],
-      using: sql`(( SELECT (auth.jwt() ->> 'sub'::text)) = id)`,
-    }),
-  ]
-);
-
 export const loadouts = pgTable(
   "loadouts",
   {
@@ -103,7 +82,7 @@ export const loadouts = pgTable(
     gadget_id: integer().notNull(),
     pweapon_id: integer().notNull(),
     sweapon_id: integer().notNull(),
-    created_at: timestamp({ mode: "string" }).defaultNow().notNull(),
+    created_at: timestamp({ withTimezone: true }).defaultNow().notNull(),
     user_id: text().notNull(),
     name: text().default(""),
   },
@@ -128,20 +107,13 @@ export const loadouts = pgTable(
       foreignColumns: [weapons.id],
       name: "loadouts_sweapon_id_weapons_id_fk",
     }).onDelete("cascade"),
-    foreignKey({
-      columns: [table.user_id],
-      foreignColumns: [profiles.id],
-      name: "loadouts_user_id_fkey",
-    })
-      .onUpdate("cascade")
-      .onDelete("cascade"),
-    pgPolicy("Users must insert their own loadouts", {
+    pgPolicy("Users must insert their own tasks", {
       as: "permissive",
       for: "insert",
       to: ["authenticated"],
       withCheck: sql`(( SELECT (auth.jwt() ->> 'sub'::text)) = user_id)`,
     }),
-    pgPolicy("User can view their own loadouts", {
+    pgPolicy("User can view their own tasks", {
       as: "permissive",
       for: "select",
       to: ["authenticated"],
@@ -159,7 +131,8 @@ export const operators = pgTable(
     speed: integer().notNull(),
     difficulty: integer().notNull(),
     unique_ability: text().notNull(),
-    image_url: text(),
+    icon_url: text(),
+    portrait_url: text(),
   },
   (table) => [
     pgPolicy("Enable read access for all users", {
@@ -262,6 +235,36 @@ export const weapon_attachments = pgTable(
       for: "select",
       to: ["public"],
       using: sql`true`,
+    }),
+  ]
+);
+
+export const loadout_attachments = pgTable(
+  "loadout_attachments",
+  {
+    loadout_id: integer().notNull(),
+    weapon_id: integer().notNull(),
+    attachment_id: integer().notNull(),
+  },
+  (table) => [
+    foreignKey({
+      columns: [table.attachment_id],
+      foreignColumns: [attachments.id],
+      name: "loadout_attachments_attachment_id_fkey",
+    }).onDelete("cascade"),
+    foreignKey({
+      columns: [table.loadout_id],
+      foreignColumns: [loadouts.id],
+      name: "loadout_attachments_loadout_id_fkey",
+    }).onDelete("cascade"),
+    foreignKey({
+      columns: [table.weapon_id],
+      foreignColumns: [weapons.id],
+      name: "loadout_attachments_weapon_id_fkey",
+    }).onDelete("cascade"),
+    primaryKey({
+      columns: [table.loadout_id, table.weapon_id, table.attachment_id],
+      name: "loadout_attachments_pkey",
     }),
   ]
 );
