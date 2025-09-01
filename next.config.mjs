@@ -1,11 +1,4 @@
 import createMDX from "@next/mdx";
-
-const s3_url = process.env.NEXT_PUBLIC_SUPABASE_URL?.replace("https://", "");
-
-if (!s3_url) {
-  throw Error("NEXT_PUBLIC_SUPABASE_URL not set");
-}
-
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   // Configure `pageExtensions` to include markdown and MDX files
@@ -15,9 +8,17 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: s3_url,
+        // This is your DEV hostname
+        hostname: "hhcizyfqkhsyspojddcc.supabase.co",
         port: "",
-        pathname: "/**",
+        pathname: "/storage/v1/object/public/**",
+      },
+      {
+        protocol: "https",
+        // This is your PROD hostname
+        hostname: "lbowlaynaxcptunzgtog.supabase.co",
+        port: "",
+        pathname: "/storage/v1/object/public/**",
       },
     ],
   },
