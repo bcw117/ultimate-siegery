@@ -6,6 +6,7 @@ import Navbar from "@/components/Navbar";
 import { Toaster } from "@/components/ui/sonner";
 import { dark } from "@clerk/themes";
 import { Analytics } from "@vercel/analytics/next";
+import Footer from "@/components/Footer";
 
 const inter = Inter({
   variable: "--font-geist-mono",
@@ -32,6 +33,7 @@ export default function RootLayout({
         <body className={`${inter.variable} antialiased`}>
           <Navbar />
           {children}
+          <Footer />
           <Toaster />
           <Analytics />
         </body>

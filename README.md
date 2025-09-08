@@ -1,9 +1,16 @@
 # Ultimate Siegery
 A tool to help randomize your operator loadouts and teams
 
+## Tech Stack
+- Next.js
+- Drizzle
+- Supabase
+- Clerk
+
 ## Requirements
 - Node.js
-- Supabase
+- Supabase account
+- Clerk account
 
 ## Installation
 1. Install dependencies
@@ -22,6 +29,14 @@ bun dev
 ```
 #### .env file
 ```env
-NEXT_PUBLIC_SUPABASE_URL=YOUR_NEXT_PUBLIC_SUPABASE_URL
-NEXT_PUBLIC_SUPABASE_ANON_KEY=YOUR_NEXT_PUBLIC_SUPABASE_ANON_KEY
+
+NEXT_PUBLIC_SUPABASE_URL=<your_supabase_url>
+NEXT_PUBLIC_SUPABASE_KEY=<your_supabase_key>
+DATABASE_URL=<your_database_url>
+
+NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=<your_clerk_publishable_key>
+CLERK_SECRET_KEY=<your_secret_key>
+
+NEXT_PUBLIC_CLERK_SIGN_IN_FORCE_REDIRECT_URL=/dashboard
+NEXT_PUBLIC_CLERK_SIGN_UP_FORCE_REDIRECT_URL=/dashboard
 ```
