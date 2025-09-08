@@ -2,6 +2,7 @@
 import React from "react";
 import { Target } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
 
 const Footer: React.FC = () => {
   return (
@@ -14,38 +15,21 @@ const Footer: React.FC = () => {
       <div className="relative z-10 container mx-auto px-6">
         {/* Main Footer Content */}
         <div className="pt-16 pb-8 border-b border-white/10">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-10">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
             {/* Logo & Info */}
             <div className="md:col-span-1">
-              <a href="#" className="flex items-center space-x-2 mb-6">
-                <Target className="w-6 h-6 text-siege-accent" />
-                <span className="font-bold text-xl text-white">
+              <Link href="/" className="flex items-center space-x-2 group">
+                <Image
+                  src="/logo.png"
+                  alt="Ultimate Siegery Logo"
+                  width={500}
+                  height={500}
+                  className="w-6 h-6 text-siege-accent transition-transform duration-500 group-hover:-rotate-15"
+                />
+                <span className="font-bold text-xl tracking-tight text-white">
                   <span className="text-siege-accent">Ultimate</span> Siegery
                 </span>
-              </a>
-            </div>
-
-            {/* Links */}
-            <div>
-              <h3 className="text-white font-medium mb-4">Navigation</h3>
-              <ul className="space-y-2">
-                <li>
-                  <a
-                    href="#"
-                    className="text-white/60 hover:text-white transition-colors"
-                  >
-                    Home
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="#features"
-                    className="text-white/60 hover:text-white transition-colors"
-                  >
-                    Features
-                  </a>
-                </li>
-              </ul>
+              </Link>
             </div>
 
             <div>
@@ -65,6 +49,30 @@ const Footer: React.FC = () => {
                     className="text-white/60 hover:text-white transition-colors"
                   >
                     Privacy Policy
+                  </Link>
+                </li>
+              </ul>
+            </div>
+            <div>
+              <h3 className="text-white font-medium mb-4">
+                Developed with ☕ by Boris Wang
+              </h3>
+              <ul className="space-y-2">
+                <li>
+                  <Link
+                    href="https://beacons.ai/boriscodes"
+                    className="text-white/60 hover:text-white transition-colors"
+                  >
+                    Support Me
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="https://tinyurl.com/42yfkjwc"
+                    target="_blank"
+                    className="text-transparent hover:text-white transition-colors"
+                  >
+                    super secret link
                   </Link>
                 </li>
               </ul>
