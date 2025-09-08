@@ -1,10 +1,9 @@
 "use client";
 import React from "react";
-import { Target } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 
-const Footer: React.FC = () => {
+const Footer = () => {
   return (
     <footer className="bg-siege-darker relative overflow-hidden">
       {/* Background Elements */}
