@@ -1,47 +1,36 @@
-import { NextResponse, type NextRequest } from "next/server";
-import { db } from "@/db/index";
+import { NextRequest, NextResponse } from "next/server";
+import { groupBy, isNil } from "lodash";
+import { db } from "@/db";
 import {
-  operator_weapons,
-  operator_gadgets,
-  gadgets,
-  operators,
   weapons,
+  operator_weapons,
+  gadgets,
+  operator_gadgets,
+  operators,
   attachments,
   weapon_attachments,
 } from "@/db/schema";
-import { eq, sql } from "drizzle-orm";
-import { Weapon, Gadget, Operator, Attachment } from "@/utils/types";
-import { getRandomElement, randomizedLoadoutName } from "@/utils/helpers";
+import { eq } from "drizzle-orm";
+import { Attachment, Weapon } from "@/utils/types";
+
 
 export async function GET(request: NextRequest) {
   try {
     const searchParams = request.nextUrl.searchParams;
-    let side = searchParams.get("side");
-    if (!side) {
-      side = "A";
+
+    const operatorId = searchParams.get("operatorId");
+
+    if (isNil(operatorId)) {
+      return NextResponse.json(
+        { error: "Invalid search parameters" },
+        { status: 400 }
+      );
     }
 
-    const result = await db
+    const operatorPromise = db
       .select()
       .from(operators)
-      .where(eq(operators.side, side))
-      .orderBy(sql`random()`)
-      .limit(1);
-
-    const operatorData = result[0];
-    const operator: Operator = {
-      id: operatorData.id,
-      name: operatorData.name,
-      speed: operatorData.speed,
-      side: operatorData.side,
-      health: operatorData.health,
-      difficulty: operatorData.difficulty,
-      unique_ability: operatorData.unique_ability,
-      icon_url: operatorData.icon_url,
-      portrait_url: operatorData.portrait_url,
-    };
-
-    const operatorId = operatorData.id;
+      .where(eq(operators.id, Number(operatorId)));
 
     const weaponsPromise = db
       .select({
@@ -56,7 +45,7 @@ export async function GET(request: NextRequest) {
       })
       .from(operator_weapons)
       .innerJoin(weapons, eq(operator_weapons.weapon_id, weapons.id))
-      .where(eq(operator_weapons.operator_id, operatorId));
+      .where(eq(operator_weapons.operator_id, Number(operatorId)));
 
     const gadgetsPromise = db
       .select({
@@ -66,22 +55,17 @@ export async function GET(request: NextRequest) {
       })
       .from(operator_gadgets)
       .innerJoin(gadgets, eq(operator_gadgets.gadget_id, gadgets.id))
-      .where(eq(operator_gadgets.operator_id, operatorId));
+      .where(eq(operator_gadgets.operator_id, Number(operatorId)));
 
-    const [weaponResults, gadgetResults] = await Promise.all([
+    const [operatorResults, weaponResults, gadgetResults] = await Promise.all([
+      operatorPromise,
       weaponsPromise,
       gadgetsPromise,
     ]);
 
-    const primary_weapon = getRandomElement(
-      weaponResults.filter((weapon) => weapon.type === "Primary")
-    ) as Weapon;
+    const results = [];
 
-    const secondary_weapon = getRandomElement(
-      weaponResults.filter((weapon) => weapon.type === "Secondary")
-    ) as Weapon;
-
-    for (let w of [primary_weapon, secondary_weapon]) {
+    for (let w of weaponResults) {
       const attachmentsResult: Attachment[] = await db
         .select({
           id: attachments.id,
@@ -95,40 +79,24 @@ export async function GET(request: NextRequest) {
         )
         .where(eq(weapon_attachments.weapon_id, w.id));
 
-      let scope: Attachment | undefined = getRandomElement(
-        attachmentsResult.filter((attachment) => attachment.type == "Scope")
-      );
+      const attachmentMap = groupBy(attachmentsResult, "type");
 
-      let barrel: Attachment | undefined = getRandomElement(
-        attachmentsResult.filter((attachment) => attachment.type == "Barrel")
-      );
-
-      let grip: Attachment | undefined = getRandomElement(
-        attachmentsResult.filter((attachment) => attachment.type == "Grip")
-      );
-      w.attachments = {
-        scope: scope,
-        barrel: barrel,
-        grip: grip,
-        underbarrel: undefined,
-      };
-
-      // w.underbarrel = (Math.random() < 0.5 ? 0 : 1)
-      //   ? { id: 28, name: "Laser Sight", type: "Underbarrel" }
-      //   : undefined;
+      const a = w as Weapon;
+      a.attachments = Object.fromEntries(
+        Object.entries(attachmentMap).map(([key, value]) => [
+          key.toLowerCase(),
+          value,
+        ])
+      ) as Record<string, Attachment[]>;
+      results.push(a);
     }
 
-    const name = randomizedLoadoutName(operator.name);
 
-    const loadout = {
-      name,
-      operator,
-      primary_weapon,
-      secondary_weapon,
-      gadget: getRandomElement(gadgetResults) as Gadget,
-    };
-
-    return NextResponse.json(loadout);
+    return NextResponse.json({
+      operator: operatorResults,
+      weapons: results,
+      gadgets: gadgetResults,
+    });
   } catch (error) {
     console.log(error);
     return NextResponse.json({ error: error }, { status: 500 });
