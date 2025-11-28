@@ -21,8 +21,8 @@ const Footer = () => {
                 <Image
                   src="/logo.png"
                   alt="Ultimate Siegery Logo"
-                  width={500}
-                  height={500}
+                  width={885}
+                  height={1014}
                   className="w-6 h-6 text-siege-accent transition-transform duration-500 group-hover:-rotate-15"
                 />
                 <span className="font-bold text-xl tracking-tight text-white">

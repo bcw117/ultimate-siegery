@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Button } from "../ui/button";
-import { challenges } from "@/data/challenges";
+import { challenges } from "@/lib/data/challenges";
 import { Shield, Shuffle } from "lucide-react";
 
 export default function ChallengeSection() {

@@ -1,9 +1,11 @@
 "use server";
 
-import { Attachment, Loadout } from "@/utils/types";
-import { db } from "@/db";
-import { loadout_attachments, loadouts } from "@/db/schema";
 import { currentUser } from "@clerk/nextjs/server";
+import { loadout_attachments, loadouts } from "../schema";
+import { db } from "..";
+import { Loadout } from "@/lib/utils/types";
+import { revalidatePath } from "next/cache";
+import { eq } from "drizzle-orm";
 
 export async function saveLoadout(loadout: Loadout) {
   try {
@@ -34,26 +36,28 @@ export async function saveLoadout(loadout: Loadout) {
         gadget_id,
       })
       .returning({ id: loadouts.id });
+
     if (!result) {
       throw new Error("Failed to insert loadout!");
     }
 
     const loadoutId = result.id;
 
-    const primaryAttachments = extractAttachmentID(
+    const primaryAttachments = Object.values(
       loadout.primary_weapon.attachments
-    );
-    const secondaryAttachments = extractAttachmentID(
+    ).map((attachment) => attachment.id);
+
+    const secondaryAttachments = Object.values(
       loadout.secondary_weapon.attachments
-    );
+    ).map((attachment) => attachment.id);
 
     const rows = [
-      ...primaryAttachments.map((attachment_id) => ({
+      ...primaryAttachments.map((attachment_id: number) => ({
         loadout_id: loadoutId,
         weapon_id: pweapon_id,
         attachment_id: attachment_id,
       })),
-      ...secondaryAttachments.map((attachment_id) => ({
+      ...secondaryAttachments.map((attachment_id: number) => ({
         loadout_id: loadoutId,
         weapon_id: sweapon_id,
         attachment_id: attachment_id,
@@ -61,7 +65,7 @@ export async function saveLoadout(loadout: Loadout) {
     ];
 
     await db.insert(loadout_attachments).values(rows);
-    
+
     return { success: true, message: "Loadout saved successfully!" };
   } catch (error) {
     return {
@@ -71,13 +75,14 @@ export async function saveLoadout(loadout: Loadout) {
   }
 }
 
-function extractAttachmentID(attachments: {
-  scope?: Attachment;
-  barrel?: Attachment;
-  grip?: Attachment;
-  underBarrel?: Attachment;
-}) {
-  const values = Object.values(attachments);
-  const defined = values.filter((a): a is Attachment => !!a);
-  return defined.map((a) => a.id);
+export async function deleteLoadout(id: number) {
+  try {
+    await db.delete(loadouts).where(eq(loadouts.id, id));
+    revalidatePath("/");
+  } catch (error) {
+    const errorMessage = error instanceof Error ? error.message : String(error);
+    return {
+      error: errorMessage,
+    };
+  }
 }

@@ -1,17 +1,12 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 import { ClerkProvider } from "@clerk/nextjs";
-import "./globals.css";
+import "@/styles/globals.css";
 import Navbar from "@/components/Navbar";
 import { Toaster } from "@/components/ui/sonner";
 import { dark } from "@clerk/themes";
 import { Analytics } from "@vercel/analytics/next";
 import Footer from "@/components/Footer";
-
-const inter = Inter({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+import { inter } from "@/lib/fonts";
 
 export const metadata: Metadata = {
   title: "Ultimate Siegery",

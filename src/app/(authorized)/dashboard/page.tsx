@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import LoadoutSection from "@/components/dashboard/LoadoutSection";
+import LoadoutSection from "@/components/dashboard/RandomizeLoadoutSection";
 import ChallengeSection from "@/components/dashboard/ChallengeSection";
 import CustomLoadoutSection from "@/components/dashboard/CustomLoadoutSection";
 
@@ -11,25 +11,25 @@ export default function Dashboard() {
       <div className="w-full relative z-10">
         <div className="text-center">
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
-            The Randomizer
+            Dashboard
           </h2>
         </div>
 
         <div className="max-w-4xl mx-auto">
           <div className="siege-card">
-            <Tabs defaultValue="operator" className="w-full">
+            <Tabs defaultValue="custom" className="w-full">
               <TabsList className="grid w-full grid-cols-3 bg-siege-dark/50">
                 <TabsTrigger
                   value="custom"
                   className="data-[state=active]:bg-siege-accent/20 data-[state=active]:text-siege-accent"
                 >
-                  Custom Operator
+                  Operator
                 </TabsTrigger>
                 <TabsTrigger
                   value="operator"
                   className="data-[state=active]:bg-siege-accent/20 data-[state=active]:text-siege-accent"
                 >
-                  Operator
+                  Random
                 </TabsTrigger>
                 <TabsTrigger
                   value="bans"

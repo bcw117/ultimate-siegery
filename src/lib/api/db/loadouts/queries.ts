@@ -1,46 +1,33 @@
-"use server";
-import { db } from "@/db";
 import {
+  decodeCursor,
+  encodeCursor,
+  foldAttachments,
+} from "@/lib/utils/helpers";
+import { auth } from "@clerk/nextjs/server";
+import { redirect } from "next/navigation";
+import {
+  attachments,
   gadgets,
+  loadout_attachments,
   loadouts,
   operators,
   weapons,
-  loadout_attachments,
-  attachments,
-} from "@/db/schema";
-import { Weapon } from "@/utils/types";
-import { auth } from "@clerk/nextjs/server";
-import { gt, eq, asc, and, or, lt, desc, ne, sql } from "drizzle-orm";
-import { alias } from "drizzle-orm/pg-core";
-import { redirect } from "next/navigation";
+} from "../schema";
+import { and, asc, count, desc, eq, gt, lt, ne, or, sql } from "drizzle-orm";
+import { alias } from "drizzle-orm/pg-core/alias";
+import { db } from "..";
+import { Weapon } from "@/lib/utils/types";
+
+type CursorData = {
+  created_at: Date;
+  id: number;
+};
 
 const primaryWeapons = alias(weapons, "primary_weapons");
 const secondaryWeapons = alias(weapons, "secondary_weapons");
 const LIMIT = 5;
 
-type MetaData = {
-  created_at: Date;
-  id: number;
-};
-
-function foldAttachments(rows: { id: number; name: string; type: string }[]) {
-  const result: {
-    scope?: { id: number; name: string; type: string };
-    barrel?: { id: number; name: string; type: string };
-    grip?: { id: number; name: string; type: string };
-    underbarrel?: { id: number; name: string; type: string };
-  } = {};
-  for (const a of rows) {
-    if (a.type === "Scope" && !result.scope) result.scope = a;
-    else if (a.type === "Barrel" && !result.barrel) result.barrel = a;
-    else if (a.type === "Grip" && !result.grip) result.grip = a;
-    else if (a.type === "Underbarrel" && !result.underbarrel)
-      result.underbarrel = a;
-  }
-  return result;
-}
-
-export async function getLoadouts(cursor: string | null, forward: string) {
+export async function fetchLoadouts(cursor: string | null, forward: string) {
   try {
     const { userId: id } = await auth();
 
@@ -48,7 +35,7 @@ export async function getLoadouts(cursor: string | null, forward: string) {
       redirect("/");
     }
 
-    const entry: MetaData | null = decodeCursor(cursor);
+    const entry: CursorData | null = decodeCursor(cursor);
 
     const whereCondition =
       entry !== null
@@ -221,21 +208,11 @@ export async function getLoadouts(cursor: string | null, forward: string) {
   }
 }
 
-function encodeCursor(data: { created_at: Date; id: number }) {
-  const json = JSON.stringify(data);
-  return Buffer.from(json, "utf8").toString("base64url");
-}
+export async function getNumLoadouts(user_id: string) {
+  const response = await db
+    .select({ count: count() })
+    .from(loadouts)
+    .where(eq(loadouts.user_id, user_id));
 
-function decodeCursor(cursor: string | null): MetaData | null {
-  if (!cursor) return null;
-  try {
-    const json = Buffer.from(cursor, "base64url").toString("utf8");
-    const parsed = JSON.parse(json) as { created_at: string; id: number };
-    return {
-      created_at: new Date(parsed.created_at),
-      id: parsed.id,
-    };
-  } catch {
-    return null;
-  }
+  return { count: response[0].count };
 }

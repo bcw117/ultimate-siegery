@@ -1,8 +1,8 @@
 import React from "react";
 import PaginationControls from "@/components/PaginationControls";
-import { getLoadouts } from "./actions";
+import { fetchLoadouts } from "@/lib/api/db/loadouts/queries";
 import LoadoutCard from "@/components/LoadoutCard";
-import { Gadget, Operator, Weapon } from "@/utils/types";
+import { Gadget, Operator, Weapon } from "@/lib/utils/types";
 
 type SingleLoadout = {
   details: { name: string | null; id: number; timestamp: Date };
@@ -22,7 +22,7 @@ export default async function Loadouts({
   const cursor = params["cursor"] ?? null;
   const forward = params["forward"] ?? "true";
 
-  const response = await getLoadouts(cursor, forward);
+  const response = await fetchLoadouts(cursor, forward);
 
   const {
     result: loadouts,
@@ -49,18 +49,20 @@ export default async function Loadouts({
         {loadouts && loadouts.length > 0 ? (
           <div className="grid w-full gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             {loadouts.map((loadout: SingleLoadout, idx: number) => (
-              <LoadoutCard
-                key={idx}
-                name={
-                  loadout.details?.name
-                    ? loadout.details.name
-                    : `Loadout ${idx + 1}`
-                }
-                operator={loadout.operator as Operator}
-                primary={loadout.primary_weapon as Weapon}
-                secondary={loadout.secondary_weapon as Weapon}
-                gadget={loadout.gadget as Gadget}
-              />
+              <div key={loadout.details.id}>
+                <LoadoutCard
+                  id={loadout.details.id}
+                  name={
+                    loadout.details?.name
+                      ? loadout.details.name
+                      : `Loadout ${idx + 1}`
+                  }
+                  operator={loadout.operator as Operator}
+                  primary={loadout.primary_weapon as Weapon}
+                  secondary={loadout.secondary_weapon as Weapon}
+                  gadget={loadout.gadget as Gadget}
+                />
+              </div>
             ))}
           </div>
         ) : (

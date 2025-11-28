@@ -1,19 +1,10 @@
-import { currentUser } from "@clerk/nextjs/server";
-import { redirect } from "next/navigation";
 import React from "react";
 import { UserProfile } from "@clerk/nextjs";
 
 export default async function Profile() {
-  const user = await currentUser();
-
-  if (!user) {
-    redirect("/");
-  }
-
   return (
     <div className="min-h-screen bg-background relative ">
       <div className="max-w-4xl mx-auto space-y-8">
-        {/* Header Section */}
         <div className="text-center space-y-2">
           <h1 className="text-4xl font-bold text-slate-900 dark:text-slate-100">
             Profile

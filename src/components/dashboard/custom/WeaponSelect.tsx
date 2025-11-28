@@ -5,7 +5,7 @@ import {
   SelectContent,
   SelectItem,
 } from "@/components/ui/select";
-import { Attachment, WeaponSlot } from "@/utils/types";
+import { Attachment, WeaponSlot } from "@/lib/utils/types";
 import React from "react";
 import { Label } from "@/components/ui/label";
 
@@ -68,7 +68,6 @@ export default function WeaponSelect({
 
       {selectedWeapon && (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          {/* Scopes */}
           {selectedWeapon.attachments.scope &&
             selectedWeapon.attachments.scope.length > 0 && (
               <div className="space-y-2">

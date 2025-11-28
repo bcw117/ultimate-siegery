@@ -1,7 +1,7 @@
 "use client";
 import React, { useRef } from "react";
 import { Button } from "@/components/ui/button";
-import { useInView, useTextScramble } from "@/assets/animations";
+import { useInView, useTextScramble } from "@/lib/hooks/animations";
 import { Shield, Shuffle, Save } from "lucide-react";
 import { SignInButton } from "@clerk/nextjs";
 

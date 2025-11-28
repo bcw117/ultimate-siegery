@@ -1,3 +1,8 @@
+export type CursorData = {
+  created_at: Date;
+  id: number;
+};
+
 export type Operator = {
   id: number;
   name: string;

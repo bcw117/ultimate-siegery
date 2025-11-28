@@ -1,15 +1,20 @@
 import React from "react";
-import { removeUnderscores } from "@/utils/helpers";
+import { removeUnderscores } from "@/lib/utils/helpers";
 import Image from "next/image";
-import { Gadget, Operator, Weapon } from "@/utils/types";
+import { Gadget, Operator, Weapon } from "@/lib/utils/types";
+import { Button } from "./ui/button";
+import { deleteLoadout } from "@/lib/api/db/loadouts/mutations"
+import { Trash2 } from "lucide-react";
 
 export default function LoadoutCard({
+  id,
   name,
   operator,
   primary,
   secondary,
   gadget,
 }: {
+  id?: number;
   name: string;
   operator: Operator | null;
   primary: Weapon | null;
@@ -25,9 +30,7 @@ export default function LoadoutCard({
         {name}
       </h3>
 
-      {/* Internal grid: limit to 2 cols max to avoid overly narrow boxes causing text overlap */}
       <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
-        {/* Operator */}
         <div className="min-w-0 rounded-lg bg-siege-dark/60 p-4 ring-1 ring-inset ring-white/10">
           <h4 className="mb-1 text-xs font-medium uppercase tracking-wide text-white/60">
             Operator
@@ -69,7 +72,6 @@ export default function LoadoutCard({
             </div>
           )}
         </div>
-        {/* Primary */}
         <div className="min-w-0 rounded-lg bg-siege-dark/60 p-4 ring-1 ring-inset ring-white/10">
           <h4 className="mb-1 text-xs font-medium uppercase tracking-wide text-white/60">
             Primary
@@ -93,7 +95,6 @@ export default function LoadoutCard({
           </ul>
         </div>
 
-        {/* Secondary */}
         <div className="min-w-0 rounded-lg bg-siege-dark/60 p-4 ring-1 ring-inset ring-white/10">
           <h4 className="mb-1 text-xs font-medium uppercase tracking-wide text-white/60">
             Secondary
@@ -116,6 +117,14 @@ export default function LoadoutCard({
             )}
           </ul>
         </div>
+        {id && (
+          <Button variant="destructive" onClick={deleteLoadout.bind(null, id)}>
+            <span className="flex flex-row items-center gap-x-2">
+              <Trash2 />
+              <span>Delete</span>
+            </span>
+          </Button>
+        )}
       </div>
     </div>
   );
