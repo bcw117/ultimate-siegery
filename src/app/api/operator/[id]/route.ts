@@ -18,7 +18,7 @@ export async function GET(
   { params }: { params: { id: string } }
 ) {
   try {
-    const operatorId = params.id;
+    const operatorId = (await params).id;
 
     if (isNil(operatorId)) {
       return NextResponse.json(

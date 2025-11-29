@@ -5,17 +5,21 @@ import { toast } from "sonner";
 import OperatorSelect from "./custom/OperatorSelect";
 import { isNil } from "lodash";
 import LoadoutCustomization from "./custom/LoadoutCustomization";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export default function CustomLoadoutSection() {
   const [operator, setOperator] = useState<Operator>();
   const [weapons, setWeapons] = useState<WeaponSlot[]>([]);
   const [gadgets, setGadgets] = useState<Gadget[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleOperatorSelect = async (selectedOp: Operator) => {
     try {
       if (!isNil(operator) && selectedOp.id === operator.id) {
         return;
       }
+
+      setIsLoading(true);
       setOperator(undefined);
       setWeapons([]);
       setGadgets([]);
@@ -38,6 +42,8 @@ export default function CustomLoadoutSection() {
     } catch (error) {
       console.log(error);
       toast.error("Failed to load operator details");
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -48,13 +54,28 @@ export default function CustomLoadoutSection() {
           onSelect={handleOperatorSelect}
           selectedOperatorId={operator?.id}
         />
-        {operator && (
+
+        {isLoading ? (
+          <div className="space-y-6 animate-in fade-in duration-500">
+            <div className="flex gap-4">
+              <Skeleton className="h-10 w-64 bg-slate-800/50" />
+              <Skeleton className="h-10 w-32 bg-slate-800/50" />
+            </div>
+
+            <div className="grid gap-6 md:grid-cols-2">
+              <Skeleton className="h-[200px] rounded-xl bg-slate-800/50" />
+              <Skeleton className="h-[200px] rounded-xl bg-slate-800/50" />
+              <Skeleton className="h-[300px] md:col-span-2 rounded-xl bg-slate-800/50" />
+              <Skeleton className="h-[300px] md:col-span-2 rounded-xl bg-slate-800/50" />
+            </div>
+          </div>
+        ) : operator ? (
           <LoadoutCustomization
             operator={operator}
             weapons={weapons}
             gadgets={gadgets}
           />
-        )}
+        ) : null}
       </div>
     </div>
   );

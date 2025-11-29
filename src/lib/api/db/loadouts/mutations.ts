@@ -3,17 +3,20 @@
 import { currentUser } from "@clerk/nextjs/server";
 import { loadout_attachments, loadouts } from "../schema";
 import { db } from "..";
-import { Loadout } from "@/lib/utils/types";
+import { ActionResponse, Loadout } from "@/lib/utils/types";
 import { revalidatePath } from "next/cache";
 import { eq } from "drizzle-orm";
 
-export async function saveLoadout(loadout: Loadout) {
+export async function saveLoadout(
+  loadout: Loadout
+): Promise<ActionResponse<{ message: string }>> {
   try {
     const user = await currentUser();
+
     if (!user) {
       return {
-        success: false,
-        error: "Authentication required. Please sign in.",
+        ok: false,
+        error: "Error: User is unauthenticated",
       };
     }
 
@@ -38,7 +41,10 @@ export async function saveLoadout(loadout: Loadout) {
       .returning({ id: loadouts.id });
 
     if (!result) {
-      throw new Error("Failed to insert loadout!");
+      return {
+        ok: false,
+        error: "Error: Failed to insert loadout",
+      };
     }
 
     const loadoutId = result.id;
@@ -64,14 +70,15 @@ export async function saveLoadout(loadout: Loadout) {
       })),
     ];
 
-    await db.insert(loadout_attachments).values(rows);
+    if (rows.length !== 0) {
+      //@note check the return value
+      await db.insert(loadout_attachments).values(rows);
+    }
 
-    return { success: true, message: "Loadout saved successfully!" };
+    return { ok: true, data: { message: "Loadout saved successfully" } };
   } catch (error) {
-    return {
-      success: false,
-      error: (error as Error).message,
-    };
+    const errorMessage = error instanceof Error ? error.message : String(error);
+    return { ok: false, error: errorMessage };
   }
 }
 

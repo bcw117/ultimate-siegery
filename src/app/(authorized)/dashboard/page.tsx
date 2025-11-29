@@ -44,7 +44,6 @@ export default function Dashboard() {
               <TabsContent value="operator" className="mt-4">
                 <LoadoutSection />
               </TabsContent>
-
               <TabsContent value="bans" className="mt-4">
                 <ChallengeSection />
               </TabsContent>
