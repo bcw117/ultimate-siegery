@@ -6,7 +6,9 @@
     "dev": "pnpm next dev",
     "build": "pnpm next build",
     "start": "pnpm next start",
-    "lint": "pnpm next lint"
+    "lint": "pnpm next lint",
+    "format": "prettier --write --ignore-path .gitignore .",
+  "format:check": "prettier --check --ignore-path .gitignore ."
   },
   "dependencies": {
     "@clerk/nextjs": "^6.22.0",
@@ -64,6 +66,7 @@
     "eslint": "^9",
     "eslint-config-next": "15.2.1",
     "eslint-config-prettier": "^10.1.1",
+    "prettier": "^3.7.3",
     "tailwindcss": "^4.0.11",
     "typescript": "^5"
   }

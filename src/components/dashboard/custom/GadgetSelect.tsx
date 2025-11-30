@@ -34,7 +34,11 @@ export default function GadgetSelect({
             />
             <Label
               htmlFor={`gadget-${gadget.id}`}
-              className="flex flex-col items-center justify-between rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-siege-accent [&:has([data-state=checked])]:border-siege-accent cursor-pointer"
+              className={`flex flex-col items-center justify-between rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground cursor-pointer ${
+                selectedGadget?.id === gadget.id
+                  ? "border-siege-accent bg-siege-accent/10"
+                  : ""
+              }`}
             >
               {gadget.icon_url && (
                 <div className="relative w-8 h-8 mb-2">

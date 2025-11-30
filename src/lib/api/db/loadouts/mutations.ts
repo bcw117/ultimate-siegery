@@ -93,3 +93,7 @@ export async function deleteLoadout(id: number) {
     };
   }
 }
+
+export async function updateLoadout() {
+
+}

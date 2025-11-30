@@ -89,11 +89,9 @@ export async function fetchLoadouts(cursor: string | null, forward: string) {
 
     const data = await db
       .select({
-        details: {
-          name: loadouts.name,
-          id: loadouts.id,
-          timestamp: loadouts.created_at,
-        },
+        name: loadouts.name,
+        id: loadouts.id,
+        timestamp: loadouts.created_at,
         operator: {
           id: operators.id,
           name: operators.name,
@@ -162,15 +160,15 @@ export async function fetchLoadouts(cursor: string | null, forward: string) {
 
     const prev_cursor = hasPrevPage
       ? encodeCursor({
-          created_at: results[0].details.timestamp,
-          id: results[0].details.id,
+          created_at: results[0].timestamp,
+          id: results[0].id,
         })
       : null;
 
     const next_cursor = hasNextPage
       ? encodeCursor({
-          created_at: results[results.length - 1].details.timestamp,
-          id: results[results.length - 1].details.id,
+          created_at: results[results.length - 1].timestamp,
+          id: results[results.length - 1].id,
         })
       : null;
 

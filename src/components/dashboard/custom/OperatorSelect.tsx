@@ -47,7 +47,7 @@ export default function OperatorSelect({
   useEffect(() => {
     const fetchOperators = async () => {
       try {
-        const res = await fetch("/api/operator", { cache: "force-cache" });
+        const res = await fetch("/api/operator");
         if (!res.ok) throw new Error("Failed to fetch operators");
         const data = await res.json();
         setOperators(data);
@@ -101,7 +101,7 @@ export default function OperatorSelect({
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-[var(--radix-popover-trigger-width)] p-0 bg-slate-950 border-white/10">
+      <PopoverContent className="w-(--radix-popover-trigger-width) p-0 bg-slate-950 border-white/10">
         <Command className="flex h-full w-full flex-col overflow-hidden rounded-md bg-transparent text-popover-foreground">
           <CommandInput
             placeholder="Search operator..."

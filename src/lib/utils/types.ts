@@ -27,8 +27,7 @@ export type Attachment = {
   type: string;
 };
 
-export type Weapon = {
-  id: number;
+interface WeaponType {
   name: string | null;
   class: string | null;
   type: string | null;
@@ -36,32 +35,30 @@ export type Weapon = {
   mag_size: number | null;
   ammo_cap: number | null;
   rof: number | null;
+}
+
+export interface Weapon extends WeaponType {
+  id: number;
   attachments: {
     scope?: Attachment;
     grip?: Attachment;
     barrel?: Attachment;
     underbarrel?: Attachment;
   };
-};
+}
 
-export type WeaponSlot = {
+export interface WeaponSelection extends WeaponType {
   id: number;
-  name: string | null;
-  class: string | null;
-  type: string | null;
-  base_damage: number | null;
-  mag_size: number | null;
-  ammo_cap: number | null;
-  rof: number | null;
   attachments: {
     scope?: Attachment[];
     grip?: Attachment[];
     barrel?: Attachment[];
     underbarrel?: Attachment[];
   };
-};
+}
 
 export type Loadout = {
+  id?: number;
   name: string;
   operator: Operator;
   primary_weapon: Weapon;
@@ -69,9 +66,7 @@ export type Loadout = {
   gadget: Gadget;
 };
 
-export type ActionResponse<T> =
-  | ActionError
-  | ActionResult<T>
+export type ActionResponse<T> = ActionError | ActionResult<T>;
 
 export type ActionError = {
   ok: false;
@@ -80,6 +75,5 @@ export type ActionError = {
 
 export type ActionResult<T> = {
   ok: true;
-  data: T
-}
-
+  data: T;
+};

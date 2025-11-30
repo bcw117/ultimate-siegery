@@ -65,7 +65,7 @@ export async function GET(
 
     const results = [];
 
-    for (let w of weaponResults) {
+    for (const w of weaponResults) {
       const attachmentsResult: Attachment[] = await db
         .select({
           id: attachments.id,
@@ -82,6 +82,7 @@ export async function GET(
       const attachmentMap = groupBy(attachmentsResult, "type");
 
       const a = w as Weapon;
+
       a.attachments = Object.fromEntries(
         Object.entries(attachmentMap).map(([key, value]) => [
           key.toLowerCase(),
@@ -92,7 +93,7 @@ export async function GET(
     }
 
     return NextResponse.json({
-      operator: operatorResults,
+      operator: operatorResults[0],
       weapons: results,
       gadgets: gadgetResults,
     });

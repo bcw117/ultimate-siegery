@@ -168,6 +168,9 @@ importers:
       eslint-config-prettier:
         specifier: ^10.1.1
         version: 10.1.8(eslint@9.39.1(jiti@2.6.1))
+      prettier:
+        specifier: ^3.7.3
+        version: 3.7.3
       tailwindcss:
         specifier: ^4.0.11
         version: 4.1.17
@@ -3389,6 +3392,11 @@ packages:
   prelude-ls@1.2.1:
     resolution: {integrity: sha512-vkcDPrRZo1QZLbn5RLGPpg/WmIQ65qoWWhcGKf/b5eplkkarX0m9z8ppCat4mlOqUsWpyNuYgO3VRyrYHSzX5g==}
     engines: {node: '>= 0.8.0'}
+
+  prettier@3.7.3:
+    resolution: {integrity: sha512-QgODejq9K3OzoBbuyobZlUhznP5SKwPqp+6Q6xw6o8gnhr4O85L2U915iM2IDcfF2NPXVaM9zlo9tdwipnYwzg==}
+    engines: {node: '>=14'}
+    hasBin: true
 
   prop-types@15.8.1:
     resolution: {integrity: sha512-oj87CgZICdulUohogVAR7AjlC0327U4el4L6eAvOqCeudMDVU0NThNaV+b9Df4dXgSP1gXMTnPdhfe/2qDH5cg==}
@@ -7313,6 +7321,8 @@ snapshots:
   postgres@3.4.7: {}
 
   prelude-ls@1.2.1: {}
+
+  prettier@3.7.3: {}
 
   prop-types@15.8.1:
     dependencies:

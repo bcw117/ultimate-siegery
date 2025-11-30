@@ -36,7 +36,7 @@ export default function LoadoutSection() {
     try {
       const result = await saveLoadout(loadout);
 
-      if (result.success) {
+      if (result.ok) {
         toast.success("Loadout saved successfully!");
       } else {
         toast.error("Failed to save loadout");
@@ -99,13 +99,7 @@ export default function LoadoutSection() {
         </Button>
       </div>
       {!isLoading && !isNil(loadout) ? (
-        <LoadoutCard
-          name={loadout.name}
-          operator={loadout.operator}
-          primary={loadout.primary_weapon}
-          secondary={loadout.secondary_weapon}
-          gadget={loadout.gadget}
-        />
+        <LoadoutCard loadout={loadout} />
       ) : (
         <>
           {isLoading ? (

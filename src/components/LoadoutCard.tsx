@@ -1,28 +1,26 @@
 import React from "react";
 import { removeUnderscores } from "@/lib/utils/helpers";
 import Image from "next/image";
-import { Gadget, Operator, Weapon } from "@/lib/utils/types";
+import { Loadout, Weapon } from "@/lib/utils/types";
 import { Button } from "./ui/button";
-import { deleteLoadout } from "@/lib/api/db/loadouts/mutations"
+import { deleteLoadout } from "@/lib/api/db/loadouts/mutations";
 import { Trash2 } from "lucide-react";
+import EditLoadoutDialog from "./dialogs/EditLoadout";
 
 export default function LoadoutCard({
   id,
-  name,
-  operator,
-  primary,
-  secondary,
-  gadget,
+  loadout,
 }: {
   id?: number;
-  name: string;
-  operator: Operator | null;
-  primary: Weapon | null;
-  secondary: Weapon | null;
-  gadget: Gadget | null;
+  loadout: Loadout;
 }) {
-  const primaryAttachments = primary?.attachments;
-  const secondaryAttachments = secondary?.attachments;
+  const {
+    name,
+    operator,
+    gadget,
+    primary_weapon: primary,
+    secondary_weapon: secondary,
+  } = loadout;
 
   return (
     <div className="group relative flex h-full w-full flex-col rounded-xl border border-white/10 bg-siege-dark/50 p-5 shadow-sm transition hover:border-siege-accent/40 hover:shadow-md animate-fade-up">
@@ -35,13 +33,13 @@ export default function LoadoutCard({
           <h4 className="mb-1 text-xs font-medium uppercase tracking-wide text-white/60">
             Operator
           </h4>
-          <p className="text-sm font-semibold text-white break-words leading-snug">
-            {operator?.name}
+          <p className="text-sm font-semibold text-white wrap-break-word leading-snug">
+            {operator.name}
           </p>
           <div className="mt-1 inline-flex items-center rounded-full bg-siege-accent/15 px-2 py-0.5 text-[10px] font-medium text-siege-accent">
-            {operator?.side === "A" ? "Attacker" : "Defender"}
+            {operator.side === "A" ? "Attacker" : "Defender"}
           </div>
-          {operator?.icon_url && (
+          {operator.icon_url && (
             <div className="mt-3 flex items-center justify-center">
               <Image
                 src={operator.icon_url}
@@ -57,10 +55,10 @@ export default function LoadoutCard({
           <h4 className="mb-1 text-xs font-medium uppercase tracking-wide text-white/60">
             Gadget
           </h4>
-          <p className="text-sm font-semibold text-white break-words leading-snug">
-            {gadget?.name ?? ""}
+          <p className="text-sm font-semibold text-white wrap-break-words leading-snug">
+            {gadget.name ?? ""}
           </p>
-          {gadget?.icon_url && (
+          {gadget.icon_url && (
             <div className="mt-3 flex items-center justify-center">
               <Image
                 src={gadget.icon_url}
@@ -72,58 +70,46 @@ export default function LoadoutCard({
             </div>
           )}
         </div>
-        <div className="min-w-0 rounded-lg bg-siege-dark/60 p-4 ring-1 ring-inset ring-white/10">
-          <h4 className="mb-1 text-xs font-medium uppercase tracking-wide text-white/60">
-            Primary
-          </h4>
-          <p className="text-sm font-semibold text-white break-words leading-snug">
-            {removeUnderscores(primary?.name ?? "")}
-          </p>
-          <ul className="mt-1 space-y-0.5 text-xs text-white/70">
-            {primaryAttachments?.scope?.name && (
-              <li>{primaryAttachments?.scope?.name}</li>
-            )}
-            {primaryAttachments?.barrel?.name && (
-              <li>{primaryAttachments?.barrel?.name}</li>
-            )}
-            {primaryAttachments?.grip?.name && (
-              <li>{primaryAttachments?.grip?.name}</li>
-            )}
-            {primaryAttachments?.underbarrel?.name && (
-              <li>{primaryAttachments?.underbarrel?.name}</li>
-            )}
-          </ul>
-        </div>
-
-        <div className="min-w-0 rounded-lg bg-siege-dark/60 p-4 ring-1 ring-inset ring-white/10">
-          <h4 className="mb-1 text-xs font-medium uppercase tracking-wide text-white/60">
-            Secondary
-          </h4>
-          <p className="text-sm font-semibold text-white break-words leading-snug">
-            {removeUnderscores(secondary?.name ?? "")}
-          </p>
-          <ul className="mt-1 space-y-0.5 text-xs text-white/70">
-            {secondaryAttachments?.scope?.name && (
-              <li>{secondaryAttachments?.scope?.name}</li>
-            )}
-            {secondaryAttachments?.barrel?.name && (
-              <li>{secondaryAttachments?.barrel?.name}</li>
-            )}
-            {secondaryAttachments?.grip?.name && (
-              <li>{secondaryAttachments?.grip?.name}</li>
-            )}
-            {secondaryAttachments?.underbarrel?.name && (
-              <li>{secondaryAttachments?.underbarrel?.name}</li>
-            )}
-          </ul>
-        </div>
+        {[primary, secondary].map((weapon: Weapon) => (
+          <div
+            key={weapon.id}
+            className="min-w-0 rounded-lg bg-siege-dark/60 p-4 ring-1 ring-inset ring-white/10"
+          >
+            <h4 className="mb-1 text-xs font-medium uppercase tracking-wide text-white/60">
+              {weapon.type}
+            </h4>
+            <p className="text-sm font-semibold text-white wrap-break-word leading-snug">
+              {removeUnderscores(weapon.name ?? "")}
+            </p>
+            <ul className="mt-1 space-y-0.5 text-xs text-white/70">
+              {weapon.attachments.scope?.name && (
+                <li>{weapon.attachments.scope?.name}</li>
+              )}
+              {weapon.attachments.barrel?.name && (
+                <li>{weapon.attachments?.barrel?.name}</li>
+              )}
+              {weapon.attachments.grip?.name && (
+                <li>{weapon.attachments.grip?.name}</li>
+              )}
+              {weapon.attachments.underbarrel?.name && (
+                <li>{weapon.attachments.underbarrel?.name}</li>
+              )}
+            </ul>
+          </div>
+        ))}
         {id && (
-          <Button variant="destructive" onClick={deleteLoadout.bind(null, id)}>
-            <span className="flex flex-row items-center gap-x-2">
-              <Trash2 />
-              <span>Delete</span>
-            </span>
-          </Button>
+          <>
+            <EditLoadoutDialog loadout={loadout} />
+            <Button
+              variant="destructive"
+              onClick={deleteLoadout.bind(null, id)}
+            >
+              <span className="flex flex-row items-center gap-x-2">
+                <Trash2 />
+                <span>Delete</span>
+              </span>
+            </Button>
+          </>
         )}
       </div>
     </div>

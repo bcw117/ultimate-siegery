@@ -5,14 +5,21 @@ import {
   SelectContent,
   SelectItem,
 } from "@/components/ui/select";
-import { Attachment, WeaponSlot } from "@/lib/utils/types";
+import { Attachment, WeaponSelection } from "@/lib/utils/types";
 import React from "react";
 import { Label } from "@/components/ui/label";
+import AttachmentSelect from "./AttachmentSelect";
 
 type WeaponSelectProps = {
   slot: "primary" | "secondary";
-  selectedWeapon: WeaponSlot | null;
-  setSelectedWeapon: (weapon: WeaponSlot | null) => void;
+  selectedWeapon: WeaponSelection | null;
+  setSelectedWeapon: (weapon: WeaponSelection | null) => void;
+  selectedAttachment: {
+    scope?: Attachment;
+    barrel?: Attachment;
+    grip?: Attachment;
+    underbarrel?: Attachment;
+  };
   setAttachments: React.Dispatch<
     React.SetStateAction<{
       scope?: Attachment;
@@ -21,7 +28,7 @@ type WeaponSelectProps = {
       underbarrel?: Attachment;
     }>
   >;
-  weapons: WeaponSlot[];
+  weapons: WeaponSelection[];
   handleAttachmentChange: (
     slot: "primary" | "secondary",
     type: "scope" | "barrel" | "grip" | "underbarrel",
@@ -33,12 +40,11 @@ export default function WeaponSelect({
   slot,
   selectedWeapon,
   setSelectedWeapon,
+  selectedAttachment,
   setAttachments,
   weapons,
   handleAttachmentChange,
 }: WeaponSelectProps) {
-  const weaponType = slot === "primary" ? "Primary" : "Secondary";
-
   return (
     <>
       <div className="space-y-2">
@@ -48,119 +54,70 @@ export default function WeaponSelect({
           onValueChange={(val) => {
             const weapon = weapons.find((w) => w.id.toString() === val);
             setSelectedWeapon(weapon || null);
-            setAttachments({}); // Reset attachments on weapon change
+            setAttachments({});
           }}
         >
           <SelectTrigger className="bg-slate-900/50 border-white/10 text-white">
             <SelectValue placeholder={`Select ${slot} weapon`} />
           </SelectTrigger>
           <SelectContent>
-            {weapons
-              .filter((w) => w.type === weaponType)
-              .map((w) => (
-                <SelectItem key={w.id} value={w.id.toString()}>
-                  {w.name}
-                </SelectItem>
-              ))}
+            {weapons.map((w) => (
+              <SelectItem key={w.id} value={w.id.toString()}>
+                {w.name}
+              </SelectItem>
+            ))}
           </SelectContent>
         </Select>
       </div>
 
       {selectedWeapon && (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          {/* Scope */}
           {selectedWeapon.attachments.scope &&
             selectedWeapon.attachments.scope.length > 0 && (
-              <div className="space-y-2">
-                <Label className="text-xs text-slate-400">Sight</Label>
-                <Select
-                  onValueChange={(val) =>
-                    handleAttachmentChange(slot, "scope", val)
-                  }
-                >
-                  <SelectTrigger className="bg-slate-900/50 border-white/10 text-white">
-                    <SelectValue placeholder="None" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {selectedWeapon.attachments.scope.map((a) => (
-                      <SelectItem key={a.id} value={a.id.toString()}>
-                        {a.name}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
+              <AttachmentSelect
+                slot={slot}
+                type="scope"
+                selectedAttachment={selectedAttachment.scope ?? null}
+                attachments={selectedWeapon.attachments.scope}
+                handleAttachmentChange={handleAttachmentChange}
+              />
             )}
 
           {/* Barrels */}
           {selectedWeapon.attachments.barrel &&
             selectedWeapon.attachments.barrel.length > 0 && (
-              <div className="space-y-2">
-                <Label className="text-xs text-slate-400">Barrel</Label>
-                <Select
-                  onValueChange={(val) =>
-                    handleAttachmentChange(slot, "barrel", val)
-                  }
-                >
-                  <SelectTrigger className="bg-slate-900/50 border-white/10 text-white">
-                    <SelectValue placeholder="None" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {selectedWeapon.attachments.barrel.map((a) => (
-                      <SelectItem key={a.id} value={a.id.toString()}>
-                        {a.name}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
+              <AttachmentSelect
+                slot={slot}
+                type="barrel"
+                selectedAttachment={selectedAttachment.barrel ?? null}
+                attachments={selectedWeapon.attachments.barrel}
+                handleAttachmentChange={handleAttachmentChange}
+              />
             )}
 
           {/* Grips */}
           {selectedWeapon.attachments.grip &&
             selectedWeapon.attachments.grip.length > 0 && (
-              <div className="space-y-2">
-                <Label className="text-xs text-slate-400">Grip</Label>
-                <Select
-                  onValueChange={(val) =>
-                    handleAttachmentChange(slot, "grip", val)
-                  }
-                >
-                  <SelectTrigger className="bg-slate-900/50 border-white/10 text-white">
-                    <SelectValue placeholder="None" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {selectedWeapon.attachments.grip.map((a) => (
-                      <SelectItem key={a.id} value={a.id.toString()}>
-                        {a.name}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
+              <AttachmentSelect
+                slot={slot}
+                type="grip"
+                selectedAttachment={selectedAttachment.grip ?? null}
+                attachments={selectedWeapon.attachments.grip}
+                handleAttachmentChange={handleAttachmentChange}
+              />
             )}
 
           {/* Underbarrel */}
           {selectedWeapon.attachments.underbarrel &&
             selectedWeapon.attachments.underbarrel.length > 0 && (
-              <div className="space-y-2">
-                <Label className="text-xs text-slate-400">Underbarrel</Label>
-                <Select
-                  onValueChange={(val) =>
-                    handleAttachmentChange(slot, "underbarrel", val)
-                  }
-                >
-                  <SelectTrigger className="bg-slate-900/50 border-white/10 text-white">
-                    <SelectValue placeholder="None" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {selectedWeapon.attachments.underbarrel.map((a) => (
-                      <SelectItem key={a.id} value={a.id.toString()}>
-                        {a.name}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
+              <AttachmentSelect
+                slot={slot}
+                type="underbarrel"
+                selectedAttachment={selectedAttachment.underbarrel ?? null}
+                attachments={selectedWeapon.attachments.underbarrel}
+                handleAttachmentChange={handleAttachmentChange}
+              />
             )}
         </div>
       )}

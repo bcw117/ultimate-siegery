@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import { Gadget, Operator, WeaponSlot } from "@/lib/utils/types";
+import { Gadget, Operator, WeaponSelection} from "@/lib/utils/types";
 import { toast } from "sonner";
 import OperatorSelect from "./custom/OperatorSelect";
 import { isNil } from "lodash";
@@ -9,7 +9,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 export default function CustomLoadoutSection() {
   const [operator, setOperator] = useState<Operator>();
-  const [weapons, setWeapons] = useState<WeaponSlot[]>([]);
+  const [weapons, setWeapons] = useState<WeaponSelection[]>([]);
   const [gadgets, setGadgets] = useState<Gadget[]>([]);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -24,9 +24,8 @@ export default function CustomLoadoutSection() {
       setWeapons([]);
       setGadgets([]);
 
-      const response = await fetch(`/api/operator/${selectedOp.id}`, {
-        cache: "force-cache",
-      });
+      const response = await fetch(`/api/operator/${selectedOp.id}`
+      );
 
       if (!response.ok) {
         throw new Error("Failed to fetch operator details");

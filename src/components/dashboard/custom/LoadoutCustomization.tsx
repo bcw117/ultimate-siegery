@@ -7,7 +7,7 @@ import {
   Gadget,
   Operator,
   Weapon,
-  WeaponSlot,
+  WeaponSelection,
 } from "@/lib/utils/types";
 import React, { useEffect, useState } from "react";
 import { toast } from "sonner";
@@ -15,23 +15,33 @@ import WeaponSelect from "./WeaponSelect";
 import GadgetSelect from "./GadgetSelect";
 import Image from "next/image";
 import { Save } from "lucide-react";
+import { isNil } from "lodash";
+
+export type CustomizationFields = {
+  loadoutName: string;
+  primary: Weapon;
+  secondary: Weapon;
+  gadget: Gadget;
+};
 
 export default function LoadoutCustomization({
+  preSelected,
   operator,
   gadgets,
   weapons,
 }: {
+  preSelected?: CustomizationFields;
   operator: Operator;
   gadgets: Gadget[];
-  weapons: WeaponSlot[];
+  weapons: WeaponSelection[];
 }) {
-  const [loadoutName, setLoadoutName] = useState("");
-  const [selectedPrimary, setSelectedPrimary] = useState<WeaponSlot | null>(
-    null
+  const [loadoutName, setLoadoutName] = useState(
+    preSelected?.loadoutName ?? ""
   );
-  const [selectedSecondary, setSelectedSecondary] = useState<WeaponSlot | null>(
-    null
-  );
+  const [selectedPrimary, setSelectedPrimary] =
+    useState<WeaponSelection | null>(null);
+  const [selectedSecondary, setSelectedSecondary] =
+    useState<WeaponSelection | null>(null);
   const [selectedGadget, setSelectedGadget] = useState<Gadget | null>(null);
   const [isSaving, setIsSaving] = useState(false);
 
@@ -52,20 +62,24 @@ export default function LoadoutCustomization({
   const handleAttachmentChange = (
     slot: "primary" | "secondary",
     type: "scope" | "barrel" | "grip" | "underbarrel",
-    attachmentId: string
+    selectedAttachment: string
   ) => {
     const weapon = slot === "primary" ? selectedPrimary : selectedSecondary;
-    if (!weapon) return;
 
-    const availableAttachments = weapon.attachments[type] || [];
-    const selected = availableAttachments.find(
-      (a) => a.id.toString() === attachmentId
-    );
+    if (!weapon) {
+      return;
+    }
 
     if (slot === "primary") {
-      setPrimaryAttachments((prev) => ({ ...prev, [type]: selected }));
+      setPrimaryAttachments((prev) => ({
+        ...prev,
+        [type]: selectedAttachment,
+      }));
     } else {
-      setSecondaryAttachments((prev) => ({ ...prev, [type]: selected }));
+      setSecondaryAttachments((prev) => ({
+        ...prev,
+        [type]: secondaryAttachments,
+      }));
     }
   };
 
@@ -107,7 +121,7 @@ export default function LoadoutCustomization({
         gadget: selectedGadget,
       });
 
-      if (result.success) {
+      if (result.ok) {
         toast.success("Loadout saved successfully!");
       } else {
         toast.error(result.error || "Failed to save loadout");
@@ -120,14 +134,46 @@ export default function LoadoutCustomization({
     }
   };
 
+  const primaries = weapons.filter(
+    (w: WeaponSelection) => w.type === "Primary"
+  );
+  const secondaries = weapons.filter(
+    (w: WeaponSelection) => w.type === "Secondary"
+  );
+
   useEffect(() => {
-    const primaries = weapons.filter((w: WeaponSlot) => w.type === "Primary");
-    const secondaries = weapons.filter(
-      (w: WeaponSlot) => w.type === "Secondary"
-    );
-    if (primaries.length > 0) setSelectedPrimary(primaries[0]);
-    if (secondaries.length > 0) setSelectedSecondary(secondaries[0]);
-    if (gadgets.length > 0) setSelectedGadget(gadgets[0]);
+    if (!isNil(preSelected)) {
+      setSelectedPrimary(
+        primaries.find((weapon) => weapon.id === preSelected.primary.id) ??
+          primaries[0]
+      );
+      setSelectedSecondary(
+        secondaries.find((weapon) => weapon.id === preSelected.secondary.id) ??
+          secondaries[0]
+      );
+      setSelectedGadget(
+        gadgets.find((gadget) => gadget.id === preSelected.gadget.id) ??
+          gadgets[0]
+      );
+
+      setPrimaryAttachments({
+        scope: preSelected.primary.attachments.scope,
+        barrel: preSelected.primary.attachments.barrel,
+        grip: preSelected.primary.attachments.grip,
+        underbarrel: preSelected.primary.attachments.underbarrel,
+      });
+
+      setSecondaryAttachments({
+        scope: preSelected.secondary.attachments.scope,
+        barrel: preSelected.secondary.attachments.barrel,
+        grip: preSelected.secondary.attachments.grip,
+        underbarrel: preSelected.secondary.attachments.underbarrel,
+      });
+    } else {
+      if (primaries.length > 0) setSelectedPrimary(primaries[0]);
+      if (secondaries.length > 0) setSelectedSecondary(secondaries[0]);
+      if (gadgets.length > 0) setSelectedGadget(gadgets[0]);
+    }
   }, [gadgets, weapons]);
 
   return (
@@ -221,9 +267,10 @@ export default function LoadoutCustomization({
             <WeaponSelect
               slot="primary"
               selectedWeapon={selectedPrimary}
+              selectedAttachment={primaryAttachments}
               setSelectedWeapon={setSelectedPrimary}
               setAttachments={setPrimaryAttachments}
-              weapons={weapons}
+              weapons={primaries}
               handleAttachmentChange={handleAttachmentChange}
             />
           </CardContent>
@@ -236,9 +283,10 @@ export default function LoadoutCustomization({
             <WeaponSelect
               slot="secondary"
               selectedWeapon={selectedSecondary}
+              selectedAttachment={secondaryAttachments}
               setSelectedWeapon={setSelectedSecondary}
               setAttachments={setSecondaryAttachments}
-              weapons={weapons}
+              weapons={secondaries}
               handleAttachmentChange={handleAttachmentChange}
             />
           </CardContent>

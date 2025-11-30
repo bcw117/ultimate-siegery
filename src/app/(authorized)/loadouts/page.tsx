@@ -2,7 +2,7 @@ import React from "react";
 import PaginationControls from "@/components/PaginationControls";
 import { fetchLoadouts } from "@/lib/api/db/loadouts/queries";
 import LoadoutCard from "@/components/LoadoutCard";
-import { Gadget, Operator, Weapon } from "@/lib/utils/types";
+import { Gadget, Loadout, Operator, Weapon } from "@/lib/utils/types";
 
 type SingleLoadout = {
   details: { name: string | null; id: number; timestamp: Date };
@@ -24,15 +24,7 @@ export default async function Loadouts({
 
   const response = await fetchLoadouts(cursor, forward);
 
-  const {
-    result: loadouts,
-    prev_cursor,
-    next_cursor,
-  } = response as {
-    result: SingleLoadout[];
-    prev_cursor: string | null;
-    next_cursor: string | null;
-  };
+  const { result: loadouts, prev_cursor, next_cursor } = response;
 
   return (
     <div className="min-h-screen w-full px-4 py-12 md:py-16">
@@ -48,19 +40,16 @@ export default async function Loadouts({
 
         {loadouts && loadouts.length > 0 ? (
           <div className="grid w-full gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-            {loadouts.map((loadout: SingleLoadout, idx: number) => (
-              <div key={loadout.details.id}>
+            {loadouts.map((loadout, idx: number) => (
+              <div key={loadout.id}>
                 <LoadoutCard
-                  id={loadout.details.id}
-                  name={
-                    loadout.details?.name
-                      ? loadout.details.name
-                      : `Loadout ${idx + 1}`
+                  id={loadout.id}
+                  loadout={
+                    {
+                      ...loadout,
+                      name: loadout.name ?? `Loadout ${idx + 1}`,
+                    } as Loadout
                   }
-                  operator={loadout.operator as Operator}
-                  primary={loadout.primary_weapon as Weapon}
-                  secondary={loadout.secondary_weapon as Weapon}
-                  gadget={loadout.gadget as Gadget}
                 />
               </div>
             ))}
