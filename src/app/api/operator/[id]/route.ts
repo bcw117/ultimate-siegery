@@ -15,7 +15,7 @@ import { Attachment, Weapon } from "@/lib/utils/types";
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const operatorId = (await params).id;
