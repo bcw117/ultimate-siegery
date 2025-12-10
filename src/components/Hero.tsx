@@ -3,7 +3,8 @@ import React, { useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { useInView, useTextScramble } from "@/lib/hooks/animations";
 import { Shield, Shuffle, Save } from "lucide-react";
-import { SignInButton } from "@clerk/nextjs";
+import { SignInButton, useUser } from "@clerk/nextjs";
+import Link from "next/link";
 
 const Hero: React.FC = () => {
   const heroRef = useRef<HTMLDivElement>(null);
@@ -12,6 +13,7 @@ const Hero: React.FC = () => {
     triggerOnce: true,
   });
   const titleText = useTextScramble("ULTIMATE SIEGERY");
+  const { isSignedIn } = useUser();
 
   return (
     <div
@@ -72,14 +74,25 @@ const Hero: React.FC = () => {
               isInView ? "opacity-100" : "opacity-0 translate-y-8"
             }`}
           >
-            <SignInButton mode="modal">
-              <Button
-                size="lg"
-                className="bg-siege-accent hover:bg-siege-accent/90 text-white px-8 h-12 cursor-pointer"
-              >
-                Get Started
-              </Button>
-            </SignInButton>
+            {isSignedIn ? (
+              <Link href="dashboard">
+                <Button
+                  size="lg"
+                  className="bg-siege-accent hover:bg-siege-accent/90 text-white px-8 h-12 cursor-pointer"
+                >
+                  Get Started
+                </Button>
+              </Link>
+            ) : (
+              <SignInButton mode="modal">
+                <Button
+                  size="lg"
+                  className="bg-siege-accent hover:bg-siege-accent/90 text-white px-8 h-12 cursor-pointer"
+                >
+                  Get Started
+                </Button>
+              </SignInButton>
+            )}
           </div>
 
           {/* Feature Icons */}
