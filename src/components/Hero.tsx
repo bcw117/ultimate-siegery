@@ -6,7 +6,7 @@ import { Shield, Shuffle, Save } from "lucide-react";
 import { SignInButton, useUser } from "@clerk/nextjs";
 import Link from "next/link";
 
-const Hero: React.FC = () => {
+const Hero = () => {
   const heroRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(heroRef as React.RefObject<HTMLElement>, {
     threshold: 0.1,
