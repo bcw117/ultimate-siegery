@@ -1,15 +1,13 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { saveLoadout } from "@/lib/api/db/loadouts/mutations";
+import { saveLoadout } from "@/lib/api/loadouts/mutations";
 import {
-  Attachment,
-  Gadget,
-  Operator,
-  Weapon,
-  WeaponSelection,
-} from "@/lib/utils/types";
-import React, { useEffect, useState } from "react";
+  OperatorFullLoadout,
+  GadgetRecord,
+  WeaponWithAttachments,
+} from "@/db/types";
+import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import WeaponSelect from "./WeaponSelect";
 import GadgetSelect from "./GadgetSelect";
@@ -18,107 +16,77 @@ import { Save } from "lucide-react";
 import { isNil } from "lodash";
 
 export type CustomizationFields = {
-  loadoutName: string;
-  primary: Weapon;
-  secondary: Weapon;
-  gadget: Gadget;
+  name: string;
+  primaryWeapon: WeaponWithAttachments;
+  secondaryWeapon: WeaponWithAttachments;
+  gadget: GadgetRecord;
 };
 
-export default function LoadoutCustomization({
-  preSelected,
+export default function LoadoutCustomizer({
+  selectedLoadout,
   operator,
-  gadgets,
-  weapons,
 }: {
-  preSelected?: CustomizationFields;
-  operator: Operator;
-  gadgets: Gadget[];
-  weapons: WeaponSelection[];
+  selectedLoadout?: CustomizationFields;
+  operator: OperatorFullLoadout;
 }) {
-  const [loadoutName, setLoadoutName] = useState(
-    preSelected?.loadoutName ?? ""
+  const primaryWeapons = operator.operator_weapons.filter(
+    (weapon) => weapon.slot === "Primary"
   );
-  const [selectedPrimary, setSelectedPrimary] =
-    useState<WeaponSelection | null>(null);
-  const [selectedSecondary, setSelectedSecondary] =
-    useState<WeaponSelection | null>(null);
-  const [selectedGadget, setSelectedGadget] = useState<Gadget | null>(null);
+  const secondaryWeapons = operator.operator_weapons.filter(
+    (weapon) => weapon.slot === "Secondary"
+  );
+
+  const gadgets = operator.operator_gadgets;
   const [isSaving, setIsSaving] = useState(false);
 
-  const [primaryAttachments, setPrimaryAttachments] = useState<{
-    scope?: Attachment;
-    barrel?: Attachment;
-    grip?: Attachment;
-    underbarrel?: Attachment;
-  }>({});
+  const [loadoutName, setLoadoutName] = useState(selectedLoadout?.name ?? "");
+  const [selectedPrimary, setSelectedPrimary] = useState<
+    WeaponWithAttachments | undefined
+  >(selectedLoadout?.primaryWeapon);
+  const [selectedSecondary, setSelectedSecondary] = useState<
+    WeaponWithAttachments | undefined
+  >(selectedLoadout?.secondaryWeapon);
 
-  const [secondaryAttachments, setSecondaryAttachments] = useState<{
-    scope?: Attachment;
-    barrel?: Attachment;
-    grip?: Attachment;
-    underbarrel?: Attachment;
-  }>({});
-
-  const handleAttachmentChange = (
-    slot: "primary" | "secondary",
-    type: "scope" | "barrel" | "grip" | "underbarrel",
-    selectedAttachment: string
-  ) => {
-    const weapon = slot === "primary" ? selectedPrimary : selectedSecondary;
-
-    if (!weapon) {
-      return;
-    }
-
-    if (slot === "primary") {
-      setPrimaryAttachments((prev) => ({
-        ...prev,
-        [type]: selectedAttachment,
-      }));
-    } else {
-      setSecondaryAttachments((prev) => ({
-        ...prev,
-        [type]: secondaryAttachments,
-      }));
-    }
-  };
+  const [selectedGadget, setSelectedGadget] = useState<
+    GadgetRecord | undefined
+  >(selectedLoadout?.gadget);
 
   const handleSave = async () => {
-    if (
-      !operator ||
-      !selectedPrimary ||
-      !selectedSecondary ||
-      !selectedGadget
-    ) {
-      toast.error("Please complete the loadout selection first");
-      return;
-    }
-
-    if (!loadoutName.trim()) {
-      toast.error("Please enter a loadout name");
-      return;
-    }
-
-    setIsSaving(true);
-
     try {
-      // Construct the full weapon objects with attachments
-      const primaryWeapon: Weapon = {
-        ...selectedPrimary,
-        attachments: primaryAttachments,
-      };
+      if (
+        !operator ||
+        !selectedPrimary ||
+        !selectedSecondary ||
+        !selectedGadget
+      ) {
+        toast.error("Please complete the loadout selection first");
+        return;
+      }
 
-      const secondaryWeapon: Weapon = {
-        ...selectedSecondary,
-        attachments: secondaryAttachments,
-      };
+      if (!loadoutName.trim()) {
+        toast.error("Please enter a loadout name");
+        return;
+      }
+
+      setIsSaving(true);
+
+      const primaryAttachmentIds = Object.values(
+        selectedPrimary.attachments
+      ).map((attachment) => attachment?.id);
+
+      const secondaryAttachmentIds = Object.values(
+        selectedSecondary.attachments
+      ).map((attachment) => attachment?.id);
+
 
       const result = await saveLoadout({
         name: loadoutName,
-        operator: operator,
-        primary_weapon: primaryWeapon,
-        secondary_weapon: secondaryWeapon,
-        gadget: selectedGadget,
+        operator_id: operator.id,
+        primary_weapon_id: selectedPrimary.id,
+        secondary_weapon_id: selectedSecondary.id,
+        primary_attachment_ids: primaryAttachmentIds,
+        secondary_attachment_ids: secondaryAttachmentIds,
+        gadget_id: selectedGadget.id,
       });
 
       if (result.ok) {
@@ -134,47 +102,23 @@ export default function LoadoutCustomization({
     }
   };
 
-  const primaries = weapons.filter(
-    (w: WeaponSelection) => w.type === "Primary"
-  );
-  const secondaries = weapons.filter(
-    (w: WeaponSelection) => w.type === "Secondary"
-  );
-
   useEffect(() => {
-    if (!isNil(preSelected)) {
-      setSelectedPrimary(
-        primaries.find((weapon) => weapon.id === preSelected.primary.id) ??
-          primaries[0]
-      );
-      setSelectedSecondary(
-        secondaries.find((weapon) => weapon.id === preSelected.secondary.id) ??
-          secondaries[0]
-      );
-      setSelectedGadget(
-        gadgets.find((gadget) => gadget.id === preSelected.gadget.id) ??
-          gadgets[0]
-      );
-
-      setPrimaryAttachments({
-        scope: preSelected.primary.attachments.scope,
-        barrel: preSelected.primary.attachments.barrel,
-        grip: preSelected.primary.attachments.grip,
-        underbarrel: preSelected.primary.attachments.underbarrel,
-      });
-
-      setSecondaryAttachments({
-        scope: preSelected.secondary.attachments.scope,
-        barrel: preSelected.secondary.attachments.barrel,
-        grip: preSelected.secondary.attachments.grip,
-        underbarrel: preSelected.secondary.attachments.underbarrel,
-      });
+    if (!isNil(selectedLoadout)) {
+      setSelectedPrimary(selectedLoadout.primaryWeapon);
+      setSelectedSecondary(selectedLoadout.secondaryWeapon);
+      setSelectedGadget(selectedLoadout.gadget);
     } else {
-      if (primaries.length > 0) setSelectedPrimary(primaries[0]);
-      if (secondaries.length > 0) setSelectedSecondary(secondaries[0]);
-      if (gadgets.length > 0) setSelectedGadget(gadgets[0]);
+      if (primaryWeapons.length > 0) {
+        setSelectedPrimary({ ...primaryWeapons[0], attachments: {} });
+      }
+      if (secondaryWeapons.length > 0) {
+        setSelectedSecondary({ ...secondaryWeapons[0], attachments: {} });
+      }
+      if (gadgets.length > 0) {
+        setSelectedGadget(gadgets[0]);
+      }
     }
-  }, [gadgets, weapons]);
+  }, [gadgets]);
 
   return (
     <div className="flex flex-col gap-6">
@@ -267,11 +211,8 @@ export default function LoadoutCustomization({
             <WeaponSelect
               slot="primary"
               selectedWeapon={selectedPrimary}
-              selectedAttachment={primaryAttachments}
               setSelectedWeapon={setSelectedPrimary}
-              setAttachments={setPrimaryAttachments}
-              weapons={primaries}
-              handleAttachmentChange={handleAttachmentChange}
+              weapons={primaryWeapons}
             />
           </CardContent>
         </Card>
@@ -283,11 +224,8 @@ export default function LoadoutCustomization({
             <WeaponSelect
               slot="secondary"
               selectedWeapon={selectedSecondary}
-              selectedAttachment={secondaryAttachments}
               setSelectedWeapon={setSelectedSecondary}
-              setAttachments={setSecondaryAttachments}
-              weapons={secondaries}
-              handleAttachmentChange={handleAttachmentChange}
+              weapons={secondaryWeapons}
             />
           </CardContent>
         </Card>

@@ -1,8 +1,10 @@
 import { defineConfig, globalIgnores } from "eslint/config";
 import nextVitals from "eslint-config-next/core-web-vitals";
+import prettier from "eslint-config-prettier/flat";
 
 const eslintConfig = defineConfig([
   ...nextVitals,
+  prettier,
   // Override default ignores of eslint-config-next.
   globalIgnores([
     // Default ignores of eslint-config-next:
@@ -10,17 +12,13 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
-    "**/src/db/schema.ts",
-    "**/src/db/**/*",
+    "**/src/lib/db/schema.ts",
+    "**/src/lib/db/**/*",
     "**/*.generated.ts",
-    "src/db/0000_*.sql",
+    "src/lib/db/0000_*.sql",
   ]),
-  ...compat.extends("next/core-web-vitals", "next/typescript", "prettier"),
-  {
-    rules: {
-      "prefer-const": "off",
-    },
-  },
+  ...compat.extends("next/core-web-vitals", "next/typescript"),
+  { rules: { "prefer-const": "off" } },
 ]);
 
 export default eslintConfig;

@@ -1,6 +1,6 @@
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
-import { CursorData } from "./types";
+import { CursorData } from "../../db/types";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -88,16 +88,15 @@ export function decodeCursor(cursor: string | null) {
     const json = Buffer.from(cursor, "base64url").toString("utf8");
     const parsed = JSON.parse(json) as { created_at: string; id: number };
 
-    return {
-      created_at: new Date(parsed.created_at),
-      id: parsed.id,
-    };
+    return { created_at: new Date(parsed.created_at), id: parsed.id };
   } catch {
     return null;
   }
 }
 
-export function foldAttachments(rows: { id: number; name: string; type: string }[]) {
+export function foldAttachments(
+  rows: { id: number; name: string; type: string }[]
+) {
   const result: {
     scope?: { id: number; name: string; type: string };
     barrel?: { id: number; name: string; type: string };

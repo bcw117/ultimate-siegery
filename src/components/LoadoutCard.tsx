@@ -1,19 +1,14 @@
 import React from "react";
 import { removeUnderscores } from "@/lib/utils/helpers";
 import Image from "next/image";
-import { Loadout, Weapon } from "@/lib/utils/types";
+import { LoadoutDisplay, Weapon } from "@/db/types";
 import { Button } from "./ui/button";
-import { deleteLoadout } from "@/lib/api/db/loadouts/mutations";
-import { Trash2 } from "lucide-react";
-import EditLoadoutDialog from "./dialogs/EditLoadout";
+import { deleteLoadout } from "@/lib/api/loadouts/mutations";
+import { PencilLine, Trash2 } from "lucide-react";
+import EditLoadoutDialog from "./dialogs/EditLoadoutDialog";
+import { Dialog, DialogTrigger } from "./ui/dialog";
 
-export default function LoadoutCard({
-  id,
-  loadout,
-}: {
-  id?: number;
-  loadout: Loadout;
-}) {
+export default function LoadoutCard({ loadout }: { loadout: LoadoutDisplay }) {
   const {
     name,
     operator,
@@ -21,6 +16,8 @@ export default function LoadoutCard({
     primary_weapon: primary,
     secondary_weapon: secondary,
   } = loadout;
+
+  console.log("INSANE LOADOUTTT", loadout);
 
   return (
     <div className="group relative flex h-full w-full flex-col rounded-xl border border-white/10 bg-siege-dark/50 p-5 shadow-sm transition hover:border-siege-accent/40 hover:shadow-md animate-fade-up">
@@ -37,7 +34,7 @@ export default function LoadoutCard({
             {operator.name}
           </p>
           <div className="mt-1 inline-flex items-center rounded-full bg-siege-accent/15 px-2 py-0.5 text-[10px] font-medium text-siege-accent">
-            {operator.side === "A" ? "Attacker" : "Defender"}
+            {operator.side}
           </div>
           {operator.icon_url && (
             <div className="mt-3 flex items-center justify-center">
@@ -70,13 +67,13 @@ export default function LoadoutCard({
             </div>
           )}
         </div>
-        {[primary, secondary].map((weapon: Weapon) => (
+        {[primary, secondary].map((weapon) => (
           <div
             key={weapon.id}
             className="min-w-0 rounded-lg bg-siege-dark/60 p-4 ring-1 ring-inset ring-white/10"
           >
             <h4 className="mb-1 text-xs font-medium uppercase tracking-wide text-white/60">
-              {weapon.type}
+              {weapon.category}
             </h4>
             <p className="text-sm font-semibold text-white wrap-break-word leading-snug">
               {removeUnderscores(weapon.name ?? "")}
@@ -97,20 +94,24 @@ export default function LoadoutCard({
             </ul>
           </div>
         ))}
-        {id && (
-          <>
-            <EditLoadoutDialog loadout={loadout} />
-            <Button
-              variant="destructive"
-              onClick={deleteLoadout.bind(null, id)}
-            >
-              <span className="flex flex-row items-center gap-x-2">
-                <Trash2 />
-                <span>Delete</span>
-              </span>
-            </Button>
-          </>
-        )}
+        <Dialog>
+          <DialogTrigger>
+            <span className="flex flex-row items-center gap-x-2">
+              <PencilLine />
+              <span>Edit</span>
+            </span>
+            <EditLoadoutDialog loadout={loadout}/>
+          </DialogTrigger>
+        </Dialog>
+        <Button
+          variant="destructive"
+          onClick={deleteLoadout.bind(null, loadout.id)}
+        >
+          <span className="flex flex-row items-center gap-x-2">
+            <Trash2 />
+            <span>Delete</span>
+          </span>
+        </Button>
       </div>
     </div>
   );

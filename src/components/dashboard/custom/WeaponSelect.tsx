@@ -5,57 +5,81 @@ import {
   SelectContent,
   SelectItem,
 } from "@/components/ui/select";
-import { Attachment, WeaponSelection } from "@/lib/utils/types";
-import React from "react";
+import {
+  Attachment,
+  AttachmentRecord,
+  WeaponRecord,
+  WeaponWithAllAttachments,
+  WeaponWithAttachments,
+} from "@/db/types";
 import { Label } from "@/components/ui/label";
 import AttachmentSelect from "./AttachmentSelect";
+import { isNil } from "lodash";
 
 type WeaponSelectProps = {
   slot: "primary" | "secondary";
-  selectedWeapon: WeaponSelection | null;
-  setSelectedWeapon: (weapon: WeaponSelection | null) => void;
-  selectedAttachment: {
-    scope?: Attachment;
-    barrel?: Attachment;
-    grip?: Attachment;
-    underbarrel?: Attachment;
-  };
-  setAttachments: React.Dispatch<
-    React.SetStateAction<{
-      scope?: Attachment;
-      barrel?: Attachment;
-      grip?: Attachment;
-      underbarrel?: Attachment;
-    }>
-  >;
-  weapons: WeaponSelection[];
-  handleAttachmentChange: (
-    slot: "primary" | "secondary",
-    type: "scope" | "barrel" | "grip" | "underbarrel",
-    attachmentId: string
-  ) => void;
+  selectedWeapon: WeaponWithAttachments | undefined;
+  setSelectedWeapon: (weapon: WeaponWithAttachments | undefined) => void;
+  weapons: WeaponWithAllAttachments[];
 };
 
 export default function WeaponSelect({
   slot,
   selectedWeapon,
   setSelectedWeapon,
-  selectedAttachment,
-  setAttachments,
   weapons,
-  handleAttachmentChange,
 }: WeaponSelectProps) {
+  const weaponAttachments = weapons
+    .filter((weapon) => weapon.id === selectedWeapon?.id)
+    .flatMap(({ attachments }) => attachments);
+  const sights = weaponAttachments.filter(
+    (attachment) => attachment.type === "Sight"
+  );
+  const grips = weaponAttachments.filter(
+    (attachment) => attachment.type === "Grip"
+  );
+  const barrels = weaponAttachments.filter(
+    (attachment) => attachment.type === "Barrel"
+  );
+
+  const handleWeaponUpdate = (val: string) => {
+    const weapon = weapons.find((w) => w.id.toString() === val);
+    if (isNil(weapon)) {
+      setSelectedWeapon(undefined);
+      return;
+    }
+
+    setSelectedWeapon({
+      ...weapon,
+      attachments: { scope: undefined, grip: undefined, barrel: undefined },
+    });
+  };
+
+  const handleAttachmentChange = (attachment: AttachmentRecord | undefined) => {
+    if (isNil(selectedWeapon) || isNil(attachment)) {
+      return;
+    }
+    const attachmentType = attachment.type.toLowerCase() as
+      | "scope"
+      | "barrel"
+      | "grip"
+      | "underbarrel";
+    setSelectedWeapon({
+      ...selectedWeapon,
+      attachments: {
+        ...selectedWeapon.attachments,
+        [attachmentType]: attachment,
+      },
+    });
+  };
+
   return (
     <>
       <div className="space-y-2">
         <Label className="text-slate-300">Select Weapon</Label>
         <Select
           value={selectedWeapon?.id.toString()}
-          onValueChange={(val) => {
-            const weapon = weapons.find((w) => w.id.toString() === val);
-            setSelectedWeapon(weapon || null);
-            setAttachments({});
-          }}
+          onValueChange={(val) => handleWeaponUpdate(val)}
         >
           <SelectTrigger className="bg-slate-900/50 border-white/10 text-white">
             <SelectValue placeholder={`Select ${slot} weapon`} />
@@ -72,53 +96,32 @@ export default function WeaponSelect({
 
       {selectedWeapon && (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          {/* Scope */}
-          {selectedWeapon.attachments.scope &&
-            selectedWeapon.attachments.scope.length > 0 && (
-              <AttachmentSelect
-                slot={slot}
-                type="scope"
-                selectedAttachment={selectedAttachment.scope ?? null}
-                attachments={selectedWeapon.attachments.scope}
-                handleAttachmentChange={handleAttachmentChange}
-              />
-            )}
+          {!isNil(sights) && (
+            <AttachmentSelect
+              type="scope"
+              selectedAttachment={selectedWeapon.attachments.scope}
+              attachments={sights}
+              handleAttachmentChange={handleAttachmentChange}
+            />
+          )}
 
-          {/* Barrels */}
-          {selectedWeapon.attachments.barrel &&
-            selectedWeapon.attachments.barrel.length > 0 && (
-              <AttachmentSelect
-                slot={slot}
-                type="barrel"
-                selectedAttachment={selectedAttachment.barrel ?? null}
-                attachments={selectedWeapon.attachments.barrel}
-                handleAttachmentChange={handleAttachmentChange}
-              />
-            )}
+          {!isNil(barrels) && (
+            <AttachmentSelect
+              type="barrel"
+              selectedAttachment={selectedWeapon.attachments.barrel}
+              attachments={barrels}
+              handleAttachmentChange={handleAttachmentChange}
+            />
+          )}
 
-          {/* Grips */}
-          {selectedWeapon.attachments.grip &&
-            selectedWeapon.attachments.grip.length > 0 && (
-              <AttachmentSelect
-                slot={slot}
-                type="grip"
-                selectedAttachment={selectedAttachment.grip ?? null}
-                attachments={selectedWeapon.attachments.grip}
-                handleAttachmentChange={handleAttachmentChange}
-              />
-            )}
-
-          {/* Underbarrel */}
-          {selectedWeapon.attachments.underbarrel &&
-            selectedWeapon.attachments.underbarrel.length > 0 && (
-              <AttachmentSelect
-                slot={slot}
-                type="underbarrel"
-                selectedAttachment={selectedAttachment.underbarrel ?? null}
-                attachments={selectedWeapon.attachments.underbarrel}
-                handleAttachmentChange={handleAttachmentChange}
-              />
-            )}
+          {!isNil(grips) && (
+            <AttachmentSelect
+              type="grip"
+              selectedAttachment={selectedWeapon.attachments.grip}
+              attachments={grips}
+              handleAttachmentChange={handleAttachmentChange}
+            />
+          )}
         </div>
       )}
     </>

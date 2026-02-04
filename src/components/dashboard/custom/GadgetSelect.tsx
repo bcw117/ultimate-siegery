@@ -1,12 +1,12 @@
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import Image from "next/image";
-import { Gadget } from "@/lib/utils/types";
+import { GadgetRecord } from "@/db/types";
 
 type GadgetSelectProps = {
-  selectedGadget: Gadget | null;
-  setSelectedGadget: (gadget: Gadget | null) => void;
-  gadgets: Gadget[];
+  selectedGadget: GadgetRecord | undefined;
+  setSelectedGadget: (gadget: GadgetRecord | undefined) => void;
+  gadgets: GadgetRecord[];
 };
 
 export default function GadgetSelect({
@@ -20,7 +20,7 @@ export default function GadgetSelect({
         value={selectedGadget?.id.toString()}
         onValueChange={(val) =>
           setSelectedGadget(
-            gadgets.find((g) => g.id.toString() === val) || null
+            gadgets.find((g) => g.id.toString() === val) || undefined
           )
         }
         className="grid grid-cols-2 gap-4"

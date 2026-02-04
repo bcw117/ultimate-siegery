@@ -1,7 +1,6 @@
 "use client";
 
 import { useSearchParams, useRouter } from "next/navigation";
-import React from "react";
 import { Button } from "./ui/button";
 
 export default function PaginationControls({

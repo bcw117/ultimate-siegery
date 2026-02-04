@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Command,
@@ -18,48 +18,20 @@ import {
 import { Check, ChevronsUpDown } from "lucide-react";
 import { cn } from "@/lib/utils/helpers";
 import Image from "next/image";
-
-type Operator = {
-  id: number;
-  name: string;
-  side: string;
-  health: number;
-  speed: number;
-  difficulty: number;
-  unique_ability: string;
-  icon_url: string | null;
-  portrait_url: string | null;
-};
+import { OperatorRecord } from "@/db/types";
 
 interface OperatorSelectProps {
-  onSelect?: (operator: Operator) => void;
+  onSelect?: (operator: OperatorRecord) => void;
   selectedOperatorId?: number;
+  operators: OperatorRecord[];
 }
 
 export default function OperatorSelect({
   onSelect,
   selectedOperatorId,
+  operators,
 }: OperatorSelectProps) {
-  const [operators, setOperators] = useState<Operator[]>([]);
-  const [loading, setLoading] = useState(true);
   const [open, setOpen] = useState(false);
-
-  useEffect(() => {
-    const fetchOperators = async () => {
-      try {
-        const res = await fetch("/api/operator");
-        if (!res.ok) throw new Error("Failed to fetch operators");
-        const data = await res.json();
-        setOperators(data);
-      } catch (error) {
-        console.error("Error fetching operators:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchOperators();
-  }, []);
-
   const selectedOperator = operators.find((op) => op.id === selectedOperatorId);
 
   return (
@@ -69,8 +41,7 @@ export default function OperatorSelect({
           variant="outline"
           role="combobox"
           aria-expanded={open}
-          className="w-full justify-between h-14 px-4 bg-background/50 backdrop-blur-sm border-white/10 hover:bg-accent/50"
-          disabled={loading}
+          className="justify-between h-14 px-4 bg-background/50 backdrop-blur-sm border-white/10 hover:bg-accent/50"
         >
           {selectedOperator ? (
             <div className="flex items-center gap-3">
@@ -95,7 +66,7 @@ export default function OperatorSelect({
             </div>
           ) : (
             <span className="text-muted-foreground">
-              {loading ? "Loading operators..." : "Select operator..."}
+              {"Select An Operator"}
             </span>
           )}
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
@@ -107,7 +78,7 @@ export default function OperatorSelect({
             placeholder="Search operator..."
             className="flex h-11 w-full rounded-md bg-transparent py-3 text-sm outline-none placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50"
           />
-          <CommandList className="max-h-[300px] overflow-y-auto overflow-x-hidden p-1">
+          <CommandList className="max-h-75 overflow-y-auto overflow-x-hidden p-1">
             <CommandEmpty className="py-6 text-center text-sm text-muted-foreground">
               No operator found.
             </CommandEmpty>

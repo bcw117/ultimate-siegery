@@ -1,5 +1,5 @@
 import { NextResponse, type NextRequest } from "next/server";
-import { db } from "@/lib/api/db/index";
+import { db } from "@/lib/db/index";
 import {
   operator_weapons,
   operator_gadgets,
@@ -8,9 +8,9 @@ import {
   weapons,
   attachments,
   weapon_attachments,
-} from "@/lib/api/db/schema";
+} from "@/lib/db/schema";
 import { eq, sql } from "drizzle-orm";
-import { Weapon, Gadget, Operator, Attachment } from "@/lib/utils/types";
+import { Weapon, Gadget, Operator, Attachment } from "@/db/types";
 import { getRandomElement, randomizedLoadoutName } from "@/lib/utils/helpers";
 
 export async function GET(request: NextRequest) {

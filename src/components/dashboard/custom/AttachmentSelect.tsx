@@ -6,39 +6,39 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Attachment } from "@/lib/utils/types";
-import React from "react";
+import { toTitleCase } from "@/lib/utils/helpers";
+import { AttachmentRecord } from "@/db/types";
 
 export default function AttachmentSelect({
-  slot,
   type,
   selectedAttachment,
   attachments,
   handleAttachmentChange,
 }: {
-  slot: "primary" | "secondary";
   type: "scope" | "barrel" | "grip" | "underbarrel";
-  selectedAttachment: Attachment | null;
-  attachments: Attachment[];
-  handleAttachmentChange: (
-    slot: "primary" | "secondary",
-    type: "scope" | "barrel" | "grip" | "underbarrel",
-    attachmentId: string
-  ) => void;
+  selectedAttachment: AttachmentRecord | undefined;
+  attachments: AttachmentRecord[];
+  handleAttachmentChange: (attachment: AttachmentRecord | undefined) => void;
 }) {
   return (
     <div className="space-y-2">
-      <Label className="text-xs text-slate-400">Sight</Label>
+      <Label className="text-xs text-slate-400">{toTitleCase(type)}</Label>
       <Select
-        value={selectedAttachment?.id?.toString()}
-        onValueChange={(val) => handleAttachmentChange(slot, type, val)}
+        value={selectedAttachment?.id.toString()}
+        onValueChange={(val) => {
+          const attachment = attachments.find(
+            (attachment) => attachment.id.toString() === val
+          );
+
+          handleAttachmentChange(attachment);
+        }}
       >
         <SelectTrigger className="bg-slate-900/50 border-white/10 text-white">
           <SelectValue placeholder="None" />
         </SelectTrigger>
         <SelectContent>
-          {attachments.map((a) => (
-            <SelectItem key={a.id} value={a.id.toString()}>
+          {attachments.map((a, idx) => (
+            <SelectItem key={idx} value={a.id.toString()}>
               {a.name}
             </SelectItem>
           ))}

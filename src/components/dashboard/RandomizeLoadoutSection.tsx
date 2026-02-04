@@ -5,8 +5,8 @@ import { Save, Shield, Shuffle } from "lucide-react";
 import LoadoutCard from "../LoadoutCard";
 import { isNil } from "lodash";
 import { toast } from "sonner";
-import { Loadout } from "@/lib/utils/types";
-import { saveLoadout } from "@/lib/api/db/loadouts/mutations";
+import { Loadout } from "@/db/types";
+import { saveLoadout } from "@/lib/db/loadouts/mutations";
 
 export default function LoadoutSection() {
   const [side, setSide] = useState<"A" | "D">("A");
