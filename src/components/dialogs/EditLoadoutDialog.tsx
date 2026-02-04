@@ -49,7 +49,7 @@ export default function EditLoadoutDialog({
     };
 
     fetchOperators();
-  }, []);
+  }, [loadout]);
 
   return (
     <DialogContent className="w-full sm:max-w-6xl max-h-[90vh] overflow-y-auto">

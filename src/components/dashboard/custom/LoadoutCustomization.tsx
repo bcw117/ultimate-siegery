@@ -78,7 +78,6 @@ export default function LoadoutCustomizer({
         selectedSecondary.attachments
       ).map((attachment) => attachment?.id);
 
-
       const result = await saveLoadout({
         name: loadoutName,
         operator_id: operator.id,
@@ -118,7 +117,7 @@ export default function LoadoutCustomizer({
         setSelectedGadget(gadgets[0]);
       }
     }
-  }, [gadgets]);
+  }, [primaryWeapons, secondaryWeapons, selectedLoadout, gadgets]);
 
   return (
     <div className="flex flex-col gap-6">
