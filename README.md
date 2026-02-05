@@ -1,27 +1,28 @@
-# Ultimate Siegery
+# Ultimate Siegery 
 The tool to help customize, randomize and store your operator loadouts and find fun challenges to make playing Siege fun!
 
-## Overview:
-
-### Key Features:
+## Key Features:
 - Interface for customizing and saving operator loadouts
 - Loadout randomizer to force playstyle variety and test player skill
 - Generate individual and team challenges to keep matches fun and engaging
 
-### Tech Stack
+## Tech Stack
 - Frontend: Next.js w/ Shadcn
 - Backend: Next.js Route Handlers and React Server Actions
 - Database: Supabase w/ Drizzle (ORM)
 - Authentication: Clerk
 
-### Requirements
+
+
+## Getting Started
+### Prerequisites
 - [Node.js](https://nodejs.org/en)
 - [pnpm](https://pnpm.io/)
 - [Supabase](https://supabase.com/) & [Supabase CLI](https://supabase.com/docs/guides/local-development/cli/getting-started)
 - [Clerk](https://clerk.com/)
 - [Docker](https://www.docker.com/)
 
-### Local Development
+### Setup Guide
 1. Clone and access the repository:
 
    ```bash
@@ -60,7 +61,7 @@ The tool to help customize, randomize and store your operator loadouts and find 
    ```bash
    pnpm run dev
    ```
-6. Get to coding!
+6. Happy coding!
 
 ## License 
 This project is licensed under the [MIT license](LICENSE)
