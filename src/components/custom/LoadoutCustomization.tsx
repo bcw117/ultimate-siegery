@@ -7,7 +7,7 @@ import {
   GadgetRecord,
   WeaponWithAttachments,
 } from "@/db/types";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { toast } from "sonner";
 import WeaponSelect from "./WeaponSelect";
 import GadgetSelect from "./GadgetSelect";
@@ -29,11 +29,15 @@ export default function LoadoutCustomizer({
   selectedLoadout?: CustomizationFields;
   operator: OperatorFullLoadout;
 }) {
-  const primaryWeapons = operator.operator_weapons.filter(
-    (weapon) => weapon.slot === "Primary"
+  const primaryWeapons = useMemo(
+    () =>
+      operator.operator_weapons.filter((weapon) => weapon.slot === "Primary"),
+    [operator]
   );
-  const secondaryWeapons = operator.operator_weapons.filter(
-    (weapon) => weapon.slot === "Secondary"
+  const secondaryWeapons = useMemo(
+    () =>
+      operator.operator_weapons.filter((weapon) => weapon.slot === "Secondary"),
+    [operator]
   );
 
   const gadgets = operator.operator_gadgets;

@@ -1,6 +1,5 @@
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
-import { CursorData } from "../../db/types";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -67,31 +66,11 @@ export function toTitleCase(name: string) {
   );
 }
 
-export function randomizedLoadoutName(name: string | undefined) {
+export function randomizedLoadoutName(name?: string) {
   if (!name) {
     return `${getRandomElement(DESCRIPTORS)} Loadout`;
   }
   return `${getRandomElement(DESCRIPTORS)} ${toTitleCase(name)} Loadout`;
-}
-
-export function encodeCursor(data: CursorData) {
-  const json = JSON.stringify(data);
-  return Buffer.from(json, "utf8").toString("base64url");
-}
-
-export function decodeCursor(cursor: string | null) {
-  if (!cursor) {
-    return null;
-  }
-
-  try {
-    const json = Buffer.from(cursor, "base64url").toString("utf8");
-    const parsed = JSON.parse(json) as { created_at: string; id: number };
-
-    return { created_at: new Date(parsed.created_at), id: parsed.id };
-  } catch {
-    return null;
-  }
 }
 
 export function foldAttachments(

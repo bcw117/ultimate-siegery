@@ -6,7 +6,7 @@ export default async function CustomLoadout() {
   const response = await fetchAllOperatorLoadouts();
 
   if (!response.ok || isNil(response.data)) {
-    return <div>Unable to retrieve data</div>;
+    throw new Error("Failed to fetch operator data");
   }
 
   return <CustomLoadoutView operators={response.data as any} />;

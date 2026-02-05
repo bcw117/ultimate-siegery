@@ -1,13 +1,17 @@
-import React from "react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import LogOutButton from "./LogoutButton";
 import { SignedIn, SignedOut, SignInButton, SignUpButton } from "@clerk/nextjs";
-import { LayoutDashboard, Backpack, User } from "lucide-react";
+import { LayoutDashboard, Backpack, User, Shuffle } from "lucide-react";
 import Image from "next/image";
 
 const links = [
-  { icon: LayoutDashboard, link: "/dashboard", value: "Dashboard" },
+  {
+    icon: LayoutDashboard,
+    link: "/create-loadout/custom",
+    value: "Custom Loadout",
+  },
+  { icon: Shuffle, link: "/create-loadout/random", value: "Random Loadout" },
   { icon: Backpack, link: "/loadouts", value: "Loadouts" },
   { icon: User, link: "/profile", value: "Profile" },
 ];

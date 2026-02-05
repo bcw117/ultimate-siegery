@@ -6,8 +6,8 @@ export default async function Loadouts() {
   const response = await fetchLoadouts();
 
   if (!response.ok || isNil(response.data)) {
-    return <div>Unable to retrieve data</div>;
+    throw Error("Unable to fetch loadouts");
   }
-  
+
   return <LoadoutsView loadouts={response.data} />;
 }

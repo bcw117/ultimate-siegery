@@ -10,9 +10,6 @@ function LogOutButton() {
 
   const handleLogOut = async () => {
     setLoading(true);
-
-    console.log("HERE");
-
     setLoading(false);
   };
 

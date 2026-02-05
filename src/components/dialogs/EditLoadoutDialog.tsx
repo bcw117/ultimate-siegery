@@ -7,8 +7,16 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { LoadoutDisplay, OperatorFullLoadout } from "@/db/types";
-import LoadoutCustomization from "../dashboard/custom/LoadoutCustomization";
+import LoadoutCustomization from "../custom/LoadoutCustomization";
 import { isNil } from "lodash";
+import useSWR from "swr";
+
+const fetcher = async (url: string) => {
+  const res = await fetch(url);
+  const data = await res.json();
+
+  return data;
+};
 
 export default function EditLoadoutDialog({
   loadout,
@@ -21,35 +29,12 @@ export default function EditLoadoutDialog({
     secondaryWeapon: loadout.secondary_weapon,
     gadget: loadout.gadget,
   };
-  const [operator, setOperatorData] = useState<OperatorFullLoadout | null>(
-    null
-  );
 
-  const [isLoading, setLoading] = useState(true);
-  const [error, setError] = useState<boolean | null>(null);
-
-  useEffect(() => {
-    const fetchOperators = async () => {
-      const operatorId = loadout.operator.id;
-      try {
-        const res = await fetch(`/api/operators/${operatorId}`);
-
-        if (!res.ok) {
-          throw new Error("Failed to fetch operators");
-        }
-        const data = await res.json();
-
-        setOperatorData(data);
-      } catch (error) {
-        console.error("Error fetching operators:", error);
-        setError(true);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchOperators();
-  }, [loadout]);
+  const {
+    isLoading,
+    data: operator,
+    error,
+  } = useSWR(`/api/operators/${loadout.operator.id}`, fetcher);
 
   return (
     <DialogContent className="w-full sm:max-w-6xl max-h-[90vh] overflow-y-auto">

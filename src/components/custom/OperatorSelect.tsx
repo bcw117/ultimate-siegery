@@ -41,7 +41,7 @@ export default function OperatorSelect({
           variant="outline"
           role="combobox"
           aria-expanded={open}
-          className="justify-between h-14 px-4 bg-background/50 backdrop-blur-sm border-white/10 hover:bg-accent/50"
+          className="w-full justify-between h-14 px-4 bg-background/50 backdrop-blur-sm border-white/10 hover:bg-accent/50"
         >
           {selectedOperator ? (
             <div className="flex items-center gap-3">

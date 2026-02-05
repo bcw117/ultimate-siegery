@@ -12,7 +12,12 @@ const eslintConfig = defineConfig([
     "build/**",
     "next-env.d.ts",
   ]),
-  { rules: { "prefer-const": "off" } },
+  {
+    rules: {
+      "prefer-const": "off",
+      "no-console": ["warn", { allow: ["warn", "error"] }],
+    },
+  },
 ]);
 
 export default eslintConfig;

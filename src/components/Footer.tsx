@@ -1,21 +1,17 @@
 "use client";
-import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 
 const Footer = () => {
   return (
     <footer className="bg-siege-darker relative overflow-hidden">
-      {/* Background Elements */}
       <div className="absolute inset-0">
         <div className="noise-bg w-full h-full"></div>
       </div>
 
       <div className="relative z-10 container mx-auto px-6">
-        {/* Main Footer Content */}
         <div className="pt-16 pb-8 border-b border-white/10">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
-            {/* Logo & Info */}
             <div className="md:col-span-1">
               <Link href="/" className="flex items-center space-x-2 group">
                 <Image
@@ -79,10 +75,9 @@ const Footer = () => {
           </div>
         </div>
 
-        {/* Footer Bottom */}
         <div className="py-6 flex flex-col md:flex-row items-center justify-between">
           <p className="text-white/60 text-sm mb-4 md:mb-0">
-            © 2025 Ultimate Siegery. All rights reserved.
+            © 2026 Ultimate Siegery. All rights reserved.
           </p>
           <p className="text-white/60 text-sm">
             Not affiliated with Ubisoft or Rainbow Six Siege.

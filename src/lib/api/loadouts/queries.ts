@@ -4,6 +4,15 @@ import { db } from "@/lib/db/index";
 import { ActionResponse } from "@/db/types";
 import { isNil } from "lodash";
 
+const processAttachments = (attachments: any[]) => {
+  return attachments.reduce((acc, { attachment }) => {
+    const type = attachment.type.toLowerCase();
+    const key = type === "sight" ? "scope" : type;
+    acc[key] = attachment;
+    return acc;
+  }, {} as any);
+};
+
 // TODO: add actual types to actions
 export async function fetchLoadout(id: number): Promise<ActionResponse<any>> {
   try {
@@ -39,17 +48,17 @@ export async function fetchLoadout(id: number): Promise<ActionResponse<any>> {
       ...data,
       primary_weapon: {
         ...primaryWeapon,
-        attachments: pAttachments.map(({ attachment }) => ({ ...attachment })),
+        attachments: processAttachments(pAttachments),
       },
       secondary_weapon: {
         ...secondaryWeapon,
-        attachments: sAttachments.map(({ attachment }) => ({ ...attachment })),
+        attachments: processAttachments(pAttachments),
       },
     };
 
     return { ok: true, data: response };
   } catch (e) {
-    return { ok: false, error: e };
+    return { ok: false, error: "Unable to fetch loadouts" };
   }
 }
 
@@ -83,15 +92,11 @@ export async function fetchLoadouts(): Promise<ActionResponse<any>> {
         ...loadout,
         primary_weapon: {
           ...primaryWeapon,
-          attachments: pAttachments.map(({ attachment }) => ({
-            ...attachment,
-          })),
+          attachments: processAttachments(pAttachments),
         },
         secondary_weapon: {
           ...secondaryWeapon,
-          attachments: sAttachments.map(({ attachment }) => ({
-            ...attachment,
-          })),
+          attachments: processAttachments(pAttachments),
         },
       };
     });

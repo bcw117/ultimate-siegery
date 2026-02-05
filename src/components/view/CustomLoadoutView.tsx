@@ -1,9 +1,9 @@
 "use client";
 import { useState } from "react";
 import { OperatorRecord, OperatorFullLoadout } from "@/db/types";
-import OperatorSelect from "../dashboard/custom/OperatorSelect";
+import OperatorSelect from "../custom/OperatorSelect";
 import { isNil } from "lodash";
-import LoadoutCustomization from "../dashboard/custom/LoadoutCustomization";
+import LoadoutCustomization from "../custom/LoadoutCustomization";
 
 interface CustomLoadoutProps {
   operators: OperatorFullLoadout[];
@@ -18,14 +18,19 @@ export default function CustomLoadoutView({ operators }: CustomLoadoutProps) {
   );
 
   return (
-    <div className="flex flex-col justify-center items-center space-y-8 w-full">
-      <OperatorSelect
-        onSelect={setSelectedOperator}
-        selectedOperatorId={selectedOperator?.id}
-        operators={operators}
-      />
+    <div className="mx-auto w-full max-w-7xl space-y-8 px-4">
+      <div className="flex flex-col items-center">
+        <OperatorSelect
+          onSelect={setSelectedOperator}
+          selectedOperatorId={selectedOperator?.id}
+          operators={operators}
+        />
+      </div>
       {!isNil(selectedOperatorLoadout) && (
-        <LoadoutCustomization operator={selectedOperatorLoadout} />
+        <LoadoutCustomization
+          key={selectedOperatorLoadout.id}
+          operator={selectedOperatorLoadout}
+        />
       )}
     </div>
   );

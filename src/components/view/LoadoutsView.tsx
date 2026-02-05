@@ -17,7 +17,7 @@ export default function LoadoutsView({ loadouts }: LoadoutViewProps) {
         </div>
 
         {loadouts.length > 0 ? (
-          <div className="grid w-full gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+          <div className="grid w-full gap-8 sm:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3">
             {loadouts.map((loadout, idx: number) => (
               <div key={loadout.id}>
                 <LoadoutCard
@@ -27,6 +27,7 @@ export default function LoadoutsView({ loadouts }: LoadoutViewProps) {
                       name: loadout.name ?? `Loadout ${idx + 1}`,
                     } as LoadoutDisplay
                   }
+                  editable
                 />
               </div>
             ))}

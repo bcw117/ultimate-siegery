@@ -23,8 +23,6 @@ export async function saveLoadout(
     // ADD SOME ACTUAL AUTH HERE
     const user_id = "asdfasdfasdf";
 
-    console.log(loadoutParams);
-
     await db.transaction(async (tx) => {
       const [createdLoadout] = await tx
         .insert(loadout)
@@ -60,7 +58,7 @@ export async function saveLoadout(
 
     return { ok: true, data: { message: "Loadout saved successfully" } };
   } catch (e) {
-    console.log(e);
+    console.error(e);
     return { ok: false, error: "Unable to save loadout" };
   }
 }
