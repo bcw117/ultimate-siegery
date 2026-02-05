@@ -41,4 +41,4 @@ NEXT_PUBLIC_CLERK_SIGN_IN_FORCE_REDIRECT_URL=/dashboard
 NEXT_PUBLIC_CLERK_SIGN_UP_FORCE_REDIRECT_URL=/dashboard
 ```
 ## License 
-This project is licensed under the [MIT license](github.com/bcw117/ultimate-siegery/blob/main/LICENSE)
+This project is licensed under the [MIT license](LICENSE)
