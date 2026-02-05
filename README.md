@@ -1,5 +1,5 @@
 # Ultimate Siegery 
-The tool to help customize, randomize and store your operator loadouts and find fun challenges to make playing Siege fun!
+The tool to customize, randomize and store your operator loadouts and find in-game challenges to make playing Siege fun!
 
 ## Key Features:
 - Interface for customizing and saving operator loadouts
