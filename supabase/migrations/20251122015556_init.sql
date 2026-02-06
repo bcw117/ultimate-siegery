@@ -121,6 +121,8 @@ ALTER TABLE "operator_gadget" ENABLE ROW LEVEL SECURITY;
 ALTER TABLE "operator_weapon" ENABLE ROW LEVEL SECURITY;
 ALTER TABLE "operator" ENABLE ROW LEVEL SECURITY;
 ALTER TABLE "weapon" ENABLE ROW LEVEL SECURITY;
+ALTER TABLE "loadout_attachment" ENABLE ROW LEVEL SECURITY;
+ALTER TABLE "operator_weapon_attachment" ENABLE ROW LEVEL SECURITY;
 
 -- Policies
 CREATE POLICY "Enable read access for all users" ON "operator" AS PERMISSIVE FOR SELECT TO public USING (true);
@@ -131,3 +133,5 @@ CREATE POLICY "Enable read access for all users" ON "weapon" AS PERMISSIVE FOR S
 CREATE POLICY "Enable read access for all users" ON "operator_gadget" AS PERMISSIVE FOR SELECT TO public USING (true);
 CREATE POLICY "Enable read access for all users" ON "operator_weapon" AS PERMISSIVE FOR SELECT TO public USING (true);
 CREATE POLICY "Enable read access for all users" ON "attachment" AS PERMISSIVE FOR SELECT TO public USING (true);
+CREATE POLICY "Enable read access for all users" ON "loadout_attachment" AS PERMISSIVE FOR SELECT TO public USING (true);
+CREATE POLICY "Enable read access for all users" ON "operator_weapon_attachment" AS PERMISSIVE FOR SELECT TO public USING (true);
