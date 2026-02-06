@@ -71,6 +71,7 @@ export async function fetchLoadout(id: number): Promise<ActionResponse<any>> {
 
     return { ok: true, data: response };
   } catch (e) {
+    console.error(e);
     return { ok: false, error: "Unable to fetch loadouts" };
   }
 }
@@ -130,6 +131,7 @@ export async function fetchLoadouts(): Promise<ActionResponse<any>> {
 
     return { ok: true, data: response };
   } catch (e) {
+    console.error(e);
     return { ok: false, error: "Unable to fetch loadouts" };
   }
 }
