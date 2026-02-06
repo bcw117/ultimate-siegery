@@ -111,6 +111,8 @@ export default function RandomLoadoutView({
 
       if (!result.ok) {
         toast.error("Failed to save loadout: " + (result as any).error);
+      } else {
+        toast.success("Loadout successfully saved!");
       }
     } catch (error) {
       toast.error("An unexpected error occurred: " + (error as Error).message);

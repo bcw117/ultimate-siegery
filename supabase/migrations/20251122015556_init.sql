@@ -90,7 +90,7 @@ CREATE TABLE "loadout_weapon_attachment" (
 	CONSTRAINT "loadout_fk" FOREIGN KEY ("loadout_id") REFERENCES "loadout"("id")
 		ON DELETE CASCADE,
 	CONSTRAINT "weapon_fk" FOREIGN KEY ("weapon_id") REFERENCES "weapon"("id"),
-	CONSTRAINT "attachment_fk" FOREIGN KEY ("attachment_id") REFERENCES "attachment"("id"),
+	CONSTRAINT "attachment_fk" FOREIGN KEY ("attachment_id") REFERENCES "attachment"("id")
 );
 
 -- Indexes
