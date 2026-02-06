@@ -1,6 +1,6 @@
 import createMDX from "@next/mdx";
 
-const s3_url = process.env.NEXT_PUBLIC_S3_URL?.replace("https://", "");
+const s3_url = process.env.NEXT_PUBLIC_SUPABASE_URL?.replace("https://", "");
 
 if (!s3_url) {
   throw Error("NEXT_PUBLIC_SUPABASE_URL not set");
@@ -12,12 +12,7 @@ const nextConfig = {
   pageExtensions: ["js", "jsx", "md", "mdx", "ts", "tsx"],
   images: {
     remotePatterns: [
-      {
-        protocol: "https",
-        hostname: s3_url,
-        port: "",
-        pathname: "/**",
-      },
+      { protocol: "https", hostname: s3_url, port: "", pathname: "/**" },
     ],
   },
 };
