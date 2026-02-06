@@ -1,8 +1,9 @@
 import { loadout } from "@/lib/db/schema";
-import { eq } from "drizzle-orm";
+import { and, eq } from "drizzle-orm";
 import { db } from "@/lib/db/index";
 import { ActionResponse } from "@/lib/types";
 import { isNil } from "lodash";
+import { currentUser } from "@clerk/nextjs/server";
 
 const processAttachments = (attachments: any[]) => {
   return attachments.reduce((acc, { attachment }) => {
@@ -14,8 +15,16 @@ const processAttachments = (attachments: any[]) => {
 
 export async function fetchLoadout(id: number): Promise<ActionResponse<any>> {
   try {
+    const user = await currentUser();
+
+    if (!user) {
+      return { ok: false, error: "User is not authenticated" };
+    }
+
+    const { id: user_id } = user;
+
     const data = await db.query.loadout.findFirst({
-      where: eq(loadout.id, id),
+      where: and(eq(loadout.id, id), eq(loadout.user_id, user_id)),
       columns: { id: true, created_at: true, name: true },
       with: {
         operator: true,
@@ -68,7 +77,15 @@ export async function fetchLoadout(id: number): Promise<ActionResponse<any>> {
 
 export async function fetchLoadouts(): Promise<ActionResponse<any>> {
   try {
+    const user = await currentUser();
+
+    if (!user) {
+      return { ok: false, error: "User is not authenticated" };
+    }
+    const { id: user_id } = user;
+
     const data = await db.query.loadout.findMany({
+      where: eq(loadout.user_id, user_id),
       columns: { id: true, created_at: true, name: true },
       with: {
         operator: true,

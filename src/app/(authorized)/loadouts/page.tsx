@@ -2,6 +2,8 @@ import LoadoutsView from "@/components/view/LoadoutsView";
 import { fetchLoadouts } from "@/lib/api/loadouts/queries";
 import { isNil } from "lodash";
 
+export const dynamic = "force-dynamic";
+
 export default async function Loadouts() {
   const response = await fetchLoadouts();
 
