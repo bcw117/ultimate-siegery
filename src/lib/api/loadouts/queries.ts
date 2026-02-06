@@ -1,19 +1,17 @@
 import { loadout } from "@/lib/db/schema";
-import { count, eq } from "drizzle-orm";
+import { eq } from "drizzle-orm";
 import { db } from "@/lib/db/index";
-import { ActionResponse } from "@/db/types";
+import { ActionResponse } from "@/lib/types";
 import { isNil } from "lodash";
 
 const processAttachments = (attachments: any[]) => {
   return attachments.reduce((acc, { attachment }) => {
     const type = attachment.type.toLowerCase();
-    const key = type === "sight" ? "scope" : type;
-    acc[key] = attachment;
+    acc[type] = attachment;
     return acc;
   }, {} as any);
 };
 
-// TODO: add actual types to actions
 export async function fetchLoadout(id: number): Promise<ActionResponse<any>> {
   try {
     const data = await db.query.loadout.findFirst({
@@ -24,12 +22,18 @@ export async function fetchLoadout(id: number): Promise<ActionResponse<any>> {
         gadget: true,
         primary_weapon: {
           with: {
-            loadout_attachments: { columns: {}, with: { attachment: true } },
+            loadout_weapon_attachments: {
+              columns: {},
+              with: { attachment: true },
+            },
           },
         },
         secondary_weapon: {
           with: {
-            loadout_attachments: { columns: {}, with: { attachment: true } },
+            loadout_weapon_attachments: {
+              columns: {},
+              with: { attachment: true },
+            },
           },
         },
       },
@@ -39,20 +43,20 @@ export async function fetchLoadout(id: number): Promise<ActionResponse<any>> {
       return { ok: false, error: "Loadout not found" };
     }
 
-    const { loadout_attachments: pAttachments, ...primaryWeapon } =
+    const { loadout_weapon_attachments: pAttachments, ...primaryWeapon } =
       data.primary_weapon;
-    const { loadout_attachments: sAttachments, ...secondaryWeapon } =
+    const { loadout_weapon_attachments: sAttachments, ...secondaryWeapon } =
       data.secondary_weapon;
 
     const response = {
       ...data,
-      primary_weapon: {
+      primaryWeapon: {
         ...primaryWeapon,
         attachments: processAttachments(pAttachments),
       },
-      secondary_weapon: {
+      secondaryWeapon: {
         ...secondaryWeapon,
-        attachments: processAttachments(pAttachments),
+        attachments: processAttachments(sAttachments),
       },
     };
 
@@ -71,32 +75,38 @@ export async function fetchLoadouts(): Promise<ActionResponse<any>> {
         gadget: true,
         primary_weapon: {
           with: {
-            loadout_attachments: { columns: {}, with: { attachment: true } },
+            loadout_weapon_attachments: {
+              columns: {},
+              with: { attachment: true },
+            },
           },
         },
         secondary_weapon: {
           with: {
-            loadout_attachments: { columns: {}, with: { attachment: true } },
+            loadout_weapon_attachments: {
+              columns: {},
+              with: { attachment: true },
+            },
           },
         },
       },
     });
 
     const response = data.map((loadout) => {
-      const { loadout_attachments: pAttachments, ...primaryWeapon } =
+      const { loadout_weapon_attachments: pAttachments, ...primaryWeapon } =
         loadout.primary_weapon;
-      const { loadout_attachments: sAttachments, ...secondaryWeapon } =
+      const { loadout_weapon_attachments: sAttachments, ...secondaryWeapon } =
         loadout.secondary_weapon;
 
       return {
         ...loadout,
-        primary_weapon: {
+        primaryWeapon: {
           ...primaryWeapon,
           attachments: processAttachments(pAttachments),
         },
-        secondary_weapon: {
+        secondaryWeapon: {
           ...secondaryWeapon,
-          attachments: processAttachments(pAttachments),
+          attachments: processAttachments(sAttachments),
         },
       };
     });

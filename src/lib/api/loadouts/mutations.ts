@@ -1,60 +1,66 @@
 "use server";
 
-import { loadout_attachment, loadout } from "@/lib/db/schema";
+import {
+  loadout_weapon_attachment,
+  loadout,
+  attachment,
+} from "@/lib/db/schema";
 import { db } from "@/lib/db";
-import { ActionResponse } from "@/db/types";
+import { ActionResponse, AttachmentSet, LoadoutDisplay } from "@/lib/types";
 import { revalidatePath } from "next/cache";
-import { eq } from "drizzle-orm";
+import { and, eq, Update } from "drizzle-orm";
+import { currentUser } from "@clerk/nextjs/server";
+import _, { isNil } from "lodash";
 
-type CreateLoadoutRequest = {
-  name: string;
-  operator_id: number;
-  primary_weapon_id: number;
-  secondary_weapon_id: number;
-  gadget_id: number;
-  primary_attachment_ids: number[];
-  secondary_attachment_ids: number[];
+type CreateLoadoutRequest = Omit<LoadoutDisplay, "operator" | "id"> & {
+  operatorId: number;
 };
+type UpdateLoadoutRequest = Omit<CreateLoadoutRequest, "operatorId">;
 
 export async function saveLoadout(
   loadoutParams: CreateLoadoutRequest
 ): Promise<ActionResponse<{ message: string }>> {
   try {
-    // ADD SOME ACTUAL AUTH HERE
-    const user_id = "asdfasdfasdf";
+    const user = await currentUser();
+
+    if (!user) {
+      return { ok: false, error: "User is not authenticated" };
+    }
+
+    const { id: user_id } = user;
+    const { name, operatorId, primaryWeapon, secondaryWeapon, gadget } =
+      loadoutParams;
 
     await db.transaction(async (tx) => {
       const [createdLoadout] = await tx
         .insert(loadout)
         .values({
-          name: loadoutParams.name,
+          name: name,
           user_id,
-          operator_id: loadoutParams.operator_id,
-          pweapon_id: loadoutParams.primary_weapon_id,
-          sweapon_id: loadoutParams.secondary_weapon_id,
-          gadget_id: loadoutParams.gadget_id,
+          operator_id: operatorId,
+          pweapon_id: primaryWeapon.id,
+          sweapon_id: secondaryWeapon.id,
+          gadget_id: gadget.id,
         })
         .returning({ id: loadout.id });
 
-      const primaryAttachmentsInsert = loadoutParams.primary_attachment_ids.map(
-        (id) => ({
-          loadout_id: createdLoadout.id,
-          weapon_id: loadoutParams.primary_weapon_id,
-          attachment_id: id,
-        })
+      const primaryAttachmentInsert = createAttachmentInsertData(
+        createdLoadout.id,
+        primaryWeapon.id,
+        primaryWeapon.attachments
       );
 
-      const secondaryAttachmentInsert =
-        loadoutParams.secondary_attachment_ids.map((id) => ({
-          loadout_id: createdLoadout.id,
-          weapon_id: loadoutParams.secondary_weapon_id,
-          attachment_id: id,
-        }));
+      const secondaryAttachmentInsert = createAttachmentInsertData(
+        createdLoadout.id,
+        secondaryWeapon.id,
+        secondaryWeapon.attachments
+      );
 
       await tx
-        .insert(loadout_attachment)
-        .values([...primaryAttachmentsInsert, ...secondaryAttachmentInsert]);
+        .insert(loadout_weapon_attachment)
+        .values([...primaryAttachmentInsert, ...secondaryAttachmentInsert]);
     });
+    revalidatePath("/loadouts");
 
     return { ok: true, data: { message: "Loadout saved successfully" } };
   } catch (e) {
@@ -67,20 +73,103 @@ export async function deleteLoadout(
   id: number
 ): Promise<ActionResponse<{ message: string }>> {
   try {
-    await db.delete(loadout).where(eq(loadout.id, id));
-    revalidatePath("/");
+    const user = await currentUser();
+
+    if (!user) {
+      return { ok: false, error: "User is not authenticated" };
+    }
+
+    const { id: user_id } = user;
+
+    await db
+      .delete(loadout)
+      .where(and(eq(loadout.id, id), eq(loadout.user_id, user_id)));
+
+    revalidatePath("/loadouts");
 
     return { ok: true, data: { message: "Loadout deleted successfully" } };
-  } catch (error) {
-    const errorMessage = error instanceof Error ? error.message : String(error);
+  } catch (e) {
+    const errorMessage = e instanceof Error ? e.message : String(e);
     return { ok: false, error: errorMessage };
   }
 }
 
+function createAttachmentInsertData(
+  loadoutId: number,
+  weaponId: number,
+  attachments: AttachmentSet
+) {
+  return Object.values(attachments)
+    .filter((attachment) => !isNil(attachment))
+    .map((attachment) => ({
+      loadout_id: loadoutId,
+      weapon_id: weaponId,
+      attachment_id: attachment.id,
+    }));
+}
+
+async function removeLoadoutAttachments(loadoutId: number, weaponId: number) {
+  await db
+    .delete(loadout_weapon_attachment)
+    .where(
+      and(
+        eq(loadout_weapon_attachment.weapon_id, weaponId),
+        eq(loadout_weapon_attachment.loadout_id, loadoutId)
+      )
+    );
+}
+
 export async function updateLoadout(
   id: number,
-  loadout: CreateLoadoutRequest
-): Promise<ActionResponse<{ message: string }>> {
-  revalidatePath("/");
-  return { ok: true, data: { message: "This worked" } };
+  previousLoadout: UpdateLoadoutRequest,
+  updatedLoadout: UpdateLoadoutRequest
+): Promise<ActionResponse<any>> {
+  try {
+    const user = await currentUser();
+
+    if (!user) {
+      return { ok: false, error: "User is not authenticated" };
+    }
+
+    if (_.isEqual(previousLoadout, updatedLoadout)) {
+      return { ok: true, data: { message: "Same loadout, no changes needed" } };
+    }
+
+    const { id: user_id } = user;
+
+    await db
+      .update(loadout)
+      .set({
+        name: updatedLoadout.name,
+        gadget_id: updatedLoadout.gadget.id,
+        pweapon_id: updatedLoadout.primaryWeapon.id,
+        sweapon_id: updatedLoadout.secondaryWeapon.id,
+      })
+      .where(and(eq(loadout.user_id, user_id), eq(loadout.id, id)));
+
+    await removeLoadoutAttachments(id, previousLoadout.primaryWeapon.id);
+    await removeLoadoutAttachments(id, previousLoadout.secondaryWeapon.id);
+
+    const primaryAttachmentInsert = createAttachmentInsertData(
+      id,
+      updatedLoadout.primaryWeapon.id,
+      updatedLoadout.primaryWeapon.attachments
+    );
+
+    const secondaryAttachmentInsert = createAttachmentInsertData(
+      id,
+      updatedLoadout.secondaryWeapon.id,
+      updatedLoadout.secondaryWeapon.attachments
+    );
+
+    await db
+      .insert(loadout_weapon_attachment)
+      .values([...primaryAttachmentInsert, ...secondaryAttachmentInsert]);
+
+    revalidatePath("/loadouts");
+    return { ok: true, data: { message: "Loadout updated" } };
+  } catch (e) {
+    const errorMessage = e instanceof Error ? e.message : String(e);
+    return { ok: false, error: errorMessage };
+  }
 }

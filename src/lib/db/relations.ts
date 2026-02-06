@@ -6,12 +6,12 @@ import {
   weapon,
   operator_gadget,
   operator_weapon,
-  operator_weapon_attachment,
+  loadout_weapon_attachment,
   attachment,
-  loadout_attachment,
+  operator_weapon_attachment,
 } from "./schema";
 
-export const loadoutRelations = relations(loadout, ({ one }) => ({
+export const loadoutRelations = relations(loadout, ({ one, many }) => ({
   operator: one(operator, {
     fields: [loadout.operator_id],
     references: [operator.id],
@@ -27,12 +27,13 @@ export const loadoutRelations = relations(loadout, ({ one }) => ({
     references: [weapon.id],
     relationName: "loadout_sweapon_id_weapon_id",
   }),
+  loadout_weapon_attachments: many(loadout_weapon_attachment),
 }));
 
 export const operatorRelations = relations(operator, ({ many }) => ({
   loadouts: many(loadout),
   operator_gadgets: many(operator_gadget),
-  operator_weapons: many(operator_weapon),
+  op_weapons: many(operator_weapon),
 }));
 
 export const gadgetRelations = relations(gadget, ({ many }) => ({
@@ -48,7 +49,7 @@ export const weaponRelations = relations(weapon, ({ many }) => ({
     relationName: "loadout_sweapon_id_weapon_id",
   }),
   operator_weapons: many(operator_weapon),
-  loadout_attachments: many(loadout_attachment),
+  loadout_weapon_attachments: many(loadout_weapon_attachment),
 }));
 
 export const operator_gadgetRelations = relations(
@@ -76,9 +77,32 @@ export const operator_weaponRelations = relations(
       fields: [operator_weapon.weapon_id],
       references: [weapon.id],
     }),
-    operator_weapon_attachments: many(operator_weapon_attachment),
+    op_weap_attachments: many(operator_weapon_attachment),
   })
 );
+
+export const loadout_weapon_attachmentRelations = relations(
+  loadout_weapon_attachment,
+  ({ one }) => ({
+    loadout: one(loadout, {
+      fields: [loadout_weapon_attachment.loadout_id],
+      references: [loadout.id],
+    }),
+    weapon: one(weapon, {
+      fields: [loadout_weapon_attachment.weapon_id],
+      references: [weapon.id],
+    }),
+    attachment: one(attachment, {
+      fields: [loadout_weapon_attachment.attachment_id],
+      references: [attachment.id],
+    }),
+  })
+);
+
+export const attachmentRelations = relations(attachment, ({ many }) => ({
+  loadout_weapon_attachments: many(loadout_weapon_attachment),
+  operator_weapon_attachments: many(operator_weapon_attachment),
+}));
 
 export const operator_weapon_attachmentRelations = relations(
   operator_weapon_attachment,
@@ -92,25 +116,6 @@ export const operator_weapon_attachmentRelations = relations(
     }),
     attachment: one(attachment, {
       fields: [operator_weapon_attachment.attachment_id],
-      references: [attachment.id],
-    }),
-  })
-);
-
-export const attachmentRelations = relations(attachment, ({ many }) => ({
-  operator_weapon_attachments: many(operator_weapon_attachment),
-  loadout_attachments: many(loadout_attachment),
-}));
-
-export const loadout_attachmentRelations = relations(
-  loadout_attachment,
-  ({ one }) => ({
-    weapon: one(weapon, {
-      fields: [loadout_attachment.weapon_id],
-      references: [weapon.id],
-    }),
-    attachment: one(attachment, {
-      fields: [loadout_attachment.attachment_id],
       references: [attachment.id],
     }),
   })

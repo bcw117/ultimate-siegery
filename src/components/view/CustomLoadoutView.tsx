@@ -1,9 +1,9 @@
 "use client";
 import { useState } from "react";
-import { OperatorRecord, OperatorFullLoadout } from "@/db/types";
+import { OperatorRecord, OperatorFullLoadout } from "@/lib/types";
 import OperatorSelect from "../custom/OperatorSelect";
 import { isNil } from "lodash";
-import LoadoutCustomization from "../custom/LoadoutCustomization";
+import LoadoutCustomization from "../custom/LoadoutCustomizer";
 
 interface CustomLoadoutProps {
   operators: OperatorFullLoadout[];
@@ -19,6 +19,14 @@ export default function CustomLoadoutView({ operators }: CustomLoadoutProps) {
 
   return (
     <div className="mx-auto w-full max-w-7xl space-y-8 px-4">
+      <div className="space-y-2">
+        <h3 className="font-semibold text-2xl leading-none tracking-tight">
+          Custom Loadouts
+        </h3>
+        <p className="text-sm text-muted-foreground">
+          Configure and save loadouts for every operator
+        </p>
+      </div>
       <div className="flex flex-col items-center">
         <OperatorSelect
           onSelect={setSelectedOperator}

@@ -1,13 +1,12 @@
 "use client";
-import { useEffect, useState } from "react";
 import {
   DialogContent,
   DialogDescription,
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { LoadoutDisplay, OperatorFullLoadout } from "@/db/types";
-import LoadoutCustomization from "../custom/LoadoutCustomization";
+import { LoadoutDisplay } from "@/lib/types";
+import LoadoutCustomization from "../custom/LoadoutCustomizer";
 import { isNil } from "lodash";
 import useSWR from "swr";
 
@@ -24,9 +23,10 @@ export default function EditLoadoutDialog({
   loadout: LoadoutDisplay;
 }) {
   const loadoutDetails = {
+    id: loadout.id,
     name: loadout.name,
-    primaryWeapon: loadout.primary_weapon,
-    secondaryWeapon: loadout.secondary_weapon,
+    primaryWeapon: loadout.primaryWeapon,
+    secondaryWeapon: loadout.secondaryWeapon,
     gadget: loadout.gadget,
   };
 

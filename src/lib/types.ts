@@ -80,27 +80,29 @@ export type Gadget = Omit<GadgetRecord, "id">;
 
 export type Loadout = Omit<LoadoutRecord, "id">;
 
+export type AttachmentSet = {
+  sight: AttachmentRecord | undefined;
+  grip: AttachmentRecord | undefined;
+  barrel: AttachmentRecord | undefined;
+  underbarrel: AttachmentRecord | undefined;
+};
+
 export type LoadoutDisplay = {
   id: number;
   name: string;
   operator: OperatorRecord;
-  primary_weapon: WeaponWithAttachments;
-  secondary_weapon: WeaponWithAttachments;
+  primaryWeapon: WeaponWithAttachments;
+  secondaryWeapon: WeaponWithAttachments;
   gadget: GadgetRecord;
 };
 
 export type OperatorFullLoadout = OperatorRecord & {
-  operator_gadgets: GadgetRecord[];
-  operator_weapons: WeaponWithAllAttachments[];
+  operatorGadgets: GadgetRecord[];
+  operatorWeapons: WeaponWithAllAttachments[];
 };
 
 export type WeaponWithAttachments = WeaponRecord & {
-  attachments: {
-    scope?: AttachmentRecord;
-    grip?: AttachmentRecord;
-    barrel?: AttachmentRecord;
-    underbarrel?: AttachmentRecord;
-  };
+  attachments: AttachmentSet;
 };
 
 export type WeaponWithAllAttachments = WeaponRecord & {

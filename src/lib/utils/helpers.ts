@@ -72,22 +72,3 @@ export function randomizedLoadoutName(name?: string) {
   }
   return `${getRandomElement(DESCRIPTORS)} ${toTitleCase(name)} Loadout`;
 }
-
-export function foldAttachments(
-  rows: { id: number; name: string; type: string }[]
-) {
-  const result: {
-    scope?: { id: number; name: string; type: string };
-    barrel?: { id: number; name: string; type: string };
-    grip?: { id: number; name: string; type: string };
-    underbarrel?: { id: number; name: string; type: string };
-  } = {};
-  for (const a of rows) {
-    if (a.type === "Scope" && !result.scope) result.scope = a;
-    else if (a.type === "Barrel" && !result.barrel) result.barrel = a;
-    else if (a.type === "Grip" && !result.grip) result.grip = a;
-    else if (a.type === "Underbarrel" && !result.underbarrel)
-      result.underbarrel = a;
-  }
-  return result;
-}

@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { Button } from "../ui/button";
 import { challenges } from "@/lib/data/challenges";
-import { Shield, Shuffle } from "lucide-react";
+import { RefreshCw, Shield, Shuffle } from "lucide-react";
 
 export default function ChallengeSection() {
   const [randomChallenge, setRandomChallenge] = useState<{
@@ -10,6 +10,7 @@ export default function ChallengeSection() {
     title: string;
     description: string;
   } | null>(null);
+
   const generateChallenge = () => {
     if (!challenges || challenges.length === 0) return;
     const idx = Math.floor(Math.random() * challenges.length);
@@ -17,13 +18,21 @@ export default function ChallengeSection() {
   };
   return (
     <div className="space-y-6">
+      <div className="space-y-1.5">
+        <h3 className="font-semibold text-2xl leading-none tracking-tight">
+          Random Challenge
+        </h3>
+        <p className="text-sm text-muted-foreground">
+          Take on a random challenge for your next round.
+        </p>
+      </div>
       <div className="flex flex-wrap justify-center sm:justify-start gap-4">
         <Button
           className="bg-siege-accent hover:bg-siege-accent/90 text-white flex items-center gap-2"
           onClick={generateChallenge}
         >
-          <Shuffle className="w-4 h-4" />
-          <span>Generate Random Challenge</span>
+          <RefreshCw />
+          <span>Generate</span>
         </Button>
       </div>
 

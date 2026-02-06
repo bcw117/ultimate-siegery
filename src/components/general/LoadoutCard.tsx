@@ -1,12 +1,12 @@
 "use client";
 import { removeUnderscores } from "@/lib/utils/helpers";
 import Image from "next/image";
-import { LoadoutDisplay } from "@/db/types";
-import { Button } from "./ui/button";
+import { LoadoutDisplay } from "@/lib/types";
+import { Button } from "../ui/button";
 import { deleteLoadout } from "@/lib/api/loadouts/mutations";
 import { PencilLine, Trash2 } from "lucide-react";
-import EditLoadoutDialog from "./dialogs/EditLoadoutDialog";
-import { Dialog, DialogTrigger } from "./ui/dialog";
+import EditLoadoutDialog from "../dialogs/EditLoadoutDialog";
+import { Dialog, DialogTrigger } from "../ui/dialog";
 import { isNil } from "lodash";
 import {
   Card,
@@ -14,9 +14,9 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "./ui/card";
-import DeleteLoadoutDialog from "./dialogs/DeleteLoadoutDialog";
-import { Badge } from "./ui/badge";
+} from "../ui/card";
+import DeleteLoadoutDialog from "../dialogs/DeleteLoadoutDialog";
+import { Badge } from "../ui/badge";
 
 export default function LoadoutCard({
   loadout,
@@ -29,8 +29,8 @@ export default function LoadoutCard({
     name,
     operator,
     gadget,
-    primary_weapon: primary,
-    secondary_weapon: secondary,
+    primaryWeapon: primary,
+    secondaryWeapon: secondary,
   } = loadout;
 
   return (
@@ -102,7 +102,7 @@ export default function LoadoutCard({
             </p>
             <ul className="space-y-1">
               {[
-                weapon.attachments.scope,
+                weapon.attachments.sight,
                 weapon.attachments.barrel,
                 weapon.attachments.grip,
                 weapon.attachments.underbarrel,

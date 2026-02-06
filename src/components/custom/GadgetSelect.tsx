@@ -1,7 +1,7 @@
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import Image from "next/image";
-import { GadgetRecord } from "@/db/types";
+import { GadgetRecord } from "@/lib/types";
 
 type GadgetSelectProps = {
   selectedGadget: GadgetRecord | undefined;

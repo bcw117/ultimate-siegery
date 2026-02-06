@@ -19,7 +19,7 @@ export const challenges = [
     category: "Gameplay Challenge",
     title: "The Mechanic",
     description:
-      "You can only deal the final blow to an opponent with a gadget and abilities (e.g., grenades, claymores, Nitro Cells).",
+      "You can only deal the final blow to an opponent with a gadget and abilities (e.g., grenades, claymores, nitro cells).",
   },
   {
     category: "Gameplay Challenge",

@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import LogOutButton from "./LogoutButton";
 import { SignedIn, SignedOut, SignInButton, SignUpButton } from "@clerk/nextjs";
-import { LayoutDashboard, Backpack, User, Shuffle } from "lucide-react";
+import { LayoutDashboard, Backpack, User, Shuffle, Target } from "lucide-react";
 import Image from "next/image";
 
 const links = [
@@ -12,6 +12,7 @@ const links = [
     value: "Custom Loadout",
   },
   { icon: Shuffle, link: "/create-loadout/random", value: "Random Loadout" },
+  { icon: Target, link: "/challenges", value: "Challenges" },
   { icon: Backpack, link: "/loadouts", value: "Loadouts" },
   { icon: User, link: "/profile", value: "Profile" },
 ];

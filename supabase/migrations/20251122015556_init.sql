@@ -46,31 +46,25 @@ CREATE TABLE "operator_gadget" (
 	"operator_id" integer NOT NULL,
 	"gadget_id" integer NOT NULL,
 	CONSTRAINT "operator_gadget_operator_id_gadget_id_pk" PRIMARY KEY("operator_id","gadget_id"),
-    CONSTRAINT "operator_fk" FOREIGN KEY ("operator_id") REFERENCES "operator"("id")
-        ON DELETE CASCADE,
+    CONSTRAINT "operator_fk" FOREIGN KEY ("operator_id") REFERENCES "operator"("id"),
     CONSTRAINT "gadget_fk" FOREIGN KEY ("gadget_id") REFERENCES "gadget"("id")
-        ON DELETE CASCADE
 );
 
 CREATE TABLE "operator_weapon" (
 	"operator_id" integer NOT NULL,
 	"weapon_id" integer NOT NULL,
 	CONSTRAINT "operator_weapon_operator_id_weapon_id_pk" PRIMARY KEY("operator_id","weapon_id"),
-    CONSTRAINT "operator_fk" FOREIGN KEY ("operator_id") REFERENCES "operator"("id")
-        ON DELETE CASCADE,
+    CONSTRAINT "operator_fk" FOREIGN KEY ("operator_id") REFERENCES "operator"("id"),
     CONSTRAINT "weapon_fk" FOREIGN KEY ("weapon_id") REFERENCES "weapon"("id")
-        ON DELETE CASCADE
 );
 
 CREATE TABLE "operator_weapon_attachment" (
-  "operator_id" integer NOT NULL,
+  	"operator_id" integer NOT NULL,
 	"weapon_id" integer NOT NULL,
 	"attachment_id" integer NOT NULL,
-  CONSTRAINT "operator_weapon_attachment_pkey" PRIMARY KEY("operator_id", "weapon_id","attachment_id"),
-	CONSTRAINT "operator_weapon_fk" FOREIGN KEY ("operator_id", "weapon_id") REFERENCES "operator_weapon"("operator_id", "weapon_id")
-		ON DELETE CASCADE,
+  	CONSTRAINT "operator_weapon_attachment_pkey" PRIMARY KEY("operator_id", "weapon_id","attachment_id"),
+	CONSTRAINT "operator_weapon_fk" FOREIGN KEY ("operator_id", "weapon_id") REFERENCES "operator_weapon"("operator_id", "weapon_id"),
 	CONSTRAINT "attachment_fk" FOREIGN KEY ("attachment_id") REFERENCES "attachment"("id")
-		ON DELETE CASCADE
 );
 
 CREATE TABLE "loadout" (
@@ -82,25 +76,21 @@ CREATE TABLE "loadout" (
 	"pweapon_id" integer NOT NULL,
 	"sweapon_id" integer NOT NULL,
 	"created_at" timestamp with time zone DEFAULT now() NOT NULL,
-    CONSTRAINT "operator_fk" FOREIGN KEY ("operator_id") REFERENCES "operator"("id")
-        ON DELETE CASCADE,
-    CONSTRAINT "gadget_fk" FOREIGN KEY ("gadget_id") REFERENCES "gadget"("id")
-        ON DELETE CASCADE,
-    CONSTRAINT "pweapon_fk" FOREIGN KEY ("pweapon_id") REFERENCES "weapon"("id")
-        ON DELETE CASCADE,
+    CONSTRAINT "operator_fk" FOREIGN KEY ("operator_id") REFERENCES "operator"("id"),
+    CONSTRAINT "gadget_fk" FOREIGN KEY ("gadget_id") REFERENCES "gadget"("id"),
+    CONSTRAINT "pweapon_fk" FOREIGN KEY ("pweapon_id") REFERENCES "weapon"("id"),
     CONSTRAINT "sweapon_fk" FOREIGN KEY ("sweapon_id") REFERENCES "weapon"("id")
-        ON DELETE CASCADE
 );
 
-CREATE TABLE "loadout_attachment" (
+CREATE TABLE "loadout_weapon_attachment" (
 	"loadout_id" integer NOT NULL,
 	"weapon_id" integer NOT NULL,
 	"attachment_id" integer NOT NULL,
-	CONSTRAINT "loadout_attachment_pkey" PRIMARY KEY("loadout_id","weapon_id","attachment_id"),
-	CONSTRAINT "weapon_fk" FOREIGN KEY ("weapon_id") REFERENCES "weapon"("id")
+	CONSTRAINT "loadout_weapon_attachment_pkey" PRIMARY KEY("loadout_id","weapon_id","attachment_id"),
+	CONSTRAINT "loadout_fk" FOREIGN KEY ("loadout_id") REFERENCES "loadout"("id")
 		ON DELETE CASCADE,
-	CONSTRAINT "attachment_fk" FOREIGN KEY ("attachment_id") REFERENCES "attachment"("id")
-		ON DELETE CASCADE
+	CONSTRAINT "weapon_fk" FOREIGN KEY ("weapon_id") REFERENCES "weapon"("id"),
+	CONSTRAINT "attachment_fk" FOREIGN KEY ("attachment_id") REFERENCES "attachment"("id"),
 );
 
 -- Indexes
@@ -121,7 +111,7 @@ ALTER TABLE "operator_gadget" ENABLE ROW LEVEL SECURITY;
 ALTER TABLE "operator_weapon" ENABLE ROW LEVEL SECURITY;
 ALTER TABLE "operator" ENABLE ROW LEVEL SECURITY;
 ALTER TABLE "weapon" ENABLE ROW LEVEL SECURITY;
-ALTER TABLE "loadout_attachment" ENABLE ROW LEVEL SECURITY;
+ALTER TABLE "loadout_weapon_attachment" ENABLE ROW LEVEL SECURITY;
 ALTER TABLE "operator_weapon_attachment" ENABLE ROW LEVEL SECURITY;
 
 -- Policies
@@ -133,5 +123,5 @@ CREATE POLICY "Enable read access for all users" ON "weapon" AS PERMISSIVE FOR S
 CREATE POLICY "Enable read access for all users" ON "operator_gadget" AS PERMISSIVE FOR SELECT TO public USING (true);
 CREATE POLICY "Enable read access for all users" ON "operator_weapon" AS PERMISSIVE FOR SELECT TO public USING (true);
 CREATE POLICY "Enable read access for all users" ON "attachment" AS PERMISSIVE FOR SELECT TO public USING (true);
-CREATE POLICY "Enable read access for all users" ON "loadout_attachment" AS PERMISSIVE FOR SELECT TO public USING (true);
+CREATE POLICY "Enable read access for all users" ON "loadout_weapon_attachment" AS PERMISSIVE FOR SELECT TO public USING (true);
 CREATE POLICY "Enable read access for all users" ON "operator_weapon_attachment" AS PERMISSIVE FOR SELECT TO public USING (true);

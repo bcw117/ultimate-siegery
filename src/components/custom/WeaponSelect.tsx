@@ -6,15 +6,14 @@ import {
   SelectItem,
 } from "@/components/ui/select";
 import {
-  Attachment,
   AttachmentRecord,
-  WeaponRecord,
   WeaponWithAllAttachments,
   WeaponWithAttachments,
-} from "@/db/types";
+} from "@/lib/types";
 import { Label } from "@/components/ui/label";
 import AttachmentSelect from "./AttachmentSelect";
 import { isNil } from "lodash";
+import { useCallback } from "react";
 
 type WeaponSelectProps = {
   slot: "primary" | "secondary";
@@ -32,6 +31,7 @@ export default function WeaponSelect({
   const weaponAttachments = weapons
     .filter((weapon) => weapon.id === selectedWeapon?.id)
     .flatMap(({ attachments }) => attachments);
+
   const sights = weaponAttachments.filter(
     (attachment) => attachment.type === "Sight"
   );
@@ -40,6 +40,9 @@ export default function WeaponSelect({
   );
   const barrels = weaponAttachments.filter(
     (attachment) => attachment.type === "Barrel"
+  );
+  const underbarrels = weaponAttachments.filter(
+    (attachment) => attachment.type === "Underbarrel"
   );
 
   const handleWeaponUpdate = (val: string) => {
@@ -51,27 +54,35 @@ export default function WeaponSelect({
 
     setSelectedWeapon({
       ...weapon,
-      attachments: { scope: undefined, grip: undefined, barrel: undefined },
-    });
-  };
-
-  const handleAttachmentChange = (attachment: AttachmentRecord | undefined) => {
-    if (isNil(selectedWeapon) || isNil(attachment)) {
-      return;
-    }
-    const attachmentType = attachment.type.toLowerCase() as
-      | "scope"
-      | "barrel"
-      | "grip"
-      | "underbarrel";
-    setSelectedWeapon({
-      ...selectedWeapon,
       attachments: {
-        ...selectedWeapon.attachments,
-        [attachmentType]: attachment,
+        sight: undefined,
+        grip: undefined,
+        barrel: undefined,
+        underbarrel: undefined,
       },
     });
   };
+
+  const handleAttachmentChange = useCallback(
+    (attachment: AttachmentRecord | undefined) => {
+      if (isNil(selectedWeapon) || isNil(attachment)) {
+        return;
+      }
+      const attachmentType = attachment.type.toLowerCase() as
+        | "sight"
+        | "barrel"
+        | "grip"
+        | "underbarrel";
+      setSelectedWeapon({
+        ...selectedWeapon,
+        attachments: {
+          ...selectedWeapon.attachments,
+          [attachmentType]: attachment,
+        },
+      });
+    },
+    [selectedWeapon, setSelectedWeapon]
+  );
 
   return (
     <>
@@ -98,8 +109,8 @@ export default function WeaponSelect({
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {!isNil(sights) && (
             <AttachmentSelect
-              type="scope"
-              selectedAttachment={selectedWeapon.attachments.scope}
+              type="sight"
+              selectedAttachment={selectedWeapon.attachments.sight}
               attachments={sights}
               handleAttachmentChange={handleAttachmentChange}
             />
@@ -119,6 +130,15 @@ export default function WeaponSelect({
               type="grip"
               selectedAttachment={selectedWeapon.attachments.grip}
               attachments={grips}
+              handleAttachmentChange={handleAttachmentChange}
+            />
+          )}
+
+          {!isNil(underbarrels) && (
+            <AttachmentSelect
+              type="underbarrel"
+              selectedAttachment={selectedWeapon.attachments.underbarrel}
+              attachments={underbarrels}
               handleAttachmentChange={handleAttachmentChange}
             />
           )}

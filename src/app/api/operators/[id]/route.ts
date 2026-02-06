@@ -14,14 +14,11 @@ export async function GET(
     const data = await db.query.operator.findFirst({
       where: eq(operator.id, id),
       with: {
-        operator_weapons: {
+        op_weapons: {
           columns: {},
           with: {
             weapon: true,
-            operator_weapon_attachments: {
-              columns: {},
-              with: { attachment: true },
-            },
+            op_weap_attachments: { columns: {}, with: { attachment: true } },
           },
         },
         operator_gadgets: { columns: {}, with: { gadget: true } },
@@ -37,15 +34,15 @@ export async function GET(
 
     const result = {
       ...data,
-      operator_weapons: data.operator_weapons.map(
-        ({ weapon, operator_weapon_attachments }) => ({
+      operator_weapons: data.op_weapons.map(
+        ({ weapon, op_weap_attachments }) => ({
           ...weapon,
-          attachments: operator_weapon_attachments.map(({ attachment }) => ({
+          attachments: op_weap_attachments.map(({ attachment }) => ({
             ...attachment,
           })),
         })
       ),
-      operator_gadgets: data.operator_gadgets.map(({ gadget }) => ({
+      operatorGadgets: data.operator_gadgets.map(({ gadget }) => ({
         ...gadget,
       })),
     };

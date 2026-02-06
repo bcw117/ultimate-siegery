@@ -1,27 +1,26 @@
 "use server";
 import { eq } from "drizzle-orm";
 import { db } from "@/lib/db/index";
-import {
-  attachment,
-  operator,
-  operator_gadget,
-  operator_weapon_attachment,
-} from "@/lib/db/schema";
-import { ActionResponse } from "@/db/types";
+import { operator } from "@/lib/db/schema";
+import { ActionResponse } from "@/lib/types";
+import { currentUser } from "@clerk/nextjs/server";
 
 export async function fetchOperator(id: number): Promise<ActionResponse<any>> {
   try {
+    const user = await currentUser();
+
+    if (!user) {
+      return { ok: false, error: "User is not authenticated" };
+    }
+
     const data = await db.query.operator.findFirst({
       where: eq(operator.id, id),
       with: {
-        operator_weapons: {
+        op_weapons: {
           columns: {},
           with: {
             weapon: true,
-            operator_weapon_attachments: {
-              columns: {},
-              with: { attachment: true },
-            },
+            op_weap_attachments: { columns: {}, with: { attachment: true } },
           },
         },
         operator_gadgets: { columns: {}, with: { gadget: true } },
@@ -34,15 +33,15 @@ export async function fetchOperator(id: number): Promise<ActionResponse<any>> {
 
     const result = {
       ...data,
-      operator_weapons: data.operator_weapons.map(
-        ({ weapon, operator_weapon_attachments }) => ({
+      operatorWeapons: data.op_weapons.map(
+        ({ weapon, op_weap_attachments }) => ({
           ...weapon,
-          attachments: operator_weapon_attachments.map(({ attachment }) => ({
+          attachments: op_weap_attachments.map(({ attachment }) => ({
             ...attachment,
           })),
         })
       ),
-      operator_gadgets: data.operator_gadgets.map(({ gadget }) => ({
+      operatorGadgets: data.operator_gadgets.map(({ gadget }) => ({
         ...gadget,
       })),
     };
@@ -55,6 +54,12 @@ export async function fetchOperator(id: number): Promise<ActionResponse<any>> {
 
 export async function fetchAllOperators() {
   try {
+    const user = await currentUser();
+
+    if (!user) {
+      return { ok: false, error: "User is not authenticated" };
+    }
+
     const data = await db.select().from(operator);
 
     return { ok: true, data };
@@ -65,16 +70,18 @@ export async function fetchAllOperators() {
 
 export async function fetchAllOperatorLoadouts() {
   try {
+    const user = await currentUser();
+
+    if (!user) {
+      return { ok: false, error: "User is not authenticated" };
+    }
     const response = await db.query.operator.findMany({
       with: {
-        operator_weapons: {
+        op_weapons: {
           columns: {},
           with: {
             weapon: true,
-            operator_weapon_attachments: {
-              columns: {},
-              with: { attachment: true },
-            },
+            op_weap_attachments: { columns: {}, with: { attachment: true } },
           },
         },
         operator_gadgets: { columns: {}, with: { gadget: true } },
@@ -83,15 +90,15 @@ export async function fetchAllOperatorLoadouts() {
 
     const data = response.map((record) => ({
       ...record,
-      operator_weapons: record.operator_weapons.map(
-        ({ weapon, operator_weapon_attachments }) => ({
+      operatorWeapons: record.op_weapons.map(
+        ({ weapon, op_weap_attachments }) => ({
           ...weapon,
-          attachments: operator_weapon_attachments.map(({ attachment }) => ({
+          attachments: op_weap_attachments.map(({ attachment }) => ({
             ...attachment,
           })),
         })
       ),
-      operator_gadgets: record.operator_gadgets.map(({ gadget }) => ({
+      operatorGadgets: record.operator_gadgets.map(({ gadget }) => ({
         ...gadget,
       })),
     }));
@@ -99,22 +106,5 @@ export async function fetchAllOperatorLoadouts() {
     return { ok: true, data };
   } catch (error) {
     return { ok: false, error: "Unable to fetch operator loadout data" };
-  }
-}
-
-// TODO: fix this one
-export async function fetchRandomOperator() {
-  try {
-    const data = await db.query.operator.findFirst({
-      where: eq(operator.id, 1),
-      with: {
-        operator_weapons: { columns: {}, with: { weapon: true } },
-        operator_gadgets: { columns: {}, with: { gadget: true } },
-      },
-    });
-
-    return { ok: true, data };
-  } catch (error) {
-    return { ok: false, error: "Unable to fetch information on operators" };
   }
 }

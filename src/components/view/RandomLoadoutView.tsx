@@ -1,12 +1,12 @@
 "use client";
 
-import { LoadoutDisplay, OperatorFullLoadout } from "@/db/types";
+import { LoadoutDisplay, OperatorFullLoadout } from "@/lib/types";
 import { isNil } from "lodash";
 import { useState } from "react";
 import { toast } from "sonner";
 import { Button } from "../ui/button";
 import { Save, Shield, Shuffle } from "lucide-react";
-import LoadoutCard from "../LoadoutCard";
+import LoadoutCard from "../general/LoadoutCard";
 import { saveLoadout } from "@/lib/api/loadouts/mutations";
 import { getRandomElement, randomizedLoadoutName } from "@/lib/utils/helpers";
 
@@ -33,12 +33,12 @@ export default function RandomLoadoutView({
       }
 
       const primary = getRandomElement(
-        randomOperator.operator_weapons.filter((w) => w.slot === "Primary")
+        randomOperator.operatorWeapons.filter((w) => w.slot === "Primary")
       );
       const secondary = getRandomElement(
-        randomOperator.operator_weapons.filter((w) => w.slot === "Secondary")
+        randomOperator.operatorWeapons.filter((w) => w.slot === "Secondary")
       );
-      const gadget = getRandomElement(randomOperator.operator_gadgets);
+      const gadget = getRandomElement(randomOperator.operatorGadgets);
 
       if (!primary || !secondary || !gadget) {
         setIsLoading(false);
@@ -48,12 +48,12 @@ export default function RandomLoadoutView({
 
       const newLoadout: LoadoutDisplay = {
         id: 1,
-        name: randomizedLoadoutName(),
+        name: randomizedLoadoutName(randomOperator.name),
         operator: randomOperator,
-        primary_weapon: {
+        primaryWeapon: {
           ...primary,
           attachments: {
-            scope: getRandomElement(
+            sight: getRandomElement(
               primary.attachments.filter((a) => a.type === "Sight")
             ),
             barrel: getRandomElement(
@@ -67,10 +67,10 @@ export default function RandomLoadoutView({
             ),
           },
         },
-        secondary_weapon: {
+        secondaryWeapon: {
           ...secondary,
           attachments: {
-            scope: getRandomElement(
+            sight: getRandomElement(
               secondary.attachments.filter((a) => a.type === "Sight")
             ),
             barrel: getRandomElement(
@@ -89,8 +89,7 @@ export default function RandomLoadoutView({
 
       setLoadout(newLoadout);
       setIsLoading(false);
-      toast.success(`Generated loadout for ${randomOperator.name}`);
-    }, 800);
+    }, 400);
   };
 
   const handleSave = async () => {
@@ -100,31 +99,17 @@ export default function RandomLoadoutView({
     }
 
     try {
-      const primary_attachment_ids = Object.values(
-        loadout.primary_weapon.attachments
-      )
-        .filter((a) => !isNil(a))
-        .map((a) => a!.id);
-
-      const secondary_attachment_ids = Object.values(
-        loadout.secondary_weapon.attachments
-      )
-        .filter((a) => !isNil(a))
-        .map((a) => a!.id);
-
-      const result = await saveLoadout({
+      const newLoadout = {
         name: loadout.name,
-        operator_id: loadout.operator.id,
-        primary_weapon_id: loadout.primary_weapon.id,
-        secondary_weapon_id: loadout.secondary_weapon.id,
-        gadget_id: loadout.gadget.id,
-        primary_attachment_ids,
-        secondary_attachment_ids,
-      });
+        operatorId: loadout.operator.id,
+        primaryWeapon: loadout.primaryWeapon,
+        secondaryWeapon: loadout.secondaryWeapon,
+        gadget: loadout.gadget,
+      };
 
-      if (result.ok) {
-        toast.success("Loadout saved successfully!");
-      } else {
+      const result = await saveLoadout(newLoadout);
+
+      if (!result.ok) {
         toast.error("Failed to save loadout: " + (result as any).error);
       }
     } catch (error) {
@@ -134,6 +119,14 @@ export default function RandomLoadoutView({
 
   return (
     <div className="mx-auto w-full max-w-7xl space-y-6 px-4">
+      <div className="space-y-2">
+        <h3 className="font-semibold text-2xl leading-none tracking-tight">
+          Random Challenge
+        </h3>
+        <p className="text-sm text-muted-foreground">
+          Prove your skill by using a random loadout
+        </p>
+      </div>
       <div className="flex flex-wrap gap-4">
         <Button
           variant={side === "Attacker" ? "default" : "outline"}
