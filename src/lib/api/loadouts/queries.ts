@@ -1,3 +1,5 @@
+"use server";
+
 import { loadout } from "@/lib/db/schema";
 import { and, eq } from "drizzle-orm";
 import { db } from "@/lib/db/index";

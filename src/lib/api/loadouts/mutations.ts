@@ -1,16 +1,13 @@
 "use server";
 
-import {
-  loadout_weapon_attachment,
-  loadout,
-  attachment,
-} from "@/lib/db/schema";
+import { loadout_weapon_attachment, loadout } from "@/lib/db/schema";
 import { db } from "@/lib/db";
 import { ActionResponse, AttachmentSet, LoadoutDisplay } from "@/lib/types";
 import { revalidatePath } from "next/cache";
-import { and, eq, Update } from "drizzle-orm";
+import { and, eq } from "drizzle-orm";
 import { currentUser } from "@clerk/nextjs/server";
 import _, { isNil } from "lodash";
+import { redirect } from "next/navigation";
 
 type CreateLoadoutRequest = Omit<LoadoutDisplay, "operator" | "id"> & {
   operatorId: number;
@@ -61,8 +58,7 @@ export async function saveLoadout(
         .values([...primaryAttachmentInsert, ...secondaryAttachmentInsert]);
     });
     revalidatePath("/loadouts");
-
-    return { ok: true, data: { message: "Loadout saved successfully" } };
+    redirect("/loaduts");
   } catch (e) {
     console.error(e);
     return { ok: false, error: "Unable to save loadout" };
