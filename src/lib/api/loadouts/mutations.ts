@@ -63,7 +63,7 @@ export async function saveLoadout(
   }
 
   revalidatePath("/loadouts");
-  redirect("/loaduts");
+  redirect("/loadouts");
 }
 
 export async function deleteLoadout(id: number): Promise<ActionResponse<void>> {
