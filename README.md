@@ -11,6 +11,7 @@ The tool to customize, randomize and store your operator loadouts and find in-ga
 - Backend: Next.js Route Handlers and React Server Actions
 - Database: Supabase w/ Drizzle (ORM)
 - Authentication: Clerk
+- Local Development: Docker
 
 
 
