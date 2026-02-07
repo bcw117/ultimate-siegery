@@ -1,13 +1,16 @@
 "use server";
 
-import { loadout_weapon_attachment, loadout } from "@/lib/db/schema";
+import {
+  loadout_weapon_attachment,
+  loadout,
+  attachment,
+} from "@/lib/db/schema";
 import { db } from "@/lib/db";
 import { ActionResponse, AttachmentSet, LoadoutDisplay } from "@/lib/types";
 import { revalidatePath } from "next/cache";
-import { and, eq } from "drizzle-orm";
+import { and, eq, Update } from "drizzle-orm";
 import { currentUser } from "@clerk/nextjs/server";
 import _, { isNil } from "lodash";
-import { redirect } from "next/navigation";
 
 type CreateLoadoutRequest = Omit<LoadoutDisplay, "operator" | "id"> & {
   operatorId: number;
@@ -57,16 +60,18 @@ export async function saveLoadout(
         .insert(loadout_weapon_attachment)
         .values([...primaryAttachmentInsert, ...secondaryAttachmentInsert]);
     });
+    revalidatePath("/loadouts");
+
+    return { ok: true, data: { message: "Loadout saved successfully" } };
   } catch (e) {
     console.error(e);
     return { ok: false, error: "Unable to save loadout" };
   }
-
-  revalidatePath("/loadouts");
-  redirect("/loadouts");
 }
 
-export async function deleteLoadout(id: number): Promise<ActionResponse<void>> {
+export async function deleteLoadout(
+  id: number
+): Promise<ActionResponse<{ message: string }>> {
   try {
     const user = await currentUser();
 
@@ -79,13 +84,14 @@ export async function deleteLoadout(id: number): Promise<ActionResponse<void>> {
     await db
       .delete(loadout)
       .where(and(eq(loadout.id, id), eq(loadout.user_id, user_id)));
+
+    revalidatePath("/loadouts");
+
+    return { ok: true, data: { message: "Loadout deleted successfully" } };
   } catch (e) {
     const errorMessage = e instanceof Error ? e.message : String(e);
     return { ok: false, error: errorMessage };
   }
-
-  revalidatePath("/loadouts");
-  redirect("/loadouts");
 }
 
 function createAttachmentInsertData(
