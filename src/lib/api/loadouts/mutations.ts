@@ -57,17 +57,16 @@ export async function saveLoadout(
         .insert(loadout_weapon_attachment)
         .values([...primaryAttachmentInsert, ...secondaryAttachmentInsert]);
     });
-    revalidatePath("/loadouts");
-    redirect("/loaduts");
   } catch (e) {
     console.error(e);
     return { ok: false, error: "Unable to save loadout" };
   }
+
+  revalidatePath("/loadouts");
+  redirect("/loaduts");
 }
 
-export async function deleteLoadout(
-  id: number
-): Promise<ActionResponse<{ message: string }>> {
+export async function deleteLoadout(id: number): Promise<ActionResponse<void>> {
   try {
     const user = await currentUser();
 
@@ -80,14 +79,13 @@ export async function deleteLoadout(
     await db
       .delete(loadout)
       .where(and(eq(loadout.id, id), eq(loadout.user_id, user_id)));
-
-    revalidatePath("/loadouts");
-
-    return { ok: true, data: { message: "Loadout deleted successfully" } };
   } catch (e) {
     const errorMessage = e instanceof Error ? e.message : String(e);
     return { ok: false, error: errorMessage };
   }
+
+  revalidatePath("/loadouts");
+  redirect("/loadouts");
 }
 
 function createAttachmentInsertData(
