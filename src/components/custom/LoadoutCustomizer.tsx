@@ -30,6 +30,7 @@ export default function LoadoutCustomizer({
   selectedLoadout?: CustomizationFields;
   operator: OperatorFullLoadout;
 }) {
+  console.log(operator);
   const isEditing = !isNil(selectedLoadout);
   const primaryWeapons = useMemo(
     () =>

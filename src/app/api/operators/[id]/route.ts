@@ -34,7 +34,7 @@ export async function GET(
 
     const result = {
       ...data,
-      operator_weapons: data.op_weapons.map(
+      operatorWeapons: data.op_weapons.map(
         ({ weapon, op_weap_attachments }) => ({
           ...weapon,
           attachments: op_weap_attachments.map(({ attachment }) => ({
