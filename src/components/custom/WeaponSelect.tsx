@@ -9,7 +9,7 @@ import {
   AttachmentRecord,
   WeaponWithAllAttachments,
   WeaponWithAttachments,
-} from "@/lib/types";
+} from "@/lib/types/types";
 import { Label } from "@/components/ui/label";
 import AttachmentSelect from "./AttachmentSelect";
 import { isNil } from "lodash";

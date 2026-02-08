@@ -1,6 +1,6 @@
 "use client";
 
-import { LoadoutDisplay, OperatorFullLoadout } from "@/lib/types";
+import { LoadoutDisplay, OperatorFullLoadout } from "@/lib/types/types";
 import { isNil } from "lodash";
 import { useState } from "react";
 import { toast } from "sonner";

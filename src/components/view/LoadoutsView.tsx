@@ -1,4 +1,4 @@
-import { LoadoutDisplay } from "@/lib/types";
+import { LoadoutDisplay } from "@/lib/types/types";
 import LoadoutCard from "../general/LoadoutCard";
 
 type LoadoutViewProps = { loadouts: LoadoutDisplay[] };

@@ -1,7 +1,7 @@
 "use client";
 import { removeUnderscores } from "@/lib/utils/helpers";
 import Image from "next/image";
-import { LoadoutDisplay } from "@/lib/types";
+import { LoadoutDisplay } from "@/lib/types/types";
 import { Button } from "../ui/button";
 import { deleteLoadout } from "@/lib/api/loadouts/mutations";
 import { PencilLine, Trash2 } from "lucide-react";

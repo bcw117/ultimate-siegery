@@ -5,7 +5,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { LoadoutDisplay } from "@/lib/types";
+import { LoadoutDisplay } from "@/lib/types/types";
 import LoadoutCustomization from "../custom/LoadoutCustomizer";
 import { isNil } from "lodash";
 import useSWR from "swr";

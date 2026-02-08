@@ -18,7 +18,7 @@ import {
 import { Check, ChevronsUpDown } from "lucide-react";
 import { cn } from "@/lib/utils/helpers";
 import Image from "next/image";
-import { OperatorRecord } from "@/lib/types";
+import { OperatorRecord } from "@/lib/types/types";
 
 interface OperatorSelectProps {
   onSelect?: (operator: OperatorRecord) => void;

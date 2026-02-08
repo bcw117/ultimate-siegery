@@ -7,7 +7,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { toTitleCase } from "@/lib/utils/helpers";
-import { AttachmentRecord } from "@/lib/types";
+import { AttachmentRecord } from "@/lib/types/types";
 
 export default function AttachmentSelect({
   type,

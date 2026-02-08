@@ -6,7 +6,7 @@ import {
   OperatorFullLoadout,
   GadgetRecord,
   WeaponWithAttachments,
-} from "@/lib/types";
+} from "@/lib/types/types";
 import { useEffect, useMemo, useState } from "react";
 import { toast } from "sonner";
 import WeaponSelect from "./WeaponSelect";

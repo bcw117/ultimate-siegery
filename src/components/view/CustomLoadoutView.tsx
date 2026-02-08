@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import { OperatorRecord, OperatorFullLoadout } from "@/lib/types";
+import { OperatorRecord, OperatorFullLoadout } from "@/lib/types/types";
 import OperatorSelect from "../custom/OperatorSelect";
 import { isNil } from "lodash";
 import LoadoutCustomization from "../custom/LoadoutCustomizer";

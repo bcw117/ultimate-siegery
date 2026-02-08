@@ -108,9 +108,3 @@ export type WeaponWithAttachments = WeaponRecord & {
 export type WeaponWithAllAttachments = WeaponRecord & {
   attachments: AttachmentRecord[];
 };
-
-export type ActionResponse<T> = ActionError | ActionResult<T>;
-
-export type ActionError = { ok: false; error: string };
-
-export type ActionResult<T> = { ok: true; data: T };
