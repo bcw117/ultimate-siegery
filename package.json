@@ -7,7 +7,7 @@
     "dev": "pnpm next dev",
     "build": "pnpm next build",
     "start": "pnpm next start",
-    "lint": "pnpm dlx eslint .",
+    "lint": "pnpm exec eslint .",
     "format": "prettier --write --ignore-path .gitignore .",
     "format:check": "prettier --check --ignore-path .gitignore ."
   },

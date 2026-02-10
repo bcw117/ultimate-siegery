@@ -20,15 +20,15 @@ export async function saveLoadout(loadoutParams: CreateLoadoutRequest) {
 
   if (response.ok) {
     revalidatePath("/loadouts");
-    return redirect("/loadouts");
+    return { ...response, redirectTo: "/loadouts" };
   }
 
   const { statusCode } = response.error;
   switch (statusCode) {
     case HttpStatusCode.UNAUTHORIZED:
-      return redirect("/");
+      redirect("/");
     case HttpStatusCode.INTERNAL_SERVER_ERROR:
-      return { message: "Unable to process request" };
+      return response;
     default: {
       throw new Error(`Unexpected error: ${statusCode satisfies never}`);
     }
@@ -40,15 +40,15 @@ export async function deleteLoadout(id: number) {
 
   if (response.ok) {
     revalidatePath("/loadouts");
-    return redirect("/loadouts");
+    return { ...response, redirectTo: "/loadouts" };
   }
 
   const { statusCode } = response.error;
   switch (statusCode) {
     case HttpStatusCode.UNAUTHORIZED:
-      return redirect("/");
+      redirect("/");
     case HttpStatusCode.INTERNAL_SERVER_ERROR:
-      return { message: "Unable to process request" };
+      return response;
     default: {
       throw new Error(`Unexpected error: ${statusCode satisfies never}`);
     }
@@ -68,15 +68,15 @@ export async function updateLoadout(
 
   if (response.ok) {
     revalidatePath("/loadouts");
-    return redirect("/loadouts");
+    return { message: response.data.message, redirectTo: "/loadouts" };
   }
 
   const { statusCode } = response.error;
   switch (statusCode) {
     case HttpStatusCode.UNAUTHORIZED:
-      return redirect("/");
+      redirect("/");
     case HttpStatusCode.INTERNAL_SERVER_ERROR:
-      return { message: "Unable to process request" };
+      return response;
     default: {
       throw new Error(`Unexpected error: ${statusCode satisfies never}`);
     }

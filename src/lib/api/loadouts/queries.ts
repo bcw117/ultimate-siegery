@@ -15,7 +15,7 @@ export async function fetchLoadout(id: number) {
   const { statusCode } = response.error;
   switch (statusCode) {
     case HttpStatusCode.UNAUTHORIZED:
-      return redirect("/");
+      redirect("/");
     case HttpStatusCode.INTERNAL_SERVER_ERROR:
       return { message: "Unable to process request" };
     default: {
@@ -34,9 +34,9 @@ export async function fetchLoadouts() {
   const { statusCode } = response.error;
   switch (statusCode) {
     case HttpStatusCode.UNAUTHORIZED:
-      return redirect("/");
+      redirect("/");
     case HttpStatusCode.INTERNAL_SERVER_ERROR:
-      return { message: "Unable to process request" };
+      return response;
     default: {
       throw new Error(`Unexpected error: ${statusCode satisfies never}`);
     }

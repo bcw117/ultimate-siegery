@@ -25,60 +25,70 @@ export async function fetchLoadoutService(id?: number) {
     const { id: user_id } = user;
 
     const whereCond = isNil(id)
-      ? undefined
+      ? eq(loadout.user_id, user_id)
       : and(eq(loadout.id, id), eq(loadout.user_id, user_id));
 
     const data = await db.query.loadout.findMany({
       where: whereCond,
-      columns: { id: true, created_at: true, name: true },
+      columns: {
+        id: true,
+        created_at: true,
+        name: true,
+        pweapon_id: true,
+        sweapon_id: true,
+      },
       with: {
         operator: true,
         gadget: true,
-        primary_weapon: {
-          with: {
-            loadout_weapon_attachments: {
-              columns: {},
-              with: { attachment: true },
-            },
-          },
-        },
-        secondary_weapon: {
-          with: {
-            loadout_weapon_attachments: {
-              columns: {},
-              with: { attachment: true },
-            },
-          },
+        primary_weapon: true,
+        secondary_weapon: true,
+        loadout_weapon_attachments: {
+          columns: { weapon_id: true },
+          with: { attachment: true },
         },
       },
     });
 
     if (data.length === 0) {
-      return ok(HttpStatusCode.NO_CONTENT, { message: "No loadout data" });
+      return ok(HttpStatusCode.NO_CONTENT, []);
     }
 
-    const response = data.map((loadout) => {
-      const { loadout_weapon_attachments: pAttachments, ...primaryWeapon } =
-        loadout.primary_weapon;
-      const { loadout_weapon_attachments: sAttachments, ...secondaryWeapon } =
-        loadout.secondary_weapon;
+    const response = data.map(
+      ({
+        primary_weapon,
+        secondary_weapon,
+        loadout_weapon_attachments,
+        pweapon_id,
+        sweapon_id,
+        ...loadout
+      }) => {
+        const primaryAttachments = loadout_weapon_attachments.filter(
+          (lwa) => lwa.weapon_id === pweapon_id
+        );
+        const secondaryAttachments = loadout_weapon_attachments.filter(
+          (lwa) => lwa.weapon_id === sweapon_id
+        );
 
-      return {
-        ...loadout,
-        primaryWeapon: {
-          ...primaryWeapon,
-          attachments: processAttachments(pAttachments),
-        },
-        secondaryWeapon: {
-          ...secondaryWeapon,
-          attachments: processAttachments(sAttachments),
-        },
-      };
-    });
+        return {
+          ...loadout,
+          primaryWeapon: {
+            ...primary_weapon,
+            attachments: processAttachments(primaryAttachments),
+          },
+          secondaryWeapon: {
+            ...secondary_weapon,
+            attachments: processAttachments(secondaryAttachments),
+          },
+        };
+      }
+    );
 
-    return ok(HttpStatusCode.ACCEPTED, { data: response });
+    return ok(HttpStatusCode.ACCEPTED, response);
   } catch (e) {
-    return err({ statusCode: HttpStatusCode.INTERNAL_SERVER_ERROR, error: e });
+    return err({
+      statusCode: HttpStatusCode.INTERNAL_SERVER_ERROR,
+      caughtError: e,
+    });
   }
 }
 
@@ -87,7 +97,10 @@ export async function saveLoadoutService(data: CreateLoadoutValues) {
     const user = await currentUser();
 
     if (isNil(user)) {
-      return err({ statusCode: HttpStatusCode.UNAUTHORIZED });
+      return err({
+        statusCode: HttpStatusCode.UNAUTHORIZED,
+        message: "User not authenticated",
+      });
     }
 
     const { id: user_id } = user;
@@ -125,7 +138,10 @@ export async function saveLoadoutService(data: CreateLoadoutValues) {
     });
     return ok(HttpStatusCode.CREATED, { message: "Loadout created!" });
   } catch (e) {
-    return err({ statusCode: HttpStatusCode.INTERNAL_SERVER_ERROR, e });
+    return err({
+      statusCode: HttpStatusCode.INTERNAL_SERVER_ERROR,
+      caughtError: e,
+    });
   }
 }
 
@@ -145,7 +161,10 @@ export async function deleteLoadoutService(id: number) {
 
     return ok(HttpStatusCode.OK, { message: "Loadout successfully deleted" });
   } catch (e) {
-    return err({ statusCode: HttpStatusCode.INTERNAL_SERVER_ERROR, error: e });
+    return err({
+      statusCode: HttpStatusCode.INTERNAL_SERVER_ERROR,
+      caughtErro: e,
+    });
   }
 }
 
@@ -158,7 +177,10 @@ export async function updateLoadoutService(
     const user = await currentUser();
 
     if (!user) {
-      return err({ statusCode: HttpStatusCode.UNAUTHORIZED });
+      return err({
+        statusCode: HttpStatusCode.UNAUTHORIZED,
+        message: "User not authenticated",
+      });
     }
 
     if (_.isEqual(previousLoadout, updatedLoadout)) {
@@ -213,7 +235,10 @@ export async function updateLoadoutService(
       message: "Loadout updated successfully",
     });
   } catch (e) {
-    return err({ statusCode: HttpStatusCode.INTERNAL_SERVER_ERROR, error: e });
+    return err({
+      statusCode: HttpStatusCode.INTERNAL_SERVER_ERROR,
+      caughtError: e,
+    });
   }
 }
 

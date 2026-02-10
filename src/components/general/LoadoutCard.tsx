@@ -2,11 +2,8 @@
 import { removeUnderscores } from "@/lib/utils/helpers";
 import Image from "next/image";
 import { LoadoutDisplay } from "@/lib/types/types";
-import { Button } from "../ui/button";
 import { deleteLoadout } from "@/lib/api/loadouts/mutations";
-import { PencilLine, Trash2 } from "lucide-react";
 import EditLoadoutDialog from "../dialogs/EditLoadoutDialog";
-import { Dialog, DialogTrigger } from "../ui/dialog";
 import { isNil } from "lodash";
 import {
   Card,
@@ -124,31 +121,8 @@ export default function LoadoutCard({
 
       {editable && (
         <CardFooter className="flex gap-2 pt-2 border-t border-white/5">
-          <Dialog>
-            <DialogTrigger asChild>
-              <Button
-                variant="destructive"
-                size="sm"
-                className="flex-1 text-xs h-8"
-              >
-                <Trash2 className="w-3 h-3 mr-2" />
-                Delete
-              </Button>
-            </DialogTrigger>
-            <DeleteLoadoutDialog onSubmit={() => deleteLoadout(loadout.id)} />
-          </Dialog>
-          <Dialog>
-            <DialogTrigger asChild>
-              <Button
-                variant="outline"
-                className="flex-1 bg-white/5 border-white/10 hover:bg-white/10 text-xs h-8"
-              >
-                <PencilLine className="w-3 h-3 mr-2" />
-                Edit
-              </Button>
-            </DialogTrigger>
-            <EditLoadoutDialog loadout={loadout} />
-          </Dialog>
+          <DeleteLoadoutDialog id={loadout.id} />
+          <EditLoadoutDialog loadout={loadout} />
         </CardFooter>
       )}
     </Card>

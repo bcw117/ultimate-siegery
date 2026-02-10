@@ -1,11 +1,13 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { saveLoadout, updateLoadout } from "@/lib/api/loadouts/mutations";
 import {
   OperatorFullLoadout,
   GadgetRecord,
   WeaponWithAttachments,
+  LoadoutDisplay,
 } from "@/lib/types/types";
 import { useEffect, useMemo, useState } from "react";
 import { toast } from "sonner";
@@ -14,6 +16,10 @@ import GadgetSelect from "./GadgetSelect";
 import Image from "next/image";
 import { Save } from "lucide-react";
 import { isNil } from "lodash";
+
+type CreateLoadoutRequest = Omit<LoadoutDisplay, "operator" | "id"> & {
+  operatorId: number;
+};
 
 export type CustomizationFields = {
   id: number;
@@ -26,9 +32,11 @@ export type CustomizationFields = {
 export default function LoadoutCustomizer({
   selectedLoadout,
   operator,
+  onSubmit,
 }: {
   selectedLoadout?: CustomizationFields;
   operator: OperatorFullLoadout;
+  onSubmit: (loadoutParams: CreateLoadoutRequest) => Promise<void>;
 }) {
   const isEditing = !isNil(selectedLoadout);
   const primaryWeapons = useMemo(
@@ -64,99 +72,74 @@ export default function LoadoutCustomizer({
     );
   };
 
-  const handleSave = async () => {
-    try {
-      if (
-        !operator ||
-        !selectedPrimary ||
-        !selectedSecondary ||
-        !selectedGadget
-      ) {
-        toast.error(
-          "Please fill out all options for the loadout selection first"
-        );
-        return;
-      }
-
-      if (
-        !hasValidAttachments(selectedPrimary) ||
-        !hasValidAttachments(selectedSecondary)
-      ) {
-        toast.error(
-          "Please fill out all options for the loadout selection first"
-        );
-        return;
-      }
-
-      if (!loadoutName.trim()) {
-        toast.error("Please enter a loadout name");
-        return;
-      }
-
-      setIsSaving(true);
-
-      const newLoadout = {
-        name: loadoutName,
-        operatorId: operator.id,
-        primaryWeapon: selectedPrimary,
-        secondaryWeapon: selectedSecondary,
-        gadget: selectedGadget,
-      };
-
-      if (isEditing) {
-        await updateLoadout(selectedLoadout.id, selectedLoadout, newLoadout);
-
-        return;
-      }
-
-      const result = await saveLoadout(newLoadout);
-
-      if (result.ok) {
-        toast.success("Loadout saved successfully!");
-      } else {
-        toast.error(result.error || "Failed to save loadout");
-      }
-    } catch (error) {
-      toast.error("An unexpected error occurred");
-      console.error(error);
-    } finally {
-      setIsSaving(false);
+  const handleSubmit = async () => {
+    if (
+      !operator ||
+      !selectedPrimary ||
+      !selectedSecondary ||
+      !selectedGadget
+    ) {
+      toast.error(
+        "Please fill out all options for the loadout selection first"
+      );
+      return;
     }
+
+    if (
+      !hasValidAttachments(selectedPrimary) ||
+      !hasValidAttachments(selectedSecondary)
+    ) {
+      toast.error(
+        "Please fill out all options for the loadout selection first"
+      );
+      return;
+    }
+
+    if (!loadoutName.trim()) {
+      toast.error("Please enter a loadout name");
+      return;
+    }
+
+    setIsSaving(true);
+
+    const newLoadout = {
+      name: loadoutName,
+      operatorId: operator.id,
+      primaryWeapon: selectedPrimary,
+      secondaryWeapon: selectedSecondary,
+      gadget: selectedGadget,
+    };
+
+    await onSubmit(newLoadout);
   };
 
-  useEffect(() => {
-    if (!isNil(selectedLoadout)) {
-      setSelectedPrimary(selectedLoadout.primaryWeapon);
-      setSelectedSecondary(selectedLoadout.secondaryWeapon);
-      setSelectedGadget(selectedLoadout.gadget);
-    } else {
-      if (primaryWeapons.length > 0) {
-        setSelectedPrimary({
-          ...primaryWeapons[0],
-          attachments: {
-            sight: undefined,
-            grip: undefined,
-            barrel: undefined,
-            underbarrel: undefined,
-          },
-        });
-      }
-      if (secondaryWeapons.length > 0) {
-        setSelectedSecondary({
-          ...secondaryWeapons[0],
-          attachments: {
-            sight: undefined,
-            grip: undefined,
-            barrel: undefined,
-            underbarrel: undefined,
-          },
-        });
-      }
-      if (gadgets.length > 0) {
-        setSelectedGadget(gadgets[0]);
-      }
+  if (isNil(selectedLoadout)) {
+    if (primaryWeapons.length > 0) {
+      setSelectedPrimary({
+        ...primaryWeapons[0],
+        attachments: {
+          sight: undefined,
+          grip: undefined,
+          barrel: undefined,
+          underbarrel: undefined,
+        },
+      });
     }
-  }, [primaryWeapons, secondaryWeapons, selectedLoadout, gadgets]);
+    if (secondaryWeapons.length > 0) {
+      setSelectedSecondary({
+        ...secondaryWeapons[0],
+        attachments: {
+          sight: undefined,
+          grip: undefined,
+          barrel: undefined,
+          underbarrel: undefined,
+        },
+      });
+    }
+    if (gadgets.length > 0) {
+      setSelectedGadget(gadgets[0]);
+    }
+  }
 
   return (
     <div className="flex flex-col gap-6">
@@ -172,7 +155,8 @@ export default function LoadoutCustomizer({
         <Button
           variant="outline"
           className="border-white/20 hover:border-white/50 text-white bg-transparent cursor-pointer"
-          onClick={handleSave}
+          type="submit"
+          onClick={handleSubmit}
           disabled={isSaving}
         >
           <Save className="w-4 h-4 mr-2" />

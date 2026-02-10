@@ -30,23 +30,19 @@ export async function fetchOperatorService(id?: number) {
       },
     });
 
-    const result = data.map((record) => ({
+    const result = data.map(({ op_weapons, operator_gadgets, ...record }) => ({
       ...record,
-      operatorWeapons: record.op_weapons.map(
-        ({ weapon, op_weap_attachments }) => ({
-          ...weapon,
-          attachments: op_weap_attachments.map(({ attachment }) => ({
-            ...attachment,
-          })),
-        })
-      ),
-      operatorGadgets: record.operator_gadgets.map(({ gadget }) => ({
-        ...gadget,
+      operatorWeapons: op_weapons.map(({ weapon, op_weap_attachments }) => ({
+        ...weapon,
+        attachments: op_weap_attachments.map(({ attachment }) => ({
+          ...attachment,
+        })),
       })),
+      operatorGadgets: operator_gadgets.map(({ gadget }) => ({ ...gadget })),
     }));
 
-    return ok(HttpStatusCode.ACCEPTED, { data: result });
+    return ok(HttpStatusCode.ACCEPTED, result);
   } catch (e) {
-    return err({ statusCode: HttpStatusCode.INTERNAL_SERVER_ERROR, error: e });
+    return err({ statusCode: HttpStatusCode.INTERNAL_SERVER_ERROR, caughtError: e });
   }
 }
