@@ -3,7 +3,7 @@ import { ClerkProvider } from "@clerk/nextjs";
 import "@/styles/globals.css";
 import Navbar from "@/components/general/Navbar";
 import { Toaster } from "@/components/ui/sonner";
-import { dark } from "@clerk/themes";
+import { dark } from "@clerk/ui/themes";
 import { Analytics } from "@vercel/analytics/next";
 import Footer from "@/components/general/Footer";
 import { inter } from "@/lib/fonts";
@@ -17,16 +17,16 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <ClerkProvider appearance={{ baseTheme: [dark] }}>
-      <html lang="en">
-        <body className={`${inter.variable} antialiased`}>
+    <html lang="en">
+      <body className={`${inter.variable} antialiased`}>
+        <ClerkProvider appearance={{ theme: dark }}>
           <Navbar />
           {children}
           <Footer />
           <Toaster />
           <Analytics />
-        </body>
-      </html>
-    </ClerkProvider>
+        </ClerkProvider>
+      </body>
+    </html>
   );
 }

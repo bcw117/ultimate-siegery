@@ -69,10 +69,7 @@ export default function WeaponSelect({
         return;
       }
       const attachmentType = attachment.type.toLowerCase() as
-        | "sight"
-        | "barrel"
-        | "grip"
-        | "underbarrel";
+        "sight" | "barrel" | "grip" | "underbarrel";
       setSelectedWeapon({
         ...selectedWeapon,
         attachments: {
