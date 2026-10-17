@@ -43,6 +43,9 @@ export async function fetchOperatorService(id?: number) {
 
     return ok(HttpStatusCode.ACCEPTED, result);
   } catch (e) {
-    return err({ statusCode: HttpStatusCode.INTERNAL_SERVER_ERROR, caughtError: e });
+    return err({
+      statusCode: HttpStatusCode.INTERNAL_SERVER_ERROR,
+      caughtError: e,
+    });
   }
 }

@@ -5,9 +5,9 @@
   "semi": true,
   "tabWidth": 2,
   "trailingComma": "es5",
-  "quoteProps":"consistent",
+  "quoteProps": "consistent",
   "bracketSpacing": true,
-  "objectWrap":"collapse",
+  "objectWrap": "collapse",
   "bracketSameLine": false,
   "arrowParens": "always"
 }

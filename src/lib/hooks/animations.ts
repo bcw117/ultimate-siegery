@@ -38,9 +38,7 @@ export function useInView(
 // Staggered animation for multiple elements
 export function useStaggeredAnimation(itemCount: number, baseDelay = 0.1) {
   return Array.from({ length: itemCount }, (_, i) => ({
-    transition: {
-      delay: baseDelay * i,
-    },
+    transition: { delay: baseDelay * i },
   }));
 }
 
