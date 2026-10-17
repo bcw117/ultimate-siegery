@@ -1,7 +1,9 @@
 import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
 
+// Keep in sync with the routes under src/app/(authorized)
 const isPrivateRoute = createRouteMatcher([
-  "/dashboard(.*)",
+  "/challenges(.*)",
+  "/create-loadout(.*)",
   "/loadouts(.*)",
   "/profile(.*)",
 ]);
