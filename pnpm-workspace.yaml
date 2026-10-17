@@ -1,0 +1,13 @@
+allowBuilds:
+  '@clerk/shared': false
+  core-js: false
+  esbuild: true
+  sharp: true
+  unrs-resolver: true
+
+# eslint-config-next bundles these plugins, which work on ESLint 10 but have not widened their peer range yet
+peerDependencyRules:
+  allowedVersions:
+    eslint-plugin-import>eslint: '10'
+    eslint-plugin-jsx-a11y>eslint: '10'
+    eslint-plugin-react>eslint: '10'

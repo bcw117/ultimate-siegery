@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import LogOutButton from "./LogoutButton";
-import { SignedIn, SignedOut, SignInButton, SignUpButton } from "@clerk/nextjs";
+import { Show, SignInButton, SignUpButton } from "@clerk/nextjs";
 import { LayoutDashboard, Backpack, User, Shuffle, Target } from "lucide-react";
 import Image from "next/image";
 
@@ -36,7 +36,7 @@ export default async function Navbar() {
           </span>
         </Link>
         <div className="hidden md:flex items-center space-x-10 font-medium">
-          <SignedIn>
+          <Show when="signed-in">
             {links.map((link, i) => {
               return (
                 <Link
@@ -51,8 +51,8 @@ export default async function Navbar() {
             })}
 
             <LogOutButton />
-          </SignedIn>
-          <SignedOut>
+          </Show>
+          <Show when="signed-out">
             <div className="flex items-center space-x-4">
               <SignInButton mode="modal">
                 <Button
@@ -68,7 +68,7 @@ export default async function Navbar() {
                 </Button>
               </SignUpButton>
             </div>
-          </SignedOut>
+          </Show>
         </div>
       </div>
     </nav>
