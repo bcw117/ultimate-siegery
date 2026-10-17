@@ -4,3 +4,7 @@ node_modules
 dist
 coverage
 *.log
+
+# Generated files
+pnpm-lock.yaml
+src/lib/db/meta/
