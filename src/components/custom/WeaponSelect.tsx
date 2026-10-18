@@ -14,6 +14,7 @@ import { Label } from "@/components/ui/label";
 import AttachmentSelect from "./AttachmentSelect";
 import { isNil } from "lodash";
 import { useCallback } from "react";
+import { removeUnderscores } from "@/lib/utils/helpers";
 
 type WeaponSelectProps = {
   slot: "primary" | "secondary";
@@ -84,18 +85,18 @@ export default function WeaponSelect({
   return (
     <>
       <div className="space-y-2">
-        <Label className="text-slate-300">Select Weapon</Label>
+        <Label htmlFor={`${slot}-weapon`}>Weapon</Label>
         <Select
           value={selectedWeapon?.id.toString()}
           onValueChange={(val) => handleWeaponUpdate(val)}
         >
-          <SelectTrigger className="bg-slate-900/50 border-white/10 text-white">
-            <SelectValue placeholder={`Select ${slot} weapon`} />
+          <SelectTrigger id={`${slot}-weapon`} className="w-full sm:max-w-sm">
+            <SelectValue placeholder={`Choose ${slot} weapon`} />
           </SelectTrigger>
           <SelectContent>
             {weapons.map((w) => (
               <SelectItem key={w.id} value={w.id.toString()}>
-                {w.name}
+                {removeUnderscores(w.name)}
               </SelectItem>
             ))}
           </SelectContent>
@@ -103,9 +104,10 @@ export default function WeaponSelect({
       </div>
 
       {selectedWeapon && (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {!isNil(sights) && (
             <AttachmentSelect
+              id={`${slot}-sight`}
               type="sight"
               selectedAttachment={selectedWeapon.attachments.sight}
               attachments={sights}
@@ -115,6 +117,7 @@ export default function WeaponSelect({
 
           {!isNil(barrels) && (
             <AttachmentSelect
+              id={`${slot}-barrel`}
               type="barrel"
               selectedAttachment={selectedWeapon.attachments.barrel}
               attachments={barrels}
@@ -124,6 +127,7 @@ export default function WeaponSelect({
 
           {!isNil(grips) && (
             <AttachmentSelect
+              id={`${slot}-grip`}
               type="grip"
               selectedAttachment={selectedWeapon.attachments.grip}
               attachments={grips}
@@ -133,6 +137,7 @@ export default function WeaponSelect({
 
           {!isNil(underbarrels) && (
             <AttachmentSelect
+              id={`${slot}-underbarrel`}
               type="underbarrel"
               selectedAttachment={selectedWeapon.attachments.underbarrel}
               attachments={underbarrels}

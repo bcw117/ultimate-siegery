@@ -1,213 +1,115 @@
 "use client";
 
-import { LoadoutDisplay, OperatorFullLoadout } from "@/lib/types/types";
-import { isNil } from "lodash";
+import { LoadoutDisplay, OperatorFullLoadout, Side } from "@/lib/types/types";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { Button } from "../ui/button";
-import { Save, Shield, Shuffle } from "lucide-react";
+import { Dices, Save } from "lucide-react";
 import LoadoutCard from "../general/LoadoutCard";
+import PageHeader from "../general/PageHeader";
+import SideToggle from "../custom/SideToggle";
 import { saveLoadout } from "@/lib/api/loadouts/mutations";
-import { getRandomElement, randomizedLoadoutName } from "@/lib/utils/helpers";
+import { generateRandomLoadout } from "@/lib/utils/helpers";
 
-type RandomLoadoutViewProps = { operators: OperatorFullLoadout[] };
+type RandomLoadoutViewProps = {
+  operators: OperatorFullLoadout[];
+  initialSide?: Side;
+  initialLoadout?: LoadoutDisplay;
+};
 
 export default function RandomLoadoutView({
   operators,
+  initialSide,
+  initialLoadout,
 }: RandomLoadoutViewProps) {
-  const [side, setSide] = useState<"Attacker" | "Defender">("Attacker");
-  const [loadout, setLoadout] = useState<LoadoutDisplay | null>(null);
-  const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
+  const [side, setSide] = useState<Side>(initialSide ?? Side.Attacker);
+  const [loadout, setLoadout] = useState(initialLoadout);
+  const [isSaving, setIsSaving] = useState(false);
+  const [isSaved, setIsSaved] = useState(false);
 
-  const generateRandomLoadout = (side: string) => {
-    setIsLoading(true);
-
-    setTimeout(() => {
-      const filteredOperators = operators.filter((op) => op.side === side);
-      const randomOperator = getRandomElement(filteredOperators);
-
-      if (isNil(randomOperator)) {
-        setIsLoading(false);
-        toast.error("No operators found for this side");
-        return;
-      }
-
-      const primary = getRandomElement(
-        randomOperator.operatorWeapons.filter((w) => w.slot === "Primary")
+  const roll = (rollSide: Side) => {
+    const newLoadout = generateRandomLoadout(operators, rollSide);
+    if (!newLoadout) {
+      toast.error(
+        `Couldn't roll a ${rollSide.toLowerCase()} loadout. Try again.`
       );
-      const secondary = getRandomElement(
-        randomOperator.operatorWeapons.filter((w) => w.slot === "Secondary")
-      );
-      const gadget = getRandomElement(randomOperator.operatorGadgets);
-
-      if (!primary || !secondary || !gadget) {
-        setIsLoading(false);
-        toast.error("Incomplete operator data");
-        return;
-      }
-
-      const newLoadout: LoadoutDisplay = {
-        id: 1,
-        name: randomizedLoadoutName(randomOperator.name),
-        operator: randomOperator,
-        primaryWeapon: {
-          ...primary,
-          attachments: {
-            sight: getRandomElement(
-              primary.attachments.filter((a) => a.type === "Sight")
-            ),
-            barrel: getRandomElement(
-              primary.attachments.filter((a) => a.type === "Barrel")
-            ),
-            grip: getRandomElement(
-              primary.attachments.filter((a) => a.type === "Grip")
-            ),
-            underbarrel: getRandomElement(
-              primary.attachments.filter((a) => a.type === "Underbarrel")
-            ),
-          },
-        },
-        secondaryWeapon: {
-          ...secondary,
-          attachments: {
-            sight: getRandomElement(
-              secondary.attachments.filter((a) => a.type === "Sight")
-            ),
-            barrel: getRandomElement(
-              secondary.attachments.filter((a) => a.type === "Barrel")
-            ),
-            grip: getRandomElement(
-              secondary.attachments.filter((a) => a.type === "Grip")
-            ),
-            underbarrel: getRandomElement(
-              secondary.attachments.filter((a) => a.type === "Underbarrel")
-            ),
-          },
-        },
-        gadget: gadget,
-      };
-
-      setLoadout(newLoadout);
-      setIsLoading(false);
-    }, 400);
-  };
-
-  const handleSave = async () => {
-    if (isNil(loadout)) {
-      toast.error("Please generate a loadout first");
       return;
     }
 
+    setLoadout(newLoadout);
+    setIsSaved(false);
+  };
+
+  const handleSideChange = (newSide: Side) => {
+    setSide(newSide);
+    roll(newSide);
+  };
+
+  const handleSave = async () => {
+    if (!loadout) {
+      return;
+    }
+
+    setIsSaving(true);
     try {
-      const newLoadout = {
+      const result = await saveLoadout({
         name: loadout.name,
         operatorId: loadout.operator.id,
         primaryWeapon: loadout.primaryWeapon,
         secondaryWeapon: loadout.secondaryWeapon,
         gadget: loadout.gadget,
-      };
+      });
 
-      const result = await saveLoadout(newLoadout);
-
-      if (!result.ok) {
-        toast.error("Failed to save loadout: " + (result as any).error);
-      } else {
-        toast.success("Loadout successfully saved!");
+      if ("error" in result) {
+        toast.error("Couldn't save this loadout. Try again.");
+        return;
       }
-    } catch (error) {
-      toast.error("An unexpected error occurred: " + (error as Error).message);
+
+      setIsSaved(true);
+      toast.success("Loadout saved", {
+        action: { label: "View", onClick: () => router.push("/loadouts") },
+      });
+    } catch {
+      toast.error("Couldn't save this loadout. Check your connection.");
+    } finally {
+      setIsSaving(false);
     }
   };
 
   return (
-    <div className="mx-auto w-full max-w-7xl space-y-6 px-4">
-      <div className="space-y-2">
-        <h3 className="font-semibold text-2xl leading-none tracking-tight">
-          Random Challenge
-        </h3>
-        <p className="text-sm text-muted-foreground">
-          Prove your skill by using a random loadout
-        </p>
-      </div>
-      <div className="flex flex-wrap gap-4">
-        <Button
-          variant={side === "Attacker" ? "default" : "outline"}
-          className={side === "Attacker" ? "bg-siege-accent" : "bg-transparent"}
-          onClick={() => setSide("Attacker")}
-        >
-          Attacker
-        </Button>
-        <Button
-          variant={side === "Defender" ? "default" : "outline"}
-          className={
-            side === "Defender" ? "bg-siege-accent" : "bg-transparent "
-          }
-          onClick={() => setSide("Defender")}
-        >
-          Defender
-        </Button>
-      </div>
+    <>
+      <PageHeader
+        title="Random loadout"
+        description="Pick a side and get a random operator, weapons, attachments and gadget."
+      />
 
-      <div className="flex flex-wrap justify-center sm:justify-start gap-4">
-        <Button
-          className="bg-siege-accent hover:bg-siege-accent/90 text-white flex items-center gap-2"
-          onClick={() => generateRandomLoadout(side)}
-          disabled={isLoading}
-        >
-          {isLoading ? (
-            <>
-              <span>Generating</span>
-              <span className="flex space-x-1 ml-1">
-                <span className="loading-dot"></span>
-                <span className="loading-dot"></span>
-                <span className="loading-dot"></span>
-              </span>
-            </>
-          ) : (
-            <>
-              <Shuffle className="w-4 h-4" />
-              <span>Generate Random Loadout</span>
-            </>
-          )}
+      <div className="flex flex-wrap items-center gap-3">
+        <SideToggle value={side} onValueChange={handleSideChange} />
+        <Button onClick={() => roll(side)}>
+          <Dices />
+          {loadout ? "Roll again" : "Roll loadout"}
         </Button>
-
         <Button
           variant="outline"
-          className="border-white/20 hover:border-white/50 text-white bg-transparent cursor-pointer"
-          disabled={isLoading}
+          disabled={!loadout || isSaving || isSaved}
           onClick={handleSave}
         >
-          <Save className="w-4 h-4 mr-2" />
-          Save Loadout
+          <Save />
+          {isSaved ? "Saved" : isSaving ? "Saving..." : "Save loadout"}
         </Button>
       </div>
-      {!isLoading && !isNil(loadout) ? (
-        <LoadoutCard loadout={loadout} />
+
+      {loadout ? (
+        <div className="max-w-3xl">
+          <LoadoutCard loadout={loadout} />
+        </div>
       ) : (
-        <>
-          {isLoading ? (
-            <div className="rounded-lg bg-siege-dark/30 border border-white/10 p-10 text-center">
-              <div className="flex justify-center mb-4">
-                <span className="flex space-x-2 items-center">
-                  <span className="loading-dot w-3 h-3"></span>
-                  <span className="loading-dot w-3 h-3"></span>
-                  <span className="loading-dot w-3 h-3"></span>
-                </span>
-              </div>
-              <p className="text-white/70">
-                Randomizing your tactical loadout...
-              </p>
-            </div>
-          ) : (
-            <div className="rounded-lg bg-siege-dark/30 border border-white/10 p-10 text-center">
-              <Shield className="mx-auto text-white/40 mb-4 w-12 h-12" />
-              <p className="text-white/70">
-                Click the Generate button to create your random loadout
-              </p>
-            </div>
-          )}
-        </>
+        <div className="max-w-3xl rounded-lg border border-dashed p-8 text-muted-foreground">
+          Pick a side and roll to get a loadout.
+        </div>
       )}
-    </div>
+    </>
   );
 }

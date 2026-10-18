@@ -10,20 +10,21 @@ import { toTitleCase } from "@/lib/utils/helpers";
 import { AttachmentRecord } from "@/lib/types/types";
 
 export default function AttachmentSelect({
+  id,
   type,
   selectedAttachment,
   attachments,
   handleAttachmentChange,
 }: {
+  id: string;
   type: "sight" | "barrel" | "grip" | "underbarrel";
   selectedAttachment: AttachmentRecord | undefined;
   attachments: AttachmentRecord[];
   handleAttachmentChange: (attachment: AttachmentRecord | undefined) => void;
 }) {
-  const label = toTitleCase(type);
   return (
     <div className="space-y-2">
-      <Label className="text-xs text-slate-400">{label}</Label>
+      <Label htmlFor={id}>{toTitleCase(type)}</Label>
       <Select
         value={selectedAttachment?.id.toString()}
         onValueChange={(val) => {
@@ -34,8 +35,8 @@ export default function AttachmentSelect({
           handleAttachmentChange(attachment);
         }}
       >
-        <SelectTrigger className="bg-slate-900/50 border-white/10 text-white">
-          <SelectValue placeholder={`Select a ${label}`} />
+        <SelectTrigger id={id} className="w-full">
+          <SelectValue placeholder={`Choose ${type}`} />
         </SelectTrigger>
         <SelectContent>
           {attachments.map((a, idx) => (

@@ -5,7 +5,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     // Typography components
     h1: ({ children, ...props }) => (
       <h1
-        className="text-4xl font-bold tracking-tight text-foreground mb-8 border-b border-border pb-4"
+        className="text-5xl leading-none font-semibold font-display text-foreground mb-8 border-b border-border pb-6"
         {...props}
       >
         {children}
@@ -13,7 +13,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     ),
     h2: ({ children, ...props }) => (
       <h2
-        className="text-3xl font-semibold tracking-tight text-foreground mt-12 mb-6 border-b border-border/50 pb-3"
+        className="text-3xl font-semibold font-display text-foreground mt-12 mb-4"
         {...props}
       >
         {children}

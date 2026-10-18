@@ -26,6 +26,24 @@ interface OperatorSelectProps {
   operators: OperatorRecord[];
 }
 
+function OperatorIcon({ operator }: { operator: OperatorRecord }) {
+  if (!operator.icon_url) {
+    return <div className="size-8 shrink-0 rounded-sm bg-muted" />;
+  }
+
+  return (
+    <div className="relative size-8 shrink-0">
+      <Image
+        src={operator.icon_url}
+        alt=""
+        fill
+        className="object-contain"
+        unoptimized
+      />
+    </div>
+  );
+}
+
 export default function OperatorSelect({
   onSelect,
   selectedOperatorId,
@@ -41,47 +59,35 @@ export default function OperatorSelect({
           variant="outline"
           role="combobox"
           aria-expanded={open}
-          className="w-full justify-between h-14 px-4 bg-background/50 backdrop-blur-sm border-white/10 hover:bg-accent/50"
+          aria-label="Operator"
+          className="h-14 w-full justify-between px-3"
         >
           {selectedOperator ? (
-            <div className="flex items-center gap-3">
-              {selectedOperator.icon_url ? (
-                <div className="relative w-8 h-8">
-                  <Image
-                    src={selectedOperator.icon_url}
-                    alt={selectedOperator.name}
-                    fill
-                    className="object-contain"
-                    unoptimized
-                  />
-                </div>
-              ) : (
-                <div className="w-8 h-8 bg-muted rounded-full flex items-center justify-center text-[10px] text-muted-foreground">
-                  NA
-                </div>
-              )}
-              <span className="font-medium text-lg">
+            <span className="flex items-center gap-3">
+              <OperatorIcon operator={selectedOperator} />
+              <span className="text-lg font-semibold font-display">
                 {selectedOperator.name}
               </span>
-            </div>
+              <span
+                data-side={selectedOperator.side}
+                className="text-sm font-normal text-side"
+              >
+                {selectedOperator.side}
+              </span>
+            </span>
           ) : (
-            <span className="text-muted-foreground">
-              {"Select An Operator"}
+            <span className="font-normal text-muted-foreground">
+              Choose an operator
             </span>
           )}
-          <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+          <ChevronsUpDown className="opacity-50" />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-(--radix-popover-trigger-width) p-0 bg-slate-950 border-white/10">
-        <Command className="flex h-full w-full flex-col overflow-hidden rounded-md bg-transparent text-popover-foreground">
-          <CommandInput
-            placeholder="Search operator..."
-            className="flex h-11 w-full rounded-md bg-transparent py-3 text-sm outline-none placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50"
-          />
-          <CommandList className="max-h-75 overflow-y-auto overflow-x-hidden p-1">
-            <CommandEmpty className="py-6 text-center text-sm text-muted-foreground">
-              No operator found.
-            </CommandEmpty>
+      <PopoverContent className="w-(--radix-popover-trigger-width) p-0">
+        <Command>
+          <CommandInput placeholder="Search operators" />
+          <CommandList className="max-h-80">
+            <CommandEmpty>No operator with that name.</CommandEmpty>
             <CommandGroup>
               {operators.map((op) => (
                 <CommandItem
@@ -91,34 +97,21 @@ export default function OperatorSelect({
                     onSelect?.(op);
                     setOpen(false);
                   }}
-                  className="relative flex cursor-default select-none items-center rounded-sm px-2 py-2 text-sm outline-none aria-selected:bg-accent aria-selected:text-accent-foreground hover:bg-accent/50 transition-colors"
+                  className="gap-3"
                 >
                   <Check
                     className={cn(
-                      "mr-2 h-4 w-4",
                       selectedOperatorId === op.id ? "opacity-100" : "opacity-0"
                     )}
                   />
-                  <div className="flex items-center gap-3 flex-1">
-                    {op.icon_url ? (
-                      <div className="relative w-8 h-8">
-                        <Image
-                          src={op.icon_url}
-                          alt={op.name}
-                          fill
-                          className="object-contain"
-                          unoptimized
-                        />
-                      </div>
-                    ) : (
-                      <div className="w-8 h-8 bg-muted rounded-full flex items-center justify-center text-[10px] text-muted-foreground">
-                        NA
-                      </div>
-                    )}
-                    <div className="flex flex-col">
-                      <span className="font-medium">{op.name}</span>
-                    </div>
-                  </div>
+                  <OperatorIcon operator={op} />
+                  <span className="font-medium">{op.name}</span>
+                  <span
+                    data-side={op.side}
+                    className="ml-auto text-xs text-side"
+                  >
+                    {op.side}
+                  </span>
                 </CommandItem>
               ))}
             </CommandGroup>

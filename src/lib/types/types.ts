@@ -96,6 +96,17 @@ export type LoadoutDisplay = {
   gadget: GadgetRecord;
 };
 
+export type OperatorRosterEntry = Pick<
+  OperatorRecord,
+  "id" | "name" | "side" | "icon_url"
+>;
+
+export type OperatorRoster = {
+  operators: OperatorRosterEntry[];
+  weaponCount: number;
+  attachmentCount: number;
+};
+
 export type OperatorFullLoadout = OperatorRecord & {
   operatorGadgets: GadgetRecord[];
   operatorWeapons: WeaponWithAllAttachments[];

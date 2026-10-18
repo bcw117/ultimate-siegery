@@ -5,7 +5,7 @@ import { isNil } from "lodash";
 import { db } from "../db";
 import { loadout, loadout_weapon_attachment } from "../db/schema";
 import HttpStatusCode from "../types/statusCodes";
-import { and, eq, inArray, Update } from "drizzle-orm";
+import { and, desc, eq, inArray, Update } from "drizzle-orm";
 import _ from "lodash";
 
 type CreateLoadoutValues = Omit<LoadoutDisplay, "operator" | "id"> & {
@@ -30,6 +30,7 @@ export async function fetchLoadoutService(id?: number) {
 
     const data = await db.query.loadout.findMany({
       where: whereCond,
+      orderBy: desc(loadout.created_at),
       columns: {
         id: true,
         created_at: true,
@@ -105,13 +106,21 @@ export async function saveLoadoutService(data: CreateLoadoutValues) {
 
     const { id: user_id } = user;
 
-    const { name, operatorId, primaryWeapon, secondaryWeapon, gadget } = data;
+    const { operatorId, primaryWeapon, secondaryWeapon, gadget } = data;
+    const name = data.name.trim();
+
+    if (!name) {
+      return err({
+        statusCode: HttpStatusCode.BAD_REQUEST,
+        message: "Loadout name is required",
+      });
+    }
 
     await db.transaction(async (tx) => {
       const [createdLoadout] = await tx
         .insert(loadout)
         .values({
-          name: name,
+          name,
           user_id,
           operator_id: operatorId,
           pweapon_id: primaryWeapon.id,
@@ -183,6 +192,15 @@ export async function updateLoadoutService(
       });
     }
 
+    const name = updatedLoadout.name.trim();
+
+    if (!name) {
+      return err({
+        statusCode: HttpStatusCode.BAD_REQUEST,
+        message: "Loadout name is required",
+      });
+    }
+
     if (_.isEqual(previousLoadout, updatedLoadout)) {
       return ok(HttpStatusCode.NO_CONTENT, {
         message: "No modifications made from original loadout",
@@ -195,7 +213,7 @@ export async function updateLoadoutService(
       await tx
         .update(loadout)
         .set({
-          name: updatedLoadout.name,
+          name,
           gadget_id: updatedLoadout.gadget.id,
           pweapon_id: updatedLoadout.primaryWeapon.id,
           sweapon_id: updatedLoadout.secondaryWeapon.id,

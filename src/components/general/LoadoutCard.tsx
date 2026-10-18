@@ -1,19 +1,45 @@
-"use client";
 import { removeUnderscores } from "@/lib/utils/helpers";
 import Image from "next/image";
-import { LoadoutDisplay } from "@/lib/types/types";
-import { deleteLoadout } from "@/lib/api/loadouts/mutations";
+import { LoadoutDisplay, WeaponWithAttachments } from "@/lib/types/types";
 import EditLoadoutDialog from "../dialogs/EditLoadoutDialog";
-import { isNil } from "lodash";
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "../ui/card";
 import DeleteLoadoutDialog from "../dialogs/DeleteLoadoutDialog";
-import { Badge } from "../ui/badge";
+
+function WeaponSpec({
+  slot,
+  weapon,
+}: {
+  slot: string;
+  weapon: WeaponWithAttachments;
+}) {
+  const { sight, barrel, grip, underbarrel } = weapon.attachments;
+  const attachments = [
+    { label: "Sight", value: sight },
+    { label: "Barrel", value: barrel },
+    { label: "Grip", value: grip },
+    { label: "Underbarrel", value: underbarrel },
+  ];
+
+  return (
+    <div className="space-y-3 px-5 py-4">
+      <div>
+        <p className="text-sm text-muted-foreground">{slot}</p>
+        <p className="text-xl font-semibold font-display">
+          {removeUnderscores(weapon.name ?? "")}
+        </p>
+      </div>
+      <dl className="grid grid-cols-[auto_1fr] gap-x-4 gap-y-1 text-sm">
+        {attachments.map(({ label, value }) => (
+          <div key={label} className="contents">
+            <dt className="text-muted-foreground">{label}</dt>
+            <dd className={value ? undefined : "text-muted-foreground"}>
+              {value?.name ?? "None"}
+            </dd>
+          </div>
+        ))}
+      </dl>
+    </div>
+  );
+}
 
 export default function LoadoutCard({
   loadout,
@@ -22,109 +48,62 @@ export default function LoadoutCard({
   loadout: LoadoutDisplay;
   editable?: boolean;
 }) {
-  const {
-    name,
-    operator,
-    gadget,
-    primaryWeapon: primary,
-    secondaryWeapon: secondary,
-  } = loadout;
+  const { name, operator, gadget, primaryWeapon, secondaryWeapon } = loadout;
 
   return (
-    <Card className="group w-full border-white/10 bg-siege-dark/50 shadow-sm transition hover:border-siege-accent/40 hover:shadow-md animate-fade-up">
-      <CardHeader className="pb-2">
-        <CardTitle className="line-clamp-1 text-center text-xl font-bold tracking-tight text-white">
-          {name}
-        </CardTitle>
-      </CardHeader>
-
-      <CardContent className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-        <div className="rounded-xl bg-siege-dark/60 p-4 ring-1 ring-white/10 flex flex-col items-center gap-3 h-full">
-          <div className="w-full">
-            <h4 className="text-[10px] font-bold uppercase tracking-[0.2em] text-white/40 mb-1">
-              Operator
-            </h4>
-            <div className="flex flex-col gap-2">
-              <p className="text-sm font-bold text-white truncate">
-                {operator.name}
-              </p>
-              <Badge className="rounded-full bg-siege-accent/20 text-[10px] font-bold text-siege-accent">
-                {operator.side}
-              </Badge>
-            </div>
+    <article
+      data-side={operator.side}
+      className="@container flex flex-col rounded-lg border border-l-4 border-l-side bg-card"
+    >
+      <header className="flex items-center gap-4 px-5 py-4">
+        {operator.icon_url && (
+          <div className="relative size-14 shrink-0">
+            <Image
+              src={operator.icon_url}
+              fill
+              sizes="56px"
+              alt=""
+              className="object-contain"
+            />
           </div>
-          {operator.icon_url && (
-            <div className="relative h-16 w-16">
-              <Image
-                src={operator.icon_url}
-                fill
-                alt={`${operator.name} icon`}
-                className="object-contain drop-shadow-[0_0_8px_rgba(255,255,255,0.2)]"
-              />
-            </div>
-          )}
+        )}
+        <div className="min-w-0">
+          <h2 className="truncate text-2xl leading-tight font-semibold font-display">
+            {name}
+          </h2>
+          <p className="text-sm">
+            {operator.name} <span className="text-side">{operator.side}</span>
+          </p>
         </div>
+      </header>
 
-        <div className="rounded-xl bg-siege-dark/60 p-4 ring-1 ring-white/10 flex flex-col items-center gap-3 h-full">
-          <div className="w-full">
-            <h4 className="text-[10px] font-bold uppercase tracking-[0.2em] text-white/40 mb-1">
-              Gadget
-            </h4>
-            <p className="text-sm font-bold text-white truncate">
-              {gadget.name}
-            </p>
+      <div className="flex items-center gap-3 border-t px-5 py-3 text-sm">
+        <span className="text-muted-foreground">Gadget</span>
+        {gadget.icon_url && (
+          <div className="relative size-6 shrink-0">
+            <Image
+              src={gadget.icon_url}
+              fill
+              sizes="24px"
+              alt=""
+              className="object-contain opacity-90 invert"
+            />
           </div>
-          {gadget.icon_url && (
-            <div className="relative h-14 w-14">
-              <Image
-                src={gadget.icon_url}
-                fill
-                alt={`${gadget.name} icon`}
-                className="object-contain invert opacity-80"
-              />
-            </div>
-          )}
-        </div>
+        )}
+        <span>{gadget.name}</span>
+      </div>
 
-        {[primary, secondary].map((weapon, idx) => (
-          <div
-            key={weapon.id}
-            className="rounded-xl bg-siege-dark/60 p-4 ring-1 ring-white/10 flex flex-col h-full"
-          >
-            <h4 className="text-[10px] font-bold uppercase tracking-[0.2em] text-white/40 mb-1">
-              {idx === 0 ? "Primary" : "Secondary"}
-            </h4>
-            <p className="text-sm font-bold text-white leading-tight mb-2 truncate">
-              {removeUnderscores(weapon.name ?? "")}
-            </p>
-            <ul className="space-y-1">
-              {[
-                weapon.attachments.sight,
-                weapon.attachments.barrel,
-                weapon.attachments.grip,
-                weapon.attachments.underbarrel,
-              ]
-                .filter((a) => !isNil(a))
-                .map((attachment) => (
-                  <li
-                    key={attachment!.id}
-                    className="text-[10px] text-white/60 flex items-center gap-2"
-                  >
-                    <span className="h-1 w-1 rounded-full bg-siege-accent/50" />
-                    {attachment!.name}
-                  </li>
-                ))}
-            </ul>
-          </div>
-        ))}
-      </CardContent>
+      <div className="grid flex-1 divide-y border-t @md:grid-cols-2 @md:divide-x @md:divide-y-0">
+        <WeaponSpec slot="Primary" weapon={primaryWeapon} />
+        <WeaponSpec slot="Secondary" weapon={secondaryWeapon} />
+      </div>
 
       {editable && (
-        <CardFooter className="flex gap-2 pt-2 border-t border-white/5">
-          <DeleteLoadoutDialog id={loadout.id} />
+        <footer className="flex justify-end gap-2 border-t px-5 py-3">
+          <DeleteLoadoutDialog id={loadout.id} name={name} />
           <EditLoadoutDialog loadout={loadout} />
-        </CardFooter>
+        </footer>
       )}
-    </Card>
+    </article>
   );
 }

@@ -1,12 +1,14 @@
 "use client";
-import { Dialog } from "@radix-ui/react-dialog";
 import { Button } from "../ui/button";
 import {
+  Dialog,
+  DialogClose,
   DialogContent,
   DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
+  DialogTrigger,
 } from "../ui/dialog";
 import { Trash2 } from "lucide-react";
 import { deleteLoadout } from "@/lib/api/loadouts/mutations";
@@ -14,44 +16,62 @@ import { toast } from "sonner";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
-export default function DeleteLoadoutDialog({ id }: { id: number }) {
+export default function DeleteLoadoutDialog({
+  id,
+  name,
+}: {
+  id: number;
+  name: string;
+}) {
   const router = useRouter();
   const [open, setOpen] = useState<boolean>(false);
+  const [isDeleting, setIsDeleting] = useState(false);
 
   const handleDelete = async () => {
+    setIsDeleting(true);
     const result = await deleteLoadout(id);
+    setIsDeleting(false);
 
     if ("error" in result) {
-      toast.error("Unable to delete loadout");
+      toast.error("Couldn't delete this loadout. Try again.");
     } else {
       setOpen(false);
+      toast.success("Loadout deleted");
       router.refresh();
     }
   };
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <Button
-        onClick={() => setOpen(true)}
-        variant="destructive"
-        size="sm"
-        className="flex-1 text-xs h-8"
-      >
-        <Trash2 className="w-3 h-3 mr-2" />
-        Delete
-      </Button>
-      <DialogContent className="w-full sm:max-w-6xl max-h-[90vh] overflow-y-auto">
+      <DialogTrigger asChild>
+        <Button
+          variant="ghost"
+          size="sm"
+          className="text-destructive hover:text-destructive"
+        >
+          <Trash2 />
+          Delete
+        </Button>
+      </DialogTrigger>
+      <DialogContent className="sm:max-w-md">
         <DialogHeader>
-          <DialogTitle>Deleting Loadout</DialogTitle>
+          <DialogTitle>Delete loadout?</DialogTitle>
           <DialogDescription>
-            Are you sure you want to delete this loadout?
+            &ldquo;{name}&rdquo; will be removed from your saved loadouts. You
+            can&apos;t undo this.
           </DialogDescription>
         </DialogHeader>
         <DialogFooter>
-          <Button variant="destructive" onClick={handleDelete}>
-            Yes
+          <DialogClose asChild>
+            <Button variant="outline">Cancel</Button>
+          </DialogClose>
+          <Button
+            variant="destructive"
+            onClick={handleDelete}
+            disabled={isDeleting}
+          >
+            {isDeleting ? "Deleting..." : "Delete loadout"}
           </Button>
-          <Button onClick={() => setOpen(false)}>No</Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>

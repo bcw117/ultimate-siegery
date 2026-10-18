@@ -9,8 +9,9 @@ import OperatorSelect from "../custom/OperatorSelect";
 import { isNil } from "lodash";
 import { toast } from "sonner";
 import LoadoutCustomization from "../custom/LoadoutCustomizer";
+import PageHeader from "../general/PageHeader";
 import { saveLoadout } from "@/lib/api/loadouts/mutations";
-import { redirect, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 type CreateLoadoutRequest = Omit<LoadoutDisplay, "operator" | "id"> & {
   operatorId: number;
@@ -32,37 +33,38 @@ export default function CustomLoadoutView({ operators }: CustomLoadoutProps) {
   const onSubmit = async (loadoutDetails: CreateLoadoutRequest) => {
     const result = await saveLoadout(loadoutDetails);
     if ("error" in result) {
-      toast.error("There was an issue saving your loadout");
+      toast.error("Couldn't save this loadout. Try again.");
       return;
     }
 
+    toast.success("Loadout saved");
     router.push(result.redirectTo);
   };
 
   return (
-    <div className="mx-auto w-full max-w-7xl space-y-8 px-4">
-      <div className="space-y-2">
-        <h3 className="font-semibold text-2xl leading-none tracking-tight">
-          Custom Loadouts
-        </h3>
-        <p className="text-sm text-muted-foreground">
-          Configure and save loadouts for every operator
-        </p>
-      </div>
-      <div className="flex flex-col items-center">
+    <>
+      <PageHeader
+        title="Custom loadout"
+        description="Choose an operator, then pick their weapons, attachments and gadget."
+      />
+      <div className="max-w-md">
         <OperatorSelect
           onSelect={setSelectedOperator}
           selectedOperatorId={selectedOperator?.id}
           operators={operators}
         />
       </div>
-      {!isNil(selectedOperatorLoadout) && (
+      {!isNil(selectedOperatorLoadout) ? (
         <LoadoutCustomization
           key={selectedOperatorLoadout.id}
           operator={selectedOperatorLoadout}
           onSubmit={onSubmit}
         />
+      ) : (
+        <div className="rounded-lg border border-dashed p-8 text-muted-foreground">
+          Choose an operator to start building a loadout.
+        </div>
       )}
-    </div>
+    </>
   );
 }

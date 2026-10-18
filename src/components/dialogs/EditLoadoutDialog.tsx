@@ -14,6 +14,7 @@ import useSWR from "swr";
 import { updateLoadout } from "@/lib/api/loadouts/mutations";
 import { toast } from "sonner";
 import { Button } from "../ui/button";
+import { Skeleton } from "../ui/skeleton";
 import { PencilLine } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -58,8 +59,9 @@ export default function EditLoadoutDialog({
     );
 
     if ("error" in result) {
-      toast.error("Unable to save changes to loadout");
+      toast.error("Couldn't save your changes. Try again.");
     } else {
+      toast.success("Changes saved");
       router.refresh();
       setOpen(false);
     }
@@ -67,40 +69,39 @@ export default function EditLoadoutDialog({
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <Button
-        variant="outline"
-        className="flex-1 bg-white/5 border-white/10 hover:bg-white/10 text-xs h-8"
-        onClick={() => setOpen(true)}
-      >
-        <PencilLine className="w-3 h-3 mr-2" />
-        Edit
-      </Button>
-      <DialogContent className="w-full sm:max-w-6xl max-h-[90vh] overflow-y-auto">
+      <DialogTrigger asChild>
+        <Button variant="outline" size="sm">
+          <PencilLine />
+          Edit
+        </Button>
+      </DialogTrigger>
+      <DialogContent className="max-h-[90vh] w-full overflow-y-auto sm:max-w-5xl">
         <DialogHeader>
-          <DialogTitle>Edit Loadout</DialogTitle>
+          <DialogTitle className="text-2xl font-semibold font-display">
+            Edit loadout
+          </DialogTitle>
           <DialogDescription>
-            Customize your operator loadout details below.
+            Change the weapons, attachments, gadget or name, then save.
           </DialogDescription>
         </DialogHeader>
-        <div>
-          {operator && !isLoading && isNil(error) ? (
-            <LoadoutCustomization
-              selectedLoadout={loadoutDetails}
-              operator={operator}
-              onSubmit={onSubmit}
-            />
-          ) : (
-            <>
-              {isLoading ? (
-                <div>Loading...</div>
-              ) : (
-                <div>
-                  Error getting operator details. Please try again later.
-                </div>
-              )}
-            </>
-          )}
-        </div>
+        {operator && !isLoading && isNil(error) ? (
+          <LoadoutCustomization
+            selectedLoadout={loadoutDetails}
+            operator={operator}
+            onSubmit={onSubmit}
+          />
+        ) : isLoading ? (
+          <div aria-busy className="grid gap-6 md:grid-cols-2">
+            <Skeleton className="h-48" />
+            <Skeleton className="h-48" />
+            <Skeleton className="h-40 md:col-span-2" />
+          </div>
+        ) : (
+          <p className="text-muted-foreground">
+            Couldn&apos;t load this operator&apos;s weapons and gadgets. Close
+            this and try again.
+          </p>
+        )}
       </DialogContent>
     </Dialog>
   );

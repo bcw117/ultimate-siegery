@@ -1,24 +1,14 @@
 @import "tailwindcss";
 @plugin "tailwindcss-animate";
 
+/* The app is dark-only; the root layout puts `dark` on <html>. */
+@custom-variant dark (&:where(.dark, .dark *));
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-  --color-sidebar-ring: var(--sidebar-ring);
-  --color-sidebar-border: var(--sidebar-border);
-  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-  --color-sidebar-accent: var(--sidebar-accent);
-  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-  --color-sidebar-primary: var(--sidebar-primary);
-  --color-sidebar-foreground: var(--sidebar-foreground);
-  --color-sidebar: var(--sidebar);
-  --color-chart-5: var(--chart-5);
-  --color-chart-4: var(--chart-4);
-  --color-chart-3: var(--chart-3);
-  --color-chart-2: var(--chart-2);
-  --color-chart-1: var(--chart-1);
+  --font-sans: var(--font-archivo), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-saira), var(--font-archivo), sans-serif;
   --color-ring: var(--ring);
   --color-input: var(--input);
   --color-border: var(--border);
@@ -26,11 +16,6 @@
   --color-destructive: var(--destructive);
   --color-accent-foreground: var(--accent-foreground);
   --color-accent: var(--accent);
-  --color-siege-dark: var(--siege-dark);
-  --color-siege-darker: var(--siege-darker);
-  --color-siege-light: var(--siege-light);
-  --color-siege-accent: var(--siege-accent);
-  --color-siege-red: var(--siege-red);
   --color-muted-foreground: var(--muted-foreground);
   --color-muted: var(--muted);
   --color-secondary-foreground: var(--secondary-foreground);
@@ -41,161 +26,111 @@
   --color-popover: var(--popover);
   --color-card-foreground: var(--card-foreground);
   --color-card: var(--card);
+  --color-attack: var(--attack);
+  --color-defend: var(--defend);
+  /* Resolves to the attack or defend color inside a [data-side] element */
+  --color-side: var(--side);
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
 }
 
+/*
+ * Neutral graphite chrome. The only saturated colors are the two sides,
+ * so orange and blue always mean attacker and defender.
+ * Mirrored for Clerk components in src/lib/theme.ts.
+ */
 :root {
-  /* Updated color values in OKLCH format */
-  --background: oklch(0.16 0.02 262.77);
-  --foreground: oklch(0.97 0.01 262.77);
+  --background: #121316;
+  --foreground: #e6e4df;
+  /* Faint glow at the top of every page */
+  --background-glow: #1e2229;
 
-  --card: oklch(0.22 0.03 265.56);
-  --card-foreground: oklch(0.98 0.01 245.56);
+  --card: #1b1d21;
+  --card-foreground: #e6e4df;
 
-  --popover: oklch(0.22 0.03 265.56);
-  --popover-foreground: oklch(0.98 0.01 245.56);
+  --popover: #1b1d21;
+  --popover-foreground: #e6e4df;
 
-  --primary: oklch(0.65 0.18 245.56);
-  --primary-foreground: oklch(0.98 0.01 245.56);
+  --primary: #e6e4df;
+  --primary-foreground: #121316;
+  /* Darker edge under solid buttons, so they read as pressable */
+  --primary-lip: #8f8b83;
 
-  --secondary: oklch(0.26 0.02 265.56);
-  --secondary-foreground: oklch(0.97 0.01 262.77);
+  --secondary: #25282d;
+  --secondary-foreground: #e6e4df;
 
-  --muted: oklch(0.3 0.02 265.56);
-  --muted-foreground: oklch(0.75 0.03 250.56);
+  --muted: #25282d;
+  --muted-foreground: #9a9ea4;
 
-  --accent: oklch(0.65 0.18 245.56);
-  --accent-foreground: oklch(0.98 0.01 245.56);
+  --accent: #25282d;
+  --accent-foreground: #e6e4df;
 
-  --destructive: oklch(0.68 0.25 22.77);
-  --destructive-foreground: oklch(0.98 0.01 245.56);
+  --destructive: #ef5f64;
+  --destructive-foreground: #e6e4df;
 
-  --border: oklch(0.3 0.02 265.56);
-  --input: oklch(0.3 0.02 265.56);
-  --ring: oklch(0.84 0.03 247.37);
+  --border: #2c2f35;
+  --input: #2c2f35;
+  --ring: #9a9ea4;
 
-  --radius: 0.5rem;
+  --attack: #f08a24;
+  --defend: #3d9beb;
+  --side: var(--foreground);
 
-  /* Siege theme colors */
-  --siege-dark: oklch(0.24 0.025 263.77);
-  --siege-darker: oklch(0.17 0.024 262.77);
-  --siege-light: oklch(0.57 0.005 257.77);
-  --siege-accent: oklch(0.78 0.15 204.77);
-  --siege-red: oklch(0.63 0.25 17.17);
+  --radius: 0.625rem;
+}
 
-  /* Preserved chart variables */
-  --chart-1: oklch(0.646 0.222 41.116);
-  --chart-2: oklch(0.6 0.118 184.704);
-  --chart-3: oklch(0.398 0.07 227.392);
-  --chart-4: oklch(0.828 0.189 84.429);
-  --chart-5: oklch(0.769 0.188 70.08);
+[data-side="Attacker"] {
+  --side: var(--attack);
+}
 
-  /* Preserved sidebar variables */
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
+[data-side="Defender"] {
+  --side: var(--defend);
+}
+
+/* Landing page: the randomly picked operators pop and light up after load */
+@keyframes pick-reveal {
+  from {
+    filter: grayscale(1);
+    opacity: 0.45;
+    transform: scale(0.85);
+  }
+  60% {
+    transform: scale(1.15);
+  }
+  to {
+    filter: grayscale(0);
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 
 @layer base {
   * {
     @apply border-border outline-ring/50;
   }
+  html {
+    color-scheme: dark;
+  }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground font-sans;
+    background-image: radial-gradient(
+      100% 60% at 50% 0%,
+      var(--background-glow) 0%,
+      transparent 100%
+    );
+    background-repeat: no-repeat;
   }
 }
 
-/* Utility classes */
-.glass-card {
-  @apply backdrop-blur-xl bg-white/5 border border-white/10 shadow-lg;
-}
-
-.text-glow {
-  text-shadow: 0 0 10px rgba(15, 160, 206, 0.5);
-}
-
-.noise-bg {
-  position: relative;
-}
-
-.noise-bg::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3CfeBlend mode='soft-light' in='SourceGraphic'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
-  pointer-events: none;
-  opacity: 0.03;
-  z-index: 1;
-}
-
-/* Smooth scrolling */
-html {
-  scroll-behavior: smooth;
-}
-
-/* Siege-specific styles */
-.siege-gradient {
-  background: linear-gradient(135deg, #1a1f2c 0%, #121620 100%);
-}
-
-.siege-card {
-  @apply rounded-lg border border-siege-dark/50 bg-siege-darker/90 backdrop-blur-lg p-6 transition-all duration-300;
-}
-
-@keyframes tactical-scan {
-  0% {
-    background-position: 0% 0%;
-  }
-  100% {
-    background-position: 0% 100%;
-  }
-}
-
-.tactical-scan {
-  background: linear-gradient(
-    0deg,
-    rgba(15, 160, 206, 0.05) 0%,
-    rgba(0, 0, 0, 0) 50%,
-    rgba(15, 160, 206, 0.05) 100%
-  );
-  background-size: 100% 200%;
-  animation: tactical-scan 4s ease-in-out infinite;
-  position: relative;
-}
-
-/* Loading animations */
-.loading-dot {
-  @apply inline-block h-2 w-2 bg-accent rounded-full;
-  animation: loading-dot 1.5s infinite ease-in-out;
-}
-
-.loading-dot:nth-child(2) {
-  animation-delay: 0.2s;
-}
-
-.loading-dot:nth-child(3) {
-  animation-delay: 0.4s;
-}
-
-@keyframes loading-dot {
-  0%,
-  100% {
-    transform: scale(0.5);
-    opacity: 0.5;
-  }
-  50% {
-    transform: scale(1);
-    opacity: 1;
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }

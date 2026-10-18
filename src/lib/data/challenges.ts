@@ -13,7 +13,7 @@ export const challenges = [
   {
     category: "Gameplay Challenge",
     title: "One-Tap Wonder",
-    description: "You can only allowed to kills enemies using one-taps.",
+    description: "You can only kill enemies with one-taps.",
   },
   {
     category: "Gameplay Challenge",
