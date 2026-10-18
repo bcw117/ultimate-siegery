@@ -58,7 +58,8 @@ export default function LoadoutCustomizer({
 }: {
   selectedLoadout?: CustomizationFields;
   operator: OperatorFullLoadout;
-  onSubmit: (loadoutParams: CreateLoadoutRequest) => Promise<void>;
+  // Resolves to true when the loadout was saved
+  onSubmit: (loadoutParams: CreateLoadoutRequest) => Promise<boolean>;
 }) {
   const isEditing = !isNil(selectedLoadout);
   const primaryWeapons = useMemo(
@@ -120,8 +121,9 @@ export default function LoadoutCustomizer({
     }
 
     setIsSaving(true);
+    let saved = false;
     try {
-      await onSubmit({
+      saved = await onSubmit({
         name: loadoutName,
         operatorId: operator.id,
         primaryWeapon: selectedPrimary,
@@ -129,7 +131,10 @@ export default function LoadoutCustomizer({
         gadget: selectedGadget,
       });
     } finally {
-      setIsSaving(false);
+      // On success the parent navigates away or closes, so keep the button disabled
+      if (!saved) {
+        setIsSaving(false);
+      }
     }
   };
 

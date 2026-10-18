@@ -77,6 +77,7 @@ export async function updateLoadout(
     case HttpStatusCode.UNAUTHORIZED:
       redirect("/");
     case HttpStatusCode.BAD_REQUEST:
+    case HttpStatusCode.NOT_FOUND:
     case HttpStatusCode.INTERNAL_SERVER_ERROR:
       return response;
     default: {
