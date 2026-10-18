@@ -15,46 +15,42 @@ export default function GadgetSelect({
   gadgets,
 }: GadgetSelectProps) {
   return (
-    <div>
-      <RadioGroup
-        value={selectedGadget?.id.toString()}
-        onValueChange={(val) =>
-          setSelectedGadget(
-            gadgets.find((g) => g.id.toString() === val) || undefined
-          )
-        }
-        className="grid grid-cols-2 gap-4"
-      >
-        {gadgets.map((gadget) => (
-          <div key={gadget.id}>
-            <RadioGroupItem
-              value={gadget.id.toString()}
-              id={`gadget-${gadget.id}`}
-              className="peer sr-only"
-            />
-            <Label
-              htmlFor={`gadget-${gadget.id}`}
-              className={`flex flex-col items-center justify-between rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground cursor-pointer ${
-                selectedGadget?.id === gadget.id
-                  ? "border-siege-accent bg-siege-accent/10"
-                  : ""
-              }`}
-            >
-              {gadget.icon_url && (
-                <div className="relative w-8 h-8 mb-2">
-                  <Image
-                    src={gadget.icon_url}
-                    alt={gadget.name}
-                    fill
-                    className="object-contain invert"
-                  />
-                </div>
-              )}
-              {gadget.name}
-            </Label>
-          </div>
-        ))}
-      </RadioGroup>
-    </div>
+    <RadioGroup
+      aria-label="Gadget"
+      value={selectedGadget?.id.toString()}
+      onValueChange={(val) =>
+        setSelectedGadget(
+          gadgets.find((g) => g.id.toString() === val) || undefined
+        )
+      }
+      className="grid grid-cols-2 gap-3"
+    >
+      {gadgets.map((gadget) => (
+        <div key={gadget.id}>
+          <RadioGroupItem
+            value={gadget.id.toString()}
+            id={`gadget-${gadget.id}`}
+            className="peer sr-only"
+          />
+          <Label
+            htmlFor={`gadget-${gadget.id}`}
+            className="flex h-full cursor-pointer flex-col items-center justify-center gap-2 rounded-md border p-4 text-center font-normal text-muted-foreground transition-colors peer-focus-visible:ring-2 peer-focus-visible:ring-ring hover:border-muted-foreground hover:text-foreground peer-data-[state=checked]:border-foreground peer-data-[state=checked]:bg-accent peer-data-[state=checked]:text-foreground"
+          >
+            {gadget.icon_url && (
+              <div className="relative size-8">
+                <Image
+                  src={gadget.icon_url}
+                  alt=""
+                  fill
+                  sizes="32px"
+                  className="object-contain opacity-90 invert"
+                />
+              </div>
+            )}
+            {gadget.name}
+          </Label>
+        </div>
+      ))}
+    </RadioGroup>
   );
 }

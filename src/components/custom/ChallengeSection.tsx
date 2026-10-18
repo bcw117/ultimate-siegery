@@ -1,59 +1,55 @@
 "use client";
-import React, { useState } from "react";
+import { useState } from "react";
 import { Button } from "../ui/button";
 import { challenges } from "@/lib/data/challenges";
-import { RefreshCw, Shield, Shuffle } from "lucide-react";
+import { Dices } from "lucide-react";
+
+type Challenge = (typeof challenges)[number];
 
 export default function ChallengeSection() {
-  const [randomChallenge, setRandomChallenge] = useState<{
-    category: string;
-    title: string;
-    description: string;
-  } | null>(null);
+  const [randomChallenge, setRandomChallenge] = useState<Challenge | null>(
+    null
+  );
 
   const generateChallenge = () => {
-    if (!challenges || challenges.length === 0) return;
-    const idx = Math.floor(Math.random() * challenges.length);
-    setRandomChallenge(challenges[idx]);
+    // Never roll the challenge that's already showing
+    const options = challenges.filter((c) => c !== randomChallenge);
+    if (options.length === 0) return;
+    const idx = Math.floor(Math.random() * options.length);
+    setRandomChallenge(options[idx]);
   };
-  return (
-    <div className="space-y-6">
-      <div className="space-y-1.5">
-        <h3 className="font-semibold text-2xl leading-none tracking-tight">
-          Random Challenge
-        </h3>
-        <p className="text-sm text-muted-foreground">
-          Take on a random challenge for your next round.
-        </p>
-      </div>
-      <div className="flex flex-wrap justify-center sm:justify-start gap-4">
-        <Button
-          className="bg-siege-accent hover:bg-siege-accent/90 text-white flex items-center gap-2"
-          onClick={generateChallenge}
-        >
-          <RefreshCw />
-          <span>Generate</span>
-        </Button>
-      </div>
 
-      {randomChallenge ? (
-        <div className="rounded-lg bg-siege-dark/30 border border-white/10 p-6 text-left">
-          <p className="text-sm text-siege-accent mb-1">
-            {randomChallenge.category}
-          </p>
-          <h3 className="text-xl font-semibold text-white mb-2">
-            {randomChallenge.title}
-          </h3>
-          <p className="text-white/80">{randomChallenge.description}</p>
-        </div>
-      ) : (
-        <div className="rounded-lg bg-siege-dark/30 border border-white/10 p-10 text-center">
-          <Shield className="mx-auto text-white/40 mb-4 w-12 h-12" />
-          <p className="text-white/70">
-            Click the button to generate a random challenge
-          </p>
-        </div>
-      )}
-    </div>
+  return (
+    <section
+      aria-label="Random challenge"
+      className="flex flex-col gap-6 rounded-lg border bg-card p-6 md:flex-row md:items-center md:justify-between md:p-8"
+    >
+      <div aria-live="polite" className="space-y-2">
+        {randomChallenge ? (
+          <>
+            <p className="text-sm text-muted-foreground">
+              {randomChallenge.category}
+            </p>
+            <h2 className="text-4xl leading-none font-semibold font-display">
+              {randomChallenge.title}
+            </h2>
+            <p className="max-w-prose">{randomChallenge.description}</p>
+          </>
+        ) : (
+          <>
+            <h2 className="text-4xl leading-none font-semibold font-display">
+              Random challenge
+            </h2>
+            <p className="max-w-prose text-muted-foreground">
+              Roll a challenge to play under for your next round.
+            </p>
+          </>
+        )}
+      </div>
+      <Button onClick={generateChallenge} className="self-start md:self-auto">
+        <Dices />
+        {randomChallenge ? "Roll again" : "Roll a challenge"}
+      </Button>
+    </section>
   );
 }

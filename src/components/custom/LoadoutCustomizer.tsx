@@ -3,16 +3,20 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import {
   OperatorFullLoadout,
   GadgetRecord,
   WeaponWithAttachments,
+  WeaponWithAllAttachments,
   LoadoutDisplay,
+  WeaponSlot,
 } from "@/lib/types/types";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { toast } from "sonner";
 import WeaponSelect from "./WeaponSelect";
 import GadgetSelect from "./GadgetSelect";
+import StatPips from "./StatPips";
 import Image from "next/image";
 import { Save } from "lucide-react";
 import { isNil } from "lodash";
@@ -29,6 +33,24 @@ export type CustomizationFields = {
   gadget: GadgetRecord;
 };
 
+function withoutAttachments(
+  weapon: WeaponWithAllAttachments | undefined
+): WeaponWithAttachments | undefined {
+  if (isNil(weapon)) {
+    return undefined;
+  }
+
+  return {
+    ...weapon,
+    attachments: {
+      sight: undefined,
+      grip: undefined,
+      barrel: undefined,
+      underbarrel: undefined,
+    },
+  };
+}
+
 export default function LoadoutCustomizer({
   selectedLoadout,
   operator,
@@ -41,29 +63,36 @@ export default function LoadoutCustomizer({
   const isEditing = !isNil(selectedLoadout);
   const primaryWeapons = useMemo(
     () =>
-      operator.operatorWeapons.filter((weapon) => weapon.slot === "Primary"),
+      operator.operatorWeapons.filter(
+        (weapon) => weapon.slot === WeaponSlot.Primary
+      ),
     [operator]
   );
   const secondaryWeapons = useMemo(
     () =>
-      operator.operatorWeapons.filter((weapon) => weapon.slot === "Secondary"),
+      operator.operatorWeapons.filter(
+        (weapon) => weapon.slot === WeaponSlot.Secondary
+      ),
     [operator]
   );
 
   const gadgets = operator.operatorGadgets;
   const [isSaving, setIsSaving] = useState(false);
 
+  // New loadouts start on the operator's first weapons and gadget
   const [loadoutName, setLoadoutName] = useState(selectedLoadout?.name ?? "");
-  const [selectedPrimary, setSelectedPrimary] = useState<
-    WeaponWithAttachments | undefined
-  >(selectedLoadout?.primaryWeapon);
-  const [selectedSecondary, setSelectedSecondary] = useState<
-    WeaponWithAttachments | undefined
-  >(selectedLoadout?.secondaryWeapon);
-
+  const [selectedPrimary, setSelectedPrimary] = useState(
+    () =>
+      selectedLoadout?.primaryWeapon ?? withoutAttachments(primaryWeapons[0])
+  );
+  const [selectedSecondary, setSelectedSecondary] = useState(
+    () =>
+      selectedLoadout?.secondaryWeapon ??
+      withoutAttachments(secondaryWeapons[0])
+  );
   const [selectedGadget, setSelectedGadget] = useState<
     GadgetRecord | undefined
-  >(selectedLoadout?.gadget);
+  >(() => selectedLoadout?.gadget ?? gadgets[0]);
 
   const hasValidAttachments = (selected: WeaponWithAttachments) => {
     const { attachments: weaponAttachments } = selected;
@@ -77,145 +106,79 @@ export default function LoadoutCustomizer({
       !operator ||
       !selectedPrimary ||
       !selectedSecondary ||
-      !selectedGadget
-    ) {
-      toast.error(
-        "Please fill out all options for the loadout selection first"
-      );
-      return;
-    }
-
-    if (
+      !selectedGadget ||
       !hasValidAttachments(selectedPrimary) ||
       !hasValidAttachments(selectedSecondary)
     ) {
-      toast.error(
-        "Please fill out all options for the loadout selection first"
-      );
+      toast.error("Choose a weapon, every attachment and a gadget first.");
       return;
     }
 
     if (!loadoutName.trim()) {
-      toast.error("Please enter a loadout name");
+      toast.error("Give this loadout a name first.");
       return;
     }
 
     setIsSaving(true);
-
-    const newLoadout = {
-      name: loadoutName,
-      operatorId: operator.id,
-      primaryWeapon: selectedPrimary,
-      secondaryWeapon: selectedSecondary,
-      gadget: selectedGadget,
-    };
-
-    await onSubmit(newLoadout);
+    try {
+      await onSubmit({
+        name: loadoutName,
+        operatorId: operator.id,
+        primaryWeapon: selectedPrimary,
+        secondaryWeapon: selectedSecondary,
+        gadget: selectedGadget,
+      });
+    } finally {
+      setIsSaving(false);
+    }
   };
 
-  if (isNil(selectedLoadout)) {
-    if (primaryWeapons.length > 0) {
-      setSelectedPrimary({
-        ...primaryWeapons[0],
-        attachments: {
-          sight: undefined,
-          grip: undefined,
-          barrel: undefined,
-          underbarrel: undefined,
-        },
-      });
-    }
-    if (secondaryWeapons.length > 0) {
-      setSelectedSecondary({
-        ...secondaryWeapons[0],
-        attachments: {
-          sight: undefined,
-          grip: undefined,
-          barrel: undefined,
-          underbarrel: undefined,
-        },
-      });
-    }
-    if (gadgets.length > 0) {
-      setSelectedGadget(gadgets[0]);
-    }
-  }
-
   return (
-    <div className="flex flex-col gap-6">
-      <div className="flex flex-wrap justify-center sm:justify-start gap-4 items-center animate-in fade-in slide-in-from-top-4 duration-500">
-        <div className="flex-1 max-w-xs">
-          <Input
-            placeholder="Loadout Name"
-            value={loadoutName}
-            onChange={(e) => setLoadoutName(e.target.value)}
-            className="bg-slate-900/50 border-white/10 text-white"
-          />
-        </div>
-        <Button
-          variant="outline"
-          className="border-white/20 hover:border-white/50 text-white bg-transparent cursor-pointer"
-          type="submit"
-          onClick={handleSubmit}
-          disabled={isSaving}
-        >
-          <Save className="w-4 h-4 mr-2" />
-          {isSaving ? "Saving..." : isEditing ? "Edit Loadout" : "Save Loadout"}
-        </Button>
-      </div>
-
-      <div className="grid gap-6 md:grid-cols-2 animate-in fade-in slide-in-from-bottom-8 duration-700">
-        <Card className="bg-siege-dark/50 border-white/10">
+    <form
+      className="flex flex-col gap-6"
+      onSubmit={(e) => {
+        e.preventDefault();
+        handleSubmit();
+      }}
+    >
+      <div className="grid gap-6 md:grid-cols-2">
+        <Card data-side={operator.side} className="border-l-4 border-l-side">
           <CardHeader>
-            <CardTitle className="text-white flex items-center gap-4">
+            <CardTitle className="flex items-center gap-4">
               {operator.icon_url && (
-                <div className="relative w-12 h-12">
+                <div className="relative size-12 shrink-0">
                   <Image
                     src={operator.icon_url}
-                    alt={operator.name}
+                    alt=""
                     fill
+                    sizes="48px"
                     className="object-contain"
                   />
                 </div>
               )}
-              {operator.name}
+              <div className="space-y-1">
+                <p className="text-3xl leading-none font-semibold font-display">
+                  {operator.name}
+                </p>
+                <p className="text-sm font-normal text-side">{operator.side}</p>
+              </div>
             </CardTitle>
           </CardHeader>
-          <CardContent className="space-y-4 text-slate-300">
-            <div className="grid grid-cols-2 gap-4">
-              <div>
-                <span className="text-xs uppercase tracking-wider text-slate-500">
-                  Side
-                </span>
-                <p className="font-medium text-white">{operator.side}</p>
+          <CardContent>
+            <dl className="space-y-3">
+              <StatPips label="Health" value={operator.health} />
+              <StatPips label="Speed" value={operator.speed} />
+              <div className="space-y-1 border-t pt-3">
+                <dt className="text-sm text-muted-foreground">Ability</dt>
+                <dd>{operator.unique_ability}</dd>
               </div>
-              <div>
-                <span className="text-xs uppercase tracking-wider text-slate-500">
-                  Speed
-                </span>
-                <p className="font-medium text-white">{operator.speed}</p>
-              </div>
-              <div>
-                <span className="text-xs uppercase tracking-wider text-slate-500">
-                  Health
-                </span>
-                <p className="font-medium text-white">{operator.health}</p>
-              </div>
-              <div>
-                <span className="text-xs uppercase tracking-wider text-slate-500">
-                  Ability
-                </span>
-                <p className="font-medium text-white">
-                  {operator.unique_ability}
-                </p>
-              </div>
-            </div>
+            </dl>
           </CardContent>
         </Card>
 
-        <Card className="bg-siege-dark/50 border-white/10">
+        <Card>
           <CardHeader>
-            <CardTitle className="text-white">Gadget</CardTitle>
+            <CardTitle className="text-xl font-display">Gadget</CardTitle>
           </CardHeader>
           <CardContent>
             <GadgetSelect
@@ -225,33 +188,51 @@ export default function LoadoutCustomizer({
             />
           </CardContent>
         </Card>
-        <Card className="bg-siege-dark/50 border-white/10 md:col-span-2">
-          <CardHeader>
-            <CardTitle className="text-white">Primary Weapon</CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-6">
-            <WeaponSelect
-              slot="primary"
-              selectedWeapon={selectedPrimary}
-              setSelectedWeapon={setSelectedPrimary}
-              weapons={primaryWeapons}
-            />
-          </CardContent>
-        </Card>
-        <Card className="bg-siege-dark/50 border-white/10 md:col-span-2">
-          <CardHeader>
-            <CardTitle className="text-white">Secondary Weapon</CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-6">
-            <WeaponSelect
-              slot="secondary"
-              selectedWeapon={selectedSecondary}
-              setSelectedWeapon={setSelectedSecondary}
-              weapons={secondaryWeapons}
-            />
-          </CardContent>
-        </Card>
       </div>
-    </div>
+
+      <Card>
+        <CardHeader>
+          <CardTitle className="text-xl font-display">Primary weapon</CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-6">
+          <WeaponSelect
+            slot="primary"
+            selectedWeapon={selectedPrimary}
+            setSelectedWeapon={setSelectedPrimary}
+            weapons={primaryWeapons}
+          />
+        </CardContent>
+      </Card>
+      <Card>
+        <CardHeader>
+          <CardTitle className="text-xl font-display">
+            Secondary weapon
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-6">
+          <WeaponSelect
+            slot="secondary"
+            selectedWeapon={selectedSecondary}
+            setSelectedWeapon={setSelectedSecondary}
+            weapons={secondaryWeapons}
+          />
+        </CardContent>
+      </Card>
+
+      <div className="flex flex-col gap-3 border-t pt-6 sm:flex-row sm:items-end">
+        <div className="w-full space-y-2 sm:max-w-sm">
+          <Label htmlFor="loadout-name">Loadout name</Label>
+          <Input
+            id="loadout-name"
+            value={loadoutName}
+            onChange={(e) => setLoadoutName(e.target.value)}
+          />
+        </div>
+        <Button type="submit" disabled={isSaving}>
+          <Save />
+          {isSaving ? "Saving..." : isEditing ? "Save changes" : "Save loadout"}
+        </Button>
+      </div>
+    </form>
   );
 }

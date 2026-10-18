@@ -1,88 +1,43 @@
-"use client";
 import Link from "next/link";
-import Image from "next/image";
+
+const linkClass =
+  "rounded-sm transition-colors outline-none hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring";
 
 const Footer = () => {
   return (
-    <footer className="bg-siege-darker relative overflow-hidden">
-      <div className="absolute inset-0">
-        <div className="noise-bg w-full h-full"></div>
-      </div>
-
-      <div className="relative z-10 container mx-auto px-6">
-        <div className="pt-16 pb-8 border-b border-white/10">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
-            <div className="md:col-span-1">
-              <Link href="/" className="flex items-center space-x-2 group">
-                <Image
-                  src="/logo.png"
-                  alt="Ultimate Siegery Logo"
-                  width={885}
-                  height={1014}
-                  className="w-6 h-6 text-siege-accent transition-transform duration-500 group-hover:-rotate-15"
-                />
-                <span className="font-bold text-xl tracking-tight text-white">
-                  <span className="text-siege-accent">Ultimate</span> Siegery
-                </span>
-              </Link>
-            </div>
-
-            <div>
-              <h3 className="text-white font-medium mb-4">Legal</h3>
-              <ul className="space-y-2">
-                <li>
-                  <Link
-                    href="/terms"
-                    className="text-white/60 hover:text-white transition-colors"
-                  >
-                    Terms & Conditions
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href="/privacy"
-                    className="text-white/60 hover:text-white transition-colors"
-                  >
-                    Privacy Policy
-                  </Link>
-                </li>
-              </ul>
-            </div>
-            <div>
-              <h3 className="text-white font-medium mb-4">
-                Developed with ☕ by Boris Wang
-              </h3>
-              <ul className="space-y-2">
-                <li>
-                  <Link
-                    href="https://beacons.ai/boriscodes"
-                    className="text-white/60 hover:text-white transition-colors"
-                  >
-                    Support Me
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href="https://tinyurl.com/42yfkjwc"
-                    target="_blank"
-                    className="text-transparent hover:text-white transition-colors"
-                  >
-                    super secret link
-                  </Link>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-
-        <div className="py-6 flex flex-col md:flex-row items-center justify-between">
-          <p className="text-white/60 text-sm mb-4 md:mb-0">
-            © 2026 Ultimate Siegery. All rights reserved.
+    <footer className="border-t">
+      <div className="mx-auto flex max-w-7xl flex-col gap-6 px-4 py-8 text-sm text-muted-foreground md:flex-row md:items-end md:justify-between">
+        <div className="space-y-1">
+          <p className="text-base font-semibold text-foreground font-display">
+            Ultimate Siegery
           </p>
-          <p className="text-white/60 text-sm">
-            Not affiliated with Ubisoft or Rainbow Six Siege.
+          <p>Not affiliated with Ubisoft or Rainbow Six Siege.</p>
+          <p>
+            © {new Date().getFullYear()} Ultimate Siegery. Made by Boris Wang.
           </p>
         </div>
+        <ul className="flex flex-wrap gap-x-6 gap-y-2">
+          <li>
+            <Link href="/terms" className={linkClass}>
+              Terms and conditions
+            </Link>
+          </li>
+          <li>
+            <Link href="/privacy" className={linkClass}>
+              Privacy policy
+            </Link>
+          </li>
+          <li>
+            <a
+              href="https://beacons.ai/boriscodes"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={linkClass}
+            >
+              Support the developer
+            </a>
+          </li>
+        </ul>
       </div>
     </footer>
   );

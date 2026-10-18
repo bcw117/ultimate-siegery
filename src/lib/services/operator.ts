@@ -2,9 +2,41 @@ import { currentUser } from "@clerk/nextjs/server";
 import { db } from "../db";
 import HttpStatusCode from "../types/statusCodes";
 import { err, ok } from "../errors";
-import { operator } from "../db/schema";
-import { eq } from "drizzle-orm";
+import { attachment, operator, weapon } from "../db/schema";
+import { asc, count, eq } from "drizzle-orm";
 import { isNil } from "lodash";
+import { OperatorRoster } from "../types/types";
+
+// Public game data for the landing page, so unlike the other services it
+// doesn't require a signed-in user
+export async function fetchOperatorRosterService() {
+  try {
+    const [operators, [weapons], [attachments]] = await Promise.all([
+      db
+        .select({
+          id: operator.id,
+          name: operator.name,
+          side: operator.side,
+          icon_url: operator.icon_url,
+        })
+        .from(operator)
+        .orderBy(asc(operator.name)),
+      db.select({ total: count() }).from(weapon),
+      db.select({ total: count() }).from(attachment),
+    ]);
+
+    return ok(HttpStatusCode.ACCEPTED, {
+      operators,
+      weaponCount: weapons.total,
+      attachmentCount: attachments.total,
+    } as OperatorRoster);
+  } catch (e) {
+    return err({
+      statusCode: HttpStatusCode.INTERNAL_SERVER_ERROR,
+      caughtError: e,
+    });
+  }
+}
 
 export async function fetchOperatorService(id?: number) {
   try {

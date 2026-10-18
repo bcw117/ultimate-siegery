@@ -3,5 +3,9 @@ export default function AuthorizedLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return <main className="py-28">{children}</main>;
+  return (
+    <div className="mx-auto w-full max-w-7xl space-y-10 px-4 py-10 md:py-14">
+      {children}
+    </div>
+  );
 }

@@ -2,40 +2,47 @@
 
 import { useState } from "react";
 import ChallengeSection from "@/components/custom/ChallengeSection";
+import PageHeader from "@/components/general/PageHeader";
 import { challenges } from "@/lib/data/challenges";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { Badge } from "@/components/ui/badge";
-import { Search, Trophy } from "lucide-react";
+import { Search } from "lucide-react";
+import { uniq } from "lodash";
+
+const categories = uniq(challenges.map((challenge) => challenge.category));
 
 export default function ChallengeView() {
   const [searchTerm, setSearchTerm] = useState("");
 
+  const query = searchTerm.toLowerCase();
   const filteredChallenges = challenges.filter(
     (challenge) =>
-      challenge.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      challenge.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      challenge.category.toLowerCase().includes(searchTerm.toLowerCase())
+      challenge.title.toLowerCase().includes(query) ||
+      challenge.description.toLowerCase().includes(query) ||
+      challenge.category.toLowerCase().includes(query)
   );
 
   return (
-    <div className="container max-w-7xl mx-auto py-4 px-4 space-y-12">
-      <section className="space-y-8">
-        <div className="flex flex-col space-y-4">
-          <div className="w-full pt-4">
-            <ChallengeSection />
-          </div>
-        </div>
+    <>
+      <PageHeader
+        title="Challenges"
+        description="House rules for your next round. Roll one at random or pick from the list."
+      />
 
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-          <h2 className="text-2xl font-bold flex items-center gap-2">
-            <Trophy className="h-6 w-6 text-blue-300" />
-            Challenge Database
+      <ChallengeSection />
+
+      <section aria-labelledby="all-challenges" className="space-y-8">
+        <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
+          <h2
+            id="all-challenges"
+            className="text-3xl font-semibold font-display"
+          >
+            All challenges
           </h2>
           <div className="relative w-full sm:w-72">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+            <Search className="absolute top-1/2 left-3 size-4 -translate-y-1/2 text-muted-foreground" />
             <Input
-              placeholder="Search challenges..."
+              aria-label="Search challenges"
+              placeholder="Search challenges"
               className="pl-9"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
@@ -43,42 +50,41 @@ export default function ChallengeView() {
           </div>
         </div>
 
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {filteredChallenges.map((challenge, i) => (
-            <Card
-              key={i}
-              className="flex flex-col h-full hover:border-primary/50 transition-colors"
-            >
-              <CardHeader className="pb-3">
-                <div className="flex justify-between items-start gap-2 mb-1">
-                  <Badge
-                    variant="secondary"
-                    className="mb-2 hover:bg-secondary/80"
-                  >
-                    {challenge.category}
-                  </Badge>
-                </div>
-                <CardTitle className="text-lg leading-tight">
-                  {challenge.title}
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="flex-1">
-                <p className="text-sm text-muted-foreground">
-                  {challenge.description}
-                </p>
-              </CardContent>
-            </Card>
-          ))}
+        {categories.map((category) => {
+          const inCategory = filteredChallenges.filter(
+            (challenge) => challenge.category === category
+          );
+          if (inCategory.length === 0) {
+            return null;
+          }
 
-          {filteredChallenges.length === 0 && (
-            <div className="col-span-full text-center py-12 bg-muted/20 rounded-lg border border-dashed">
-              <p className="text-muted-foreground">
-                {`No challenges found matching "${searchTerm}"`}
-              </p>
+          return (
+            <div key={category} className="space-y-3">
+              <h3 className="text-sm text-muted-foreground">
+                {category} ({inCategory.length})
+              </h3>
+              <ul className="grid gap-x-8 sm:grid-cols-2 lg:grid-cols-3">
+                {inCategory.map((challenge) => (
+                  <li key={challenge.title} className="space-y-1 border-t py-4">
+                    <p className="text-lg font-semibold font-display">
+                      {challenge.title}
+                    </p>
+                    <p className="text-sm text-muted-foreground">
+                      {challenge.description}
+                    </p>
+                  </li>
+                ))}
+              </ul>
             </div>
-          )}
-        </div>
+          );
+        })}
+
+        {filteredChallenges.length === 0 && (
+          <p className="rounded-lg border border-dashed p-8 text-muted-foreground">
+            {`No challenges match "${searchTerm}".`}
+          </p>
+        )}
       </section>
-    </div>
+    </>
   );
 }

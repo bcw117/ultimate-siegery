@@ -1,8 +1,28 @@
 "use server";
 
-import { fetchOperatorService } from "@/lib/services/operator";
+import {
+  fetchOperatorRosterService,
+  fetchOperatorService,
+} from "@/lib/services/operator";
 import HttpStatusCode from "@/lib/types/statusCodes";
 import { redirect } from "next/navigation";
+
+export async function fetchOperatorRoster() {
+  const response = await fetchOperatorRosterService();
+
+  if (response.ok) {
+    return response;
+  }
+
+  const { statusCode } = response.error;
+  switch (statusCode) {
+    case HttpStatusCode.INTERNAL_SERVER_ERROR:
+      return response;
+    default: {
+      throw new Error(`Unexpected error: ${statusCode satisfies never}`);
+    }
+  }
+}
 
 //TODO: FIX HANDLING FOR RESPONSES
 export async function fetchOperator(id: number) {

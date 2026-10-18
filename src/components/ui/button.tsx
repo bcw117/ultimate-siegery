@@ -9,11 +9,13 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        default: "bg-primary text-primary-foreground hover:bg-primary/90",
+        // Solid and outline buttons sit on a lip that presses in when clicked
+        default:
+          "bg-primary font-semibold text-primary-foreground shadow-[0_3px_0_0_var(--primary-lip)] hover:bg-primary/90 active:translate-y-0.5 active:shadow-[0_1px_0_0_var(--primary-lip)]",
         destructive:
-          "bg-destructive text-white hover:bg-destructive/90 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 dark:bg-destructive/60",
+          "bg-destructive text-white shadow-[0_3px_0_0_rgb(0_0_0/0.5)] hover:bg-destructive/90 focus-visible:ring-destructive/20 active:translate-y-0.5 active:shadow-[0_1px_0_0_rgb(0_0_0/0.5)] dark:focus-visible:ring-destructive/40 dark:bg-destructive/60",
         outline:
-          "border bg-background shadow-xs hover:bg-accent hover:text-accent-foreground dark:bg-input/30 dark:border-input dark:hover:bg-input/50",
+          "border bg-background shadow-[0_3px_0_0_var(--border)] hover:bg-accent hover:text-accent-foreground active:translate-y-0.5 active:shadow-[0_1px_0_0_var(--border)] dark:bg-input/30 dark:border-input dark:hover:bg-input/50",
         secondary:
           "bg-secondary text-secondary-foreground hover:bg-secondary/80",
         ghost:

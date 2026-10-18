@@ -27,6 +27,7 @@ export async function saveLoadout(loadoutParams: CreateLoadoutRequest) {
   switch (statusCode) {
     case HttpStatusCode.UNAUTHORIZED:
       redirect("/");
+    case HttpStatusCode.BAD_REQUEST:
     case HttpStatusCode.INTERNAL_SERVER_ERROR:
       return response;
     default: {
@@ -75,6 +76,7 @@ export async function updateLoadout(
   switch (statusCode) {
     case HttpStatusCode.UNAUTHORIZED:
       redirect("/");
+    case HttpStatusCode.BAD_REQUEST:
     case HttpStatusCode.INTERNAL_SERVER_ERROR:
       return response;
     default: {

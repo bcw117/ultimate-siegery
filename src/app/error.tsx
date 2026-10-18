@@ -1,20 +1,25 @@
 "use client";
+
+import { Button } from "@/components/ui/button";
+
 export default function Error({
-  error,
   reset,
 }: {
   error: Error & { digest?: string };
   reset: () => void;
 }) {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center">
-      <h2 className="text-center">Something went wrong!</h2>
-      <button
-        className="mt-4 rounded-md bg-blue-500 px-4 py-2 text-sm text-white transition-colors hover:bg-blue-400"
-        onClick={() => reset()}
-      >
-        Try again
-      </button>
-    </main>
+    <div className="mx-auto flex min-h-[60vh] max-w-7xl flex-col justify-center gap-4 px-4">
+      <h1 className="text-4xl font-semibold font-display md:text-5xl">
+        This page didn&apos;t load
+      </h1>
+      <p className="max-w-prose text-muted-foreground">
+        Something went wrong while loading this page. Try again, and if it keeps
+        failing, come back later.
+      </p>
+      <div>
+        <Button onClick={() => reset()}>Try again</Button>
+      </div>
+    </div>
   );
 }

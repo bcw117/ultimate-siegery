@@ -6,8 +6,8 @@ import { SignOutButton } from "@clerk/nextjs";
 function LogOutButton() {
   return (
     <SignOutButton>
-      <Button variant="outline" className="w-24 cursor-pointer">
-        {"Sign Out"}
+      <Button variant="ghost" size="sm">
+        Sign out
       </Button>
     </SignOutButton>
   );
