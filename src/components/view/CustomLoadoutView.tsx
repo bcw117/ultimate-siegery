@@ -31,14 +31,20 @@ export default function CustomLoadoutView({ operators }: CustomLoadoutProps) {
   );
 
   const onSubmit = async (loadoutDetails: CreateLoadoutRequest) => {
-    const result = await saveLoadout(loadoutDetails);
-    if ("error" in result) {
-      toast.error("Couldn't save this loadout. Try again.");
-      return;
-    }
+    try {
+      const result = await saveLoadout(loadoutDetails);
+      if ("error" in result) {
+        toast.error("Couldn't save this loadout. Try again.");
+        return false;
+      }
 
-    toast.success("Loadout saved");
-    router.push(result.redirectTo);
+      toast.success("Loadout saved");
+      router.push(result.redirectTo);
+      return true;
+    } catch {
+      toast.error("Couldn't save this loadout. Try again.");
+      return false;
+    }
   };
 
   return (

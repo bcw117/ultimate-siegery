@@ -52,18 +52,25 @@ export default function EditLoadoutDialog({
   } = useSWR(`/api/operators/${loadout.operator.id}`, fetcher);
 
   const onSubmit = async (editedLoadout: CreateLoadoutRequest) => {
-    const result = await updateLoadout(
-      loadout.id,
-      loadoutDetails,
-      editedLoadout
-    );
+    try {
+      const result = await updateLoadout(
+        loadout.id,
+        loadoutDetails,
+        editedLoadout
+      );
 
-    if ("error" in result) {
-      toast.error("Couldn't save your changes. Try again.");
-    } else {
+      if ("error" in result) {
+        toast.error("Couldn't save your changes. Try again.");
+        return false;
+      }
+
       toast.success("Changes saved");
       router.refresh();
       setOpen(false);
+      return true;
+    } catch {
+      toast.error("Couldn't save your changes. Try again.");
+      return false;
     }
   };
 
