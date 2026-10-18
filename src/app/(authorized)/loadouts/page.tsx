@@ -1,6 +1,9 @@
+import type { Metadata } from "next";
 import LoadoutsView from "@/components/view/LoadoutsView";
 import { fetchLoadouts } from "@/lib/api/loadouts/queries";
 import { LoadoutDisplay } from "@/lib/types/types";
+
+export const metadata: Metadata = { title: "Saved loadouts" };
 
 export const dynamic = "force-dynamic";
 

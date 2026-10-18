@@ -1,6 +1,9 @@
+import type { Metadata } from "next";
 import CustomLoadoutView from "@/components/view/CustomLoadoutView";
 import { fetchAllOperatorLoadouts } from "@/lib/api/operators/queries";
 import { OperatorFullLoadout } from "@/lib/types/types";
+
+export const metadata: Metadata = { title: "Custom loadout" };
 
 export const dynamic = "force-dynamic";
 

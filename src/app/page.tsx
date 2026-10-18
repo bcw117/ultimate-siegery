@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { auth, currentUser } from "@clerk/nextjs/server";
 import DashboardView from "@/components/view/DashboardView";
 import LandingView from "@/components/view/LandingView";
@@ -5,6 +6,11 @@ import { fetchLoadouts } from "@/lib/api/loadouts/queries";
 import { fetchOperatorRoster } from "@/lib/api/operators/queries";
 import { LoadoutDisplay, OperatorRosterEntry, Side } from "@/lib/types/types";
 import { getRandomElement } from "@/lib/utils/helpers";
+
+export const metadata: Metadata = {
+  title: { absolute: "Ultimate Siegery - Rainbow Six Siege Loadout Generator" },
+  alternates: { canonical: "/" },
+};
 
 // The operator picks are random on every visit
 export const dynamic = "force-dynamic";
