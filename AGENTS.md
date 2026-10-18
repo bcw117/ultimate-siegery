@@ -54,7 +54,8 @@ DB columns stay snake_case; app-facing types are camelCase.
 ### Auth
 
 Clerk route protection is in `src/proxy.ts` (Next 16's replacement for `middleware.ts`).
-Its `isPrivateRoute` matcher must be kept in sync with the route folders under `src/app/(authorized)/`.
+Its `isPrivateRoute` matcher is built from `privateRoutes` in `src/lib/site.ts`, which must be kept in sync with the route folders under `src/app/(authorized)/`.
+`src/app/robots.ts` disallows the same list.
 Services additionally scope every loadout query and mutation by the Clerk `user.id` stored in `loadout.user_id`; this is the actual per-user authorization, since the app connects to Postgres directly rather than through Supabase's RLS-enforced client.
 
 ### Database

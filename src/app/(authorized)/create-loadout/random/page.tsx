@@ -1,8 +1,11 @@
+import type { Metadata } from "next";
 import RandomLoadoutView from "@/components/view/RandomLoadoutView";
 import { fetchAllOperatorLoadouts } from "@/lib/api/operators/queries";
 import { OperatorFullLoadout } from "@/lib/types/types";
 import { generateRandomLoadout, parseSide } from "@/lib/utils/helpers";
 import { isNil } from "lodash";
+
+export const metadata: Metadata = { title: "Random loadout" };
 
 export const dynamic = "force-dynamic";
 
