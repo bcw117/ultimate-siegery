@@ -5,5 +5,5 @@ import { siteUrl } from "@/lib/site";
 const publicPaths = ["/", "/terms", "/privacy"];
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  return publicPaths.map((path) => ({ url: new URL(path, siteUrl).href }));
+    return publicPaths.map((path) => ({ url: new URL(path, siteUrl).href }));
 }

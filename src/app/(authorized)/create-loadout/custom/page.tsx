@@ -8,13 +8,13 @@ export const metadata: Metadata = { title: "Custom loadout" };
 export const dynamic = "force-dynamic";
 
 export default async function CustomLoadout() {
-  const response = await fetchAllOperatorLoadouts();
+    const response = await fetchAllOperatorLoadouts();
 
-  if ("error" in response) {
-    throw new Error(`Failed to fetch operator data: ${response.error}`);
-  }
+    if ("error" in response) {
+        throw new Error(`Failed to fetch operator data: ${response.error}`);
+    }
 
-  return (
-    <CustomLoadoutView operators={response.data as OperatorFullLoadout[]} />
-  );
+    return (
+        <CustomLoadoutView operators={response.data as OperatorFullLoadout[]} />
+    );
 }

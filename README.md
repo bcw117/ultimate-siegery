@@ -30,46 +30,46 @@ The tool to customize, randomize and store your operator loadouts and find in-ga
 
 1. Clone and access the repository:
 
-   ```bash
-   git clone https://github.com/bcw117/ultimate-siegery.git
-   ```
+    ```bash
+    git clone https://github.com/bcw117/ultimate-siegery.git
+    ```
 
 2. Install node packages:
 
-   ```bash
-   pnpm i
-   ```
+    ```bash
+    pnpm i
+    ```
 
 3. Start a local Supabase instance w/ Docker:
 
-   Make sure that you have Docker installed and that it is running
+    Make sure that you have Docker installed and that it is running
 
-   ```bash
-   supabase start
-   supabase status
-   ```
+    ```bash
+    supabase start
+    supabase status
+    ```
 
 4. Populate your .env file
 
-   Use the [.env.template](.env.template) in the repository and fill it with your own environment variables:
+    Use the [.env.template](.env.template) in the repository and fill it with your own environment variables:
 
-   ```env
+    ```env
 
-   NEXT_PUBLIC_SUPABASE_URL=<your_supabase_url>
-   NEXT_PUBLIC_SUPABASE_KEY=<your_supabase_key>
-   DATABASE_URL=<your_database_url>
+    NEXT_PUBLIC_SUPABASE_URL=<your_supabase_url>
+    NEXT_PUBLIC_SUPABASE_KEY=<your_supabase_key>
+    DATABASE_URL=<your_database_url>
 
-   NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=<your_clerk_publishable_key>
-   CLERK_SECRET_KEY=<your_secret_key>
+    NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=<your_clerk_publishable_key>
+    CLERK_SECRET_KEY=<your_secret_key>
 
-   NEXT_PUBLIC_CLERK_SIGN_IN_FORCE_REDIRECT_URL=/dashboard
-   NEXT_PUBLIC_CLERK_SIGN_UP_FORCE_REDIRECT_URL=/dashboard
-   ```
+    NEXT_PUBLIC_CLERK_SIGN_IN_FORCE_REDIRECT_URL=/dashboard
+    NEXT_PUBLIC_CLERK_SIGN_UP_FORCE_REDIRECT_URL=/dashboard
+    ```
 
 5. Run your local development server
-   ```bash
-   pnpm run dev
-   ```
+    ```bash
+    pnpm run dev
+    ```
 6. Happy coding!
 
 ## License

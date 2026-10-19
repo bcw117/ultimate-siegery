@@ -8,11 +8,11 @@ export const metadata: Metadata = { title: "Saved loadouts" };
 export const dynamic = "force-dynamic";
 
 export default async function Loadouts() {
-  const response = await fetchLoadouts();
+    const response = await fetchLoadouts();
 
-  if ("error" in response) {
-    throw new Error("Unable to fetch loadouts");
-  }
+    if ("error" in response) {
+        throw new Error("Unable to fetch loadouts");
+    }
 
-  return <LoadoutsView loadouts={response.data as LoadoutDisplay[]} />;
+    return <LoadoutsView loadouts={response.data as LoadoutDisplay[]} />;
 }
