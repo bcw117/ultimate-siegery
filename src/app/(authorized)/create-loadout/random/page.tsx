@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import RandomLoadoutView from "@/components/view/RandomLoadoutView";
 import { fetchAllOperatorLoadouts } from "@/lib/api/operators/queries";
-import { OperatorFullLoadout } from "@/lib/types/types";
+import { ALL_SIDES, OperatorFullLoadout } from "@/lib/types/types";
 import { generateRandomLoadout, parseSide } from "@/lib/utils/helpers";
 import { isNil } from "lodash";
 
@@ -22,14 +22,12 @@ export default async function RandomLoadout({
 
   const operators = response.data as OperatorFullLoadout[];
 
-  // Arriving from the landing page with a side (and optionally an operator)
-  // rolls a loadout straight away
+  // Always roll a loadout up front. The landing page can link here with a side
+  // (and optionally an operator); otherwise roll across both sides.
   const params = await searchParams;
-  const side = parseSide(params.side);
+  const side = parseSide(params.side) ?? ALL_SIDES;
   const operatorId = Number(params.operator) || undefined;
-  const initialLoadout = side
-    ? generateRandomLoadout(operators, side, operatorId)
-    : undefined;
+  const initialLoadout = generateRandomLoadout(operators, side, operatorId);
 
   return (
     <RandomLoadoutView

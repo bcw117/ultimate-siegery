@@ -1,6 +1,11 @@
 "use client";
 
-import { LoadoutDisplay, OperatorFullLoadout, Side } from "@/lib/types/types";
+import {
+  ALL_SIDES,
+  LoadoutDisplay,
+  OperatorFullLoadout,
+  SideFilter,
+} from "@/lib/types/types";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
@@ -14,7 +19,7 @@ import { generateRandomLoadout } from "@/lib/utils/helpers";
 
 type RandomLoadoutViewProps = {
   operators: OperatorFullLoadout[];
-  initialSide?: Side;
+  initialSide: SideFilter;
   initialLoadout?: LoadoutDisplay;
 };
 
@@ -24,16 +29,18 @@ export default function RandomLoadoutView({
   initialLoadout,
 }: RandomLoadoutViewProps) {
   const router = useRouter();
-  const [side, setSide] = useState<Side>(initialSide ?? Side.Attacker);
+  const [side, setSide] = useState(initialSide);
   const [loadout, setLoadout] = useState(initialLoadout);
   const [isSaving, setIsSaving] = useState(false);
   const [isSaved, setIsSaved] = useState(false);
 
-  const roll = (rollSide: Side) => {
+  const roll = (rollSide: SideFilter) => {
     const newLoadout = generateRandomLoadout(operators, rollSide);
     if (!newLoadout) {
       toast.error(
-        `Couldn't roll a ${rollSide.toLowerCase()} loadout. Try again.`
+        rollSide === ALL_SIDES
+          ? "Couldn't roll a loadout. Try again."
+          : `Couldn't roll a ${rollSide.toLowerCase()} loadout. Try again.`
       );
       return;
     }
@@ -42,7 +49,7 @@ export default function RandomLoadoutView({
     setIsSaved(false);
   };
 
-  const handleSideChange = (newSide: Side) => {
+  const handleSideChange = (newSide: SideFilter) => {
     setSide(newSide);
     roll(newSide);
   };

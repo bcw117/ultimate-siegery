@@ -2,11 +2,13 @@ import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 import { isNil } from "lodash";
 import {
+  ALL_SIDES,
   AttachmentSet,
   AttachmentType,
   LoadoutDisplay,
   OperatorFullLoadout,
   Side,
+  SideFilter,
   WeaponSlot,
   WeaponWithAllAttachments,
 } from "@/lib/types/types";
@@ -95,12 +97,14 @@ function randomAttachments(weapon: WeaponWithAllAttachments): AttachmentSet {
 
 export function generateRandomLoadout(
   operators: OperatorFullLoadout[],
-  side: Side,
+  side: SideFilter,
   operatorId?: number
 ): LoadoutDisplay | undefined {
   const operator = getRandomElement(
     operators.filter(
-      (op) => op.side === side && (isNil(operatorId) || op.id === operatorId)
+      (op) =>
+        (side === ALL_SIDES || op.side === side) &&
+        (isNil(operatorId) || op.id === operatorId)
     )
   );
   if (!operator) {

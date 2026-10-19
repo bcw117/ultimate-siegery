@@ -37,7 +37,6 @@ function favoriteOperator(loadouts: LoadoutDisplay[]) {
 export default function DashboardView({
   firstName,
   loadouts,
-  roster,
   picks,
 }: DashboardViewProps) {
   const favorite = favoriteOperator(loadouts);
@@ -168,14 +167,6 @@ export default function DashboardView({
           <NoLoadouts />
         )}
       </section>
-
-      {roster && (
-        <OperatorWall
-          operators={roster.operators}
-          picks={picks}
-          signedIn={true}
-        />
-      )}
     </div>
   );
 }

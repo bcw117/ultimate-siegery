@@ -1,7 +1,12 @@
 import * as RadioGroupPrimitive from "@radix-ui/react-radio-group";
-import { Side } from "@/lib/types/types";
+import { ALL_SIDES, Side, SideFilter } from "@/lib/types/types";
 
-type SideToggleProps = { value: Side; onValueChange: (side: Side) => void };
+type SideToggleProps = {
+  value: SideFilter;
+  onValueChange: (side: SideFilter) => void;
+};
+
+const OPTIONS: SideFilter[] = [ALL_SIDES, ...Object.values(Side)];
 
 export default function SideToggle({ value, onValueChange }: SideToggleProps) {
   return (
@@ -9,10 +14,10 @@ export default function SideToggle({ value, onValueChange }: SideToggleProps) {
       aria-label="Side"
       orientation="horizontal"
       value={value}
-      onValueChange={(val) => onValueChange(val as Side)}
+      onValueChange={(val) => onValueChange(val as SideFilter)}
       className="inline-flex rounded-md border p-1"
     >
-      {Object.values(Side).map((side) => (
+      {OPTIONS.map((side) => (
         <RadioGroupPrimitive.Item
           key={side}
           value={side}

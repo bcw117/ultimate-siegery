@@ -10,6 +10,12 @@ export enum Side {
   Defender = "Defender",
 }
 
+// Lets a side picker also offer "both sides" without widening the Side enum,
+// which mirrors the values stored in the database
+export const ALL_SIDES = "All";
+
+export type SideFilter = Side | typeof ALL_SIDES;
+
 export enum WeaponType {
   AR = "AR",
   HG = "HG",
