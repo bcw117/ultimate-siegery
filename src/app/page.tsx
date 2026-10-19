@@ -27,13 +27,14 @@ function pickPerSide(operators: OperatorRosterEntry[]) {
 // Signed-out visitors get the landing page; signed-in users get their dashboard
 export default async function Home() {
   const { userId } = await auth();
-  const rosterResponse = await fetchOperatorRoster();
-
-  // The roster only powers the operator wall, so the page renders without it
-  const roster = rosterResponse.ok ? rosterResponse.data : undefined;
-  const picks = roster ? pickPerSide(roster.operators) : {};
 
   if (!userId) {
+    const rosterResponse = await fetchOperatorRoster();
+
+    // The roster only powers the operator wall, so the page renders without it
+    const roster = rosterResponse.ok ? rosterResponse.data : undefined;
+    const picks = roster ? pickPerSide(roster.operators) : {};
+
     return <LandingView roster={roster} picks={picks} />;
   }
 
@@ -50,8 +51,6 @@ export default async function Home() {
     <DashboardView
       firstName={user?.firstName ?? undefined}
       loadouts={loadoutsResponse.data as LoadoutDisplay[]}
-      roster={roster}
-      picks={picks}
     />
   );
 }

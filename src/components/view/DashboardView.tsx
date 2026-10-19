@@ -4,15 +4,9 @@ import { countBy, maxBy } from "lodash";
 import { Dices, Hammer, Swords } from "lucide-react";
 import LoadoutCard from "../general/LoadoutCard";
 import NoLoadouts from "../general/NoLoadouts";
-import OperatorWall from "../general/OperatorWall";
 import PageHeader from "../general/PageHeader";
 import StatStrip from "../general/StatStrip";
-import {
-  LoadoutDisplay,
-  OperatorRoster,
-  OperatorRosterEntry,
-  Side,
-} from "@/lib/types/types";
+import { LoadoutDisplay, Side } from "@/lib/types/types";
 
 const RECENT_COUNT = 4;
 
@@ -22,8 +16,6 @@ const tileClass =
 type DashboardViewProps = {
   firstName: string | undefined;
   loadouts: LoadoutDisplay[];
-  roster: OperatorRoster | undefined;
-  picks: Partial<Record<Side, OperatorRosterEntry>>;
 };
 
 function favoriteOperator(loadouts: LoadoutDisplay[]) {
@@ -37,7 +29,6 @@ function favoriteOperator(loadouts: LoadoutDisplay[]) {
 export default function DashboardView({
   firstName,
   loadouts,
-  picks,
 }: DashboardViewProps) {
   const favorite = favoriteOperator(loadouts);
   const sideCount = countBy(loadouts, (loadout) => loadout.operator.side);
