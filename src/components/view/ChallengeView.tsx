@@ -3,15 +3,24 @@
 import { useState } from "react";
 import ChallengeSection from "@/components/custom/ChallengeSection";
 import PageHeader from "@/components/general/PageHeader";
+import StatStrip from "@/components/general/StatStrip";
 import { challenges } from "@/lib/data/challenges";
+import { ChallengeStreak } from "@/lib/types/types";
+import { useStreakStatus } from "@/hooks/useStreakStatus";
 import { Input } from "@/components/ui/input";
 import { Search } from "lucide-react";
 import { uniq } from "lodash";
 
 const categories = uniq(challenges.map((challenge) => challenge.category));
 
-export default function ChallengeView() {
+export default function ChallengeView({
+    streak: initialStreak,
+}: {
+    streak: ChallengeStreak;
+}) {
     const [searchTerm, setSearchTerm] = useState("");
+    const [streak, setStreak] = useState(initialStreak);
+    const streakStatus = useStreakStatus(streak);
 
     const query = searchTerm.toLowerCase();
     const filteredChallenges = challenges.filter(
@@ -28,7 +37,23 @@ export default function ChallengeView() {
                 description="House rules for your next round. Roll one at random or pick from the list."
             />
 
-            <ChallengeSection />
+            <ChallengeSection
+                streakStatus={streakStatus}
+                onStreakChange={setStreak}
+            />
+
+            <StatStrip
+                stats={[
+                    {
+                        label: "Current streak (days)",
+                        value: streakStatus?.current ?? "-",
+                    },
+                    {
+                        label: "Longest streak (days)",
+                        value: streakStatus?.longest ?? "-",
+                    },
+                ]}
+            />
 
             <section aria-labelledby="all-challenges" className="space-y-8">
                 <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-end">

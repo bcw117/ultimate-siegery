@@ -6,7 +6,8 @@ import LoadoutCard from "../general/LoadoutCard";
 import NoLoadouts from "../general/NoLoadouts";
 import PageHeader from "../general/PageHeader";
 import StatStrip from "../general/StatStrip";
-import { LoadoutDisplay, Side } from "@/lib/types/types";
+import StreakCaption from "../general/StreakCaption";
+import { ChallengeStreak, LoadoutDisplay, Side } from "@/lib/types/types";
 
 const RECENT_COUNT = 4;
 
@@ -16,6 +17,8 @@ const tileClass =
 type DashboardViewProps = {
     firstName: string | undefined;
     loadouts: LoadoutDisplay[];
+    // Missing when it couldn't be fetched; the tile then keeps its default caption
+    streak: ChallengeStreak | undefined;
 };
 
 function favoriteOperator(loadouts: LoadoutDisplay[]) {
@@ -29,6 +32,7 @@ function favoriteOperator(loadouts: LoadoutDisplay[]) {
 export default function DashboardView({
     firstName,
     loadouts,
+    streak,
 }: DashboardViewProps) {
     const favorite = favoriteOperator(loadouts);
     const sideCount = countBy(loadouts, (loadout) => loadout.operator.side);
@@ -88,7 +92,11 @@ export default function DashboardView({
                             Challenge
                         </span>
                         <span className="block text-sm text-muted-foreground">
-                            Roll a house rule for your squad
+                            {streak ? (
+                                <StreakCaption streak={streak} />
+                            ) : (
+                                "Roll a house rule for your squad"
+                            )}
                         </span>
                     </span>
                 </Link>
