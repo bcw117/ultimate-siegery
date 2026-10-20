@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { auth, currentUser } from "@clerk/nextjs/server";
 import DashboardView from "@/components/view/DashboardView";
 import LandingView from "@/components/view/LandingView";
+import { fetchChallengeStreak } from "@/lib/api/challenges/queries";
 import { fetchLoadouts } from "@/lib/api/loadouts/queries";
 import { fetchOperatorRoster } from "@/lib/api/operators/queries";
 import { LoadoutDisplay, OperatorRosterEntry, Side } from "@/lib/types/types";
@@ -40,9 +41,10 @@ export default async function Home() {
         return <LandingView roster={roster} picks={picks} />;
     }
 
-    const [user, loadoutsResponse] = await Promise.all([
+    const [user, loadoutsResponse, streakResponse] = await Promise.all([
         currentUser(),
         fetchLoadouts(),
+        fetchChallengeStreak(),
     ]);
 
     if ("error" in loadoutsResponse) {
@@ -53,6 +55,7 @@ export default async function Home() {
         <DashboardView
             firstName={user?.firstName ?? undefined}
             loadouts={loadoutsResponse.data as LoadoutDisplay[]}
+            streak={streakResponse.ok ? streakResponse.data : undefined}
         />
     );
 }
