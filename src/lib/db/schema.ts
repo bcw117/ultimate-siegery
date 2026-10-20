@@ -9,6 +9,7 @@ import {
     timestamp,
     primaryKey,
     pgEnum,
+    check,
 } from "drizzle-orm/pg-core";
 import { sql } from "drizzle-orm";
 
@@ -305,5 +306,22 @@ export const operator_weapon_attachment = pgTable(
             to: ["public"],
             using: sql`true`,
         }),
+    ]
+);
+
+export const challenge_streak = pgTable(
+    "challenge_streak",
+    {
+        user_id: text().primaryKey().notNull(),
+        streak_count: integer().default(0).notNull(),
+        longest_streak: integer().default(0).notNull(),
+        last_completed_at: timestamp({ withTimezone: true, mode: "date" }),
+    },
+    (table) => [
+        check("streak_count_nonnegative", sql`${table.streak_count} >= 0`),
+        check(
+            "longest_streak_covers_current",
+            sql`${table.longest_streak} >= ${table.streak_count}`
+        ),
     ]
 );
