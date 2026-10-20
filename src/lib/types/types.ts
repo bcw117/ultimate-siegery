@@ -125,3 +125,11 @@ export type WeaponWithAttachments = WeaponRecord & {
 export type WeaponWithAllAttachments = WeaponRecord & {
     attachments: AttachmentRecord[];
 };
+
+// Stored streak as of the last completion; whether it has since broken is
+// derived from lastCompletedAt (an ISO timestamp) in the device's time zone
+export type ChallengeStreak = {
+    streakCount: number;
+    longestStreak: number;
+    lastCompletedAt: string | null;
+};
