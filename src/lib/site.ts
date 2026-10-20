@@ -6,7 +6,7 @@ export const siteUrl = "https://www.ultimatesiegery.com";
 export const siteName = "Ultimate Siegery";
 
 export const siteDescription =
-  "Generate random Rainbow Six Siege loadouts, build and save your own, and shake up your squad's next match with challenges.";
+    "Generate random Rainbow Six Siege loadouts, build and save your own, and shake up your squad's next match with challenges.";
 
 // Matches --background in src/styles/globals.css
 export const themeColor = "#121316";
@@ -15,8 +15,8 @@ export const themeColor = "#121316";
 // keeps crawlers out, since crawling them only reaches the sign-in redirect.
 // Keep in sync with the route folders under src/app/(authorized).
 export const privateRoutes = [
-  "/challenges",
-  "/create-loadout",
-  "/loadouts",
-  "/profile",
+    "/challenges",
+    "/create-loadout",
+    "/loadouts",
+    "/profile",
 ];

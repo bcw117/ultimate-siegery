@@ -5,35 +5,35 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-archivo), ui-sans-serif, system-ui, sans-serif;
-  --font-display: var(--font-saira), var(--font-archivo), sans-serif;
-  --color-ring: var(--ring);
-  --color-input: var(--input);
-  --color-border: var(--border);
-  --color-destructive-foreground: var(--destructive-foreground);
-  --color-destructive: var(--destructive);
-  --color-accent-foreground: var(--accent-foreground);
-  --color-accent: var(--accent);
-  --color-muted-foreground: var(--muted-foreground);
-  --color-muted: var(--muted);
-  --color-secondary-foreground: var(--secondary-foreground);
-  --color-secondary: var(--secondary);
-  --color-primary-foreground: var(--primary-foreground);
-  --color-primary: var(--primary);
-  --color-popover-foreground: var(--popover-foreground);
-  --color-popover: var(--popover);
-  --color-card-foreground: var(--card-foreground);
-  --color-card: var(--card);
-  --color-attack: var(--attack);
-  --color-defend: var(--defend);
-  /* Resolves to the attack or defend color inside a [data-side] element */
-  --color-side: var(--side);
-  --radius-sm: calc(var(--radius) - 4px);
-  --radius-md: calc(var(--radius) - 2px);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) + 4px);
+    --color-background: var(--background);
+    --color-foreground: var(--foreground);
+    --font-sans: var(--font-archivo), ui-sans-serif, system-ui, sans-serif;
+    --font-display: var(--font-saira), var(--font-archivo), sans-serif;
+    --color-ring: var(--ring);
+    --color-input: var(--input);
+    --color-border: var(--border);
+    --color-destructive-foreground: var(--destructive-foreground);
+    --color-destructive: var(--destructive);
+    --color-accent-foreground: var(--accent-foreground);
+    --color-accent: var(--accent);
+    --color-muted-foreground: var(--muted-foreground);
+    --color-muted: var(--muted);
+    --color-secondary-foreground: var(--secondary-foreground);
+    --color-secondary: var(--secondary);
+    --color-primary-foreground: var(--primary-foreground);
+    --color-primary: var(--primary);
+    --color-popover-foreground: var(--popover-foreground);
+    --color-popover: var(--popover);
+    --color-card-foreground: var(--card-foreground);
+    --color-card: var(--card);
+    --color-attack: var(--attack);
+    --color-defend: var(--defend);
+    /* Resolves to the attack or defend color inside a [data-side] element */
+    --color-side: var(--side);
+    --radius-sm: calc(var(--radius) - 4px);
+    --radius-md: calc(var(--radius) - 2px);
+    --radius-lg: var(--radius);
+    --radius-xl: calc(var(--radius) + 4px);
 }
 
 /*
@@ -42,95 +42,95 @@
  * Mirrored for Clerk components in src/lib/theme.ts.
  */
 :root {
-  --background: #121316;
-  --foreground: #e6e4df;
-  /* Faint glow at the top of every page */
-  --background-glow: #1e2229;
+    --background: #121316;
+    --foreground: #e6e4df;
+    /* Faint glow at the top of every page */
+    --background-glow: #1e2229;
 
-  --card: #1b1d21;
-  --card-foreground: #e6e4df;
+    --card: #1b1d21;
+    --card-foreground: #e6e4df;
 
-  --popover: #1b1d21;
-  --popover-foreground: #e6e4df;
+    --popover: #1b1d21;
+    --popover-foreground: #e6e4df;
 
-  --primary: #e6e4df;
-  --primary-foreground: #121316;
-  /* Darker edge under solid buttons, so they read as pressable */
-  --primary-lip: #8f8b83;
+    --primary: #e6e4df;
+    --primary-foreground: #121316;
+    /* Darker edge under solid buttons, so they read as pressable */
+    --primary-lip: #8f8b83;
 
-  --secondary: #25282d;
-  --secondary-foreground: #e6e4df;
+    --secondary: #25282d;
+    --secondary-foreground: #e6e4df;
 
-  --muted: #25282d;
-  --muted-foreground: #9a9ea4;
+    --muted: #25282d;
+    --muted-foreground: #9a9ea4;
 
-  --accent: #25282d;
-  --accent-foreground: #e6e4df;
+    --accent: #25282d;
+    --accent-foreground: #e6e4df;
 
-  --destructive: #ef5f64;
-  --destructive-foreground: #e6e4df;
+    --destructive: #ef5f64;
+    --destructive-foreground: #e6e4df;
 
-  --border: #2c2f35;
-  --input: #2c2f35;
-  --ring: #9a9ea4;
+    --border: #2c2f35;
+    --input: #2c2f35;
+    --ring: #9a9ea4;
 
-  --attack: #f08a24;
-  --defend: #3d9beb;
-  --side: var(--foreground);
+    --attack: #f08a24;
+    --defend: #3d9beb;
+    --side: var(--foreground);
 
-  --radius: 0.625rem;
+    --radius: 0.625rem;
 }
 
 [data-side="Attacker"] {
-  --side: var(--attack);
+    --side: var(--attack);
 }
 
 [data-side="Defender"] {
-  --side: var(--defend);
+    --side: var(--defend);
 }
 
 /* Landing page: the randomly picked operators pop and light up after load */
 @keyframes pick-reveal {
-  from {
-    filter: grayscale(1);
-    opacity: 0.45;
-    transform: scale(0.85);
-  }
-  60% {
-    transform: scale(1.15);
-  }
-  to {
-    filter: grayscale(0);
-    opacity: 1;
-    transform: scale(1);
-  }
+    from {
+        filter: grayscale(1);
+        opacity: 0.45;
+        transform: scale(0.85);
+    }
+    60% {
+        transform: scale(1.15);
+    }
+    to {
+        filter: grayscale(0);
+        opacity: 1;
+        transform: scale(1);
+    }
 }
 
 @layer base {
-  * {
-    @apply border-border outline-ring/50;
-  }
-  html {
-    color-scheme: dark;
-  }
-  body {
-    @apply bg-background text-foreground font-sans;
-    background-image: radial-gradient(
-      100% 60% at 50% 0%,
-      var(--background-glow) 0%,
-      transparent 100%
-    );
-    background-repeat: no-repeat;
-  }
+    * {
+        @apply border-border outline-ring/50;
+    }
+    html {
+        color-scheme: dark;
+    }
+    body {
+        @apply bg-background text-foreground font-sans;
+        background-image: radial-gradient(
+            100% 60% at 50% 0%,
+            var(--background-glow) 0%,
+            transparent 100%
+        );
+        background-repeat: no-repeat;
+    }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
-  }
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
 }
